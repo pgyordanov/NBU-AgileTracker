@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html id="html" lang="en" data-layout="main" data-theme="main">
+<head>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- /Meta -->
+    <title>@ViewData["Title"] - AgileTracker Portal</title>
+    <link rel="stylesheet" href="~/lib/theme/css/core.min.css">
+    <link rel="stylesheet" href="~/lib/theme/css/theme.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header id="header" class="header pb-0 text-center">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-12 col-lg-8">
+
+                    <div class="col-12 logo mb-5">
+                        <img src="~/images/agiletracker_logo_dark.png" />
+                    </div>
+
+                    <!-- Header Title -->
+                    <h1 class="title mt-2">@ViewData["Title"]</h1>
+                    <!-- /Header Title -->
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- /Header -->
+
+    <main class="main-container">
+        @RenderBody()
+    </main>
+
+    <footer class="footer">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="text-muted mb-2">
+                    &copy; 2020 <a href="#" target="_blank">portal.agiletracker.com</a>
+                </div>
+                <div>
+                    <a href="#" target="_blank" class="btn">
+                        <i class="fa fa-facebook fs-1"></i>
+                    </a>
+                    <a href="#" target="_blank" class="btn">
+                        <i class="fa fa-instagram fs-1"></i>
+                    </a>
+                    <a href="#" target="_blank" class="btn">
+                        <i class="fa fa-twitter fs-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/theme/js/core.min.js"></script>
+    <script src="~/lib/theme/js/theme.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

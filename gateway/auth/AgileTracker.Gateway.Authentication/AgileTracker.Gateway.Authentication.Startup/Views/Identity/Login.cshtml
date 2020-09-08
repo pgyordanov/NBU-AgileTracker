@@ -1,0 +1,82 @@
+﻿@model AgileTracker.Gateway.Authentication.Startup.Features.Identity.Login.LoginViewModel
+@{
+    ViewData["Title"] = "Sign in";
+}
+
+<section id="login" class="section section-login section-right">
+    <div class="container">
+
+        <!-- Section Muted Title -->
+        <div class="section-muted-title" data-stellar-ratio=".9">
+            <span>Sign in</span>
+        </div>
+        <!-- /Section Muted Title -->
+        <!-- Section Content Row -->
+        <div class="row section-content">
+            <div class="col-12">
+
+                <!-- Form Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-12 pt-5">
+
+                        <!-- Form -->
+                        <form class="form-ajax form-identity" method="post" asp-controller="Identity" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+                            <!-- Row -->
+                            <div class="row">
+                                <div class="error-box mb-1" asp-validation-summary="All"></div>
+
+                                <input type="hidden" asp-for="ReturnUrl" />
+
+                                <!-- Form Group -->
+                                <div class="form-group col-12">
+                                    <label asp-for="EmailAddress">Email address</label>
+                                    <input asp-for="EmailAddress" type="text" class="form-control bg-transparent">
+                                    <span asp-validation-for="EmailAddress" class="mt-1"></span>
+                                </div>
+                                <!-- /Form Group -->
+                                <!-- Form Group -->
+                                <div class="form-group col-12">
+                                    <label asp-for="Password">Password</label>
+                                    <input asp-for="Password" type="password" class="form-control bg-transparent">
+                                    <span asp-validation-for="Password" class="mt-1"></span>
+                                </div>
+                                <!-- /Form Group -->
+                                <!-- Form Group -->
+                                <div class="form-group col-6">
+                                    <a href="#">Forgotten password</a>
+                                </div>
+                                <!-- /Form Group -->
+                                <!-- Form Group -->
+                                <div class="form-check col-6 text-right">
+                                    <input type="checkbox" class="form-check-input" asp-for="RememberMe">
+                                    <label class="form-check-label" asp-for="RememberMe">Remember me</label>
+                                </div>
+                                <!-- /Form Group -->
+                            </div>
+                            <!-- /Row -->
+                            <!-- Button -->
+                            <div class="row">
+                                <div class="form-group col-12 text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                </div>
+                                <div class="form-group col-12 text-center">
+                                    <a asp-controller="Identity" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="ml-3">I don't have an account yet</a>
+                                </div>
+                            </div>
+                            <!-- / Button -->
+
+                        </form>
+                        <!-- Form -->
+
+                    </div>
+                    <!-- /Column -->
+                </div>
+                <!-- /Form Row -->
+
+            </div>
+        </div>
+        <!-- /Section Content Row -->
+
+    </div>
+</section>

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>234463af-bbd1-4f65-9c9b-600fadde7017</UserSecretsId>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\application\AgileTracker.Client.Application\AgileTracker.Client.Application.csproj" />
+    <ProjectReference Include="..\infrastructure\AgileTracker.Client.Infrastructure\AgileTracker.Client.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Statistics\" />
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
+
+</Project>

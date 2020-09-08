@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTracker.Gateway.Authentication.Startup", "AgileTracker.Gateway.Authentication.Startup\AgileTracker.Gateway.Authentication.Startup.csproj", "{9E882E11-AC0A-43AE-AC46-35F9FBD3DDF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{90CFF53A-7193-42EB-B2FF-DF72E66A24C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "application", "application", "{E0C929DA-C174-4877-959F-71E63333FBBF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTracker.Gateway.Authentication.Application", "application\AgileTracker.Gateway.Authentication.Application\AgileTracker.Gateway.Authentication.Application.csproj", "{CC9E9C9D-148C-4DED-AFAE-EA10D32CE027}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgileTracker.Gateway.Authentication.Infrastructure", "infrastructure\AgileTracker.Gateway.Authentication.Infrastructure\AgileTracker.Gateway.Authentication.Infrastructure.csproj", "{0D1A0E99-0777-4B74-AFCB-AA246F654585}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E882E11-AC0A-43AE-AC46-35F9FBD3DDF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E882E11-AC0A-43AE-AC46-35F9FBD3DDF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E882E11-AC0A-43AE-AC46-35F9FBD3DDF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E882E11-AC0A-43AE-AC46-35F9FBD3DDF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC9E9C9D-148C-4DED-AFAE-EA10D32CE027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC9E9C9D-148C-4DED-AFAE-EA10D32CE027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC9E9C9D-148C-4DED-AFAE-EA10D32CE027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC9E9C9D-148C-4DED-AFAE-EA10D32CE027}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D1A0E99-0777-4B74-AFCB-AA246F654585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D1A0E99-0777-4B74-AFCB-AA246F654585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D1A0E99-0777-4B74-AFCB-AA246F654585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D1A0E99-0777-4B74-AFCB-AA246F654585}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CC9E9C9D-148C-4DED-AFAE-EA10D32CE027} = {E0C929DA-C174-4877-959F-71E63333FBBF}
+		{0D1A0E99-0777-4B74-AFCB-AA246F654585} = {90CFF53A-7193-42EB-B2FF-DF72E66A24C3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BB19F3A-BC89-49D6-9FD0-5353D6B5440C}
+	EndGlobalSection
+EndGlobal
