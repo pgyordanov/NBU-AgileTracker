@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using AgileTracker.Client.Application.Features.Tasks.Commands;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
     using AgileTracker.Client.Startup.Infrastructure;
     using AgileTracker.Client.Startup.Models;
@@ -76,9 +77,33 @@
         [HttpGet]
         [Route("project-group/{projectGroupId}")]
         [Authorize(Policy = "IsProjectGroupMember")]
-        public IActionResult Group(int projectGroupId)
+        public async Task<IActionResult> Group(int projectGroupId)
         {
-            return View();
+            var command = new GetProjectGroupCommand(projectGroupId);
+
+            var result = await this._mediator.Send(command);
+
+            var actionResult = this.HandleResultValidation(result);
+
+            if (actionResult != null)
+                return actionResult;
+
+            var group = result.Data;
+            var model = new Models.Tasks.Group.ProjectGroupViewModel
+            {
+                Id = group.Id,
+                GroupName = group.GroupName,
+                Members = group.Members.Select(m => new Models.Tasks.Group.ProjectGroupMemberViewModel
+                {
+                    Id = m.Id,
+                    MemberId = m.MemberId,
+                    UserName = m.UserName,
+                    Firstname = m.Firstname,
+                    Lastname = m.Lastname,
+                    IsOwner = m.IsOwner
+                })
+            };
+            return View(model);
         }
 
         [Route("error")]

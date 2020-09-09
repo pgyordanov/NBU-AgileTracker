@@ -33,8 +33,8 @@
 
                     AllowedScopes =
                     {
-                        $"{IdentityServerConstants.LocalApi.ScopeName}.access",
-                        "AgileTrackerGateway.access",
+                        $"{IdentityServerConstants.LocalApi.ScopeName}",
+                        "AgileTrackerGateway",
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess

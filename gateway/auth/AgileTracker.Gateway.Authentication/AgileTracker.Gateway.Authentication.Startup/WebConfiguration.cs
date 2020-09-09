@@ -3,6 +3,8 @@
     using System.Reflection;
 
     using AgileTracker.Gateway.Authentication.Application;
+    using AgileTracker.Gateway.Authentication.Application.IdentityApi.Contracts;
+    using AgileTracker.Gateway.Authentication.Startup.Services;
 
     using FluentValidation.AspNetCore;
 
@@ -20,8 +22,10 @@
                             Assembly.GetAssembly(typeof(ApplicationConfiguration)),
                             Assembly.GetExecutingAssembly()
                         }
-                ));
-                
+                ))
+                .AddNewtonsoftJson();
+
+            services.AddScoped<ICurrentUser, CurrentUserService>();
 
             return services;
         }

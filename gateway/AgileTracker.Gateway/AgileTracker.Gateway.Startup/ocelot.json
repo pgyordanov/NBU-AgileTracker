@@ -1,6 +1,22 @@
 {
   "Routes": [
     {
+      "DownstreamPathTemplate": "/api/IdentityApi/GetUsersInformation",
+      "DownstreamScheme": "https",
+      "DownstreamHttpMethod": "POST",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44393
+        }
+      ],
+      "UpstreamPathTemplate": "/api/identity/user-info",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/ProjectGroups/get-member-groups/{memberId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [

@@ -4,11 +4,13 @@
 
     using AgileTracker.Common.Infrastructure;
     using AgileTracker.Gateway.Authentication.Application.Identity.Contracts;
+    using AgileTracker.Gateway.Authentication.Application.IdentityApi.Contracts;
     using AgileTracker.Gateway.Authentication.Infrastructure.Identity;
     using AgileTracker.Gateway.Authentication.Infrastructure.Identity.Persistance.Identity;
     using AgileTracker.Gateway.Authentication.Infrastructure.Identity.Persistance.Identity.Models;
     using AgileTracker.Gateway.Authentication.Infrastructure.Identity.Persistance.IdentityServer;
     using AgileTracker.Gateway.Authentication.Infrastructure.Identity.Persistance.IdentityServer.InitialData;
+    using AgileTracker.Gateway.Authentication.Infrastructure.IdentityApi;
 
     using IdentityServer4;
 
@@ -62,7 +64,12 @@
                 });
 
             services
-                .AddIdentityServer()
+                .AddIdentityServer(options =>
+                {
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                })
                 .AddAspNetIdentity<AgileTrackerUser>()
                 .AddConfigurationStore(options =>
                 {
@@ -91,12 +98,12 @@
                 {
                     policy.AddAuthenticationSchemes(IdentityServerConstants.LocalApi.AuthenticationScheme);
                     policy.RequireAuthenticatedUser();
-                    policy.RequireClaim(ClaimTypes.Role, "manager");
                 });
             });
 
             services
-                .AddTransient<IIdentity, IdentityService>();
+                .AddTransient<IIdentity, IdentityService>()
+                .AddTransient<IIdentityApi, IdentityApiService>();
 
             return services;
         }

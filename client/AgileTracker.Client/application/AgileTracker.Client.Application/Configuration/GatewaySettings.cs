@@ -6,6 +6,8 @@
 
         public string GetProjectGroupsForMemberEndpoint { get; set; }
 
+        public string GetUserInfoEndpoint { get; set; }
+
         public string GetInvitationsForProjectGroupsForMemberEndpoint { get; set; }
 
         public string CreateProjectGroupEndpoint { get; set; }

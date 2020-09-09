@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -12,7 +13,9 @@
     using AgileTracker.Client.Application.Configuration;
     using AgileTracker.Client.Application.Contracts;
     using AgileTracker.Client.Application.Features.Tasks.Commands;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetUserInfo;
     using AgileTracker.Client.Infrastructure.Contracts;
     using AgileTracker.Common.Application;
 
@@ -60,6 +63,21 @@
             };
 
             return await this.MakeAuthenticatedRequest<IEnumerable<GetProjectGroupsOutputModel>>(request);
+        }
+
+        public async Task<Result<GetUserInfoOutputModel>> GetUserInfo(GetUserInfoInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.GetUserInfoEndpoint),
+                Method = HttpMethod.Get,
+                Content = new StringContent(
+                    JsonConvert.SerializeObject(new { userIds = input.UserIds }),
+                    Encoding.UTF8,
+                    "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest<GetUserInfoOutputModel>(request);
         }
     }
 }

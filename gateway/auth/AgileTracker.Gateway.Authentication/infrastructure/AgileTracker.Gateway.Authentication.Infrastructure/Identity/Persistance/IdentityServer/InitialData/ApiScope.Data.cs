@@ -13,9 +13,9 @@
         public IEnumerable<object> GetData()
             => new List<ApiScope>
             {
-                new IdentityServer4.Models.ApiScope($"{IdentityServer4.IdentityServerConstants.LocalApi.ScopeName}.access")
+                new IdentityServer4.Models.ApiScope($"{IdentityServer4.IdentityServerConstants.LocalApi.ScopeName}")
                     .ToEntity(),
-                new IdentityServer4.Models.ApiScope("AgileTrackerGateway.access").ToEntity()
+                new IdentityServer4.Models.ApiScope("AgileTrackerGateway").ToEntity()
             };
     }
 }

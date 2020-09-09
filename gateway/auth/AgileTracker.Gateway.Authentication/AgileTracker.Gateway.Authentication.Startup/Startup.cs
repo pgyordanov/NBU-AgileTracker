@@ -50,7 +50,7 @@ namespace AgileTracker.Gateway.Authentication.IdentityServer
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllers();
             });
         }
     }

@@ -1,5 +1,9 @@
 namespace AgileTracker.Gateway.Startup
 {
+    using System;
+
+    using IdentityServer4.AccessTokenValidation;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;

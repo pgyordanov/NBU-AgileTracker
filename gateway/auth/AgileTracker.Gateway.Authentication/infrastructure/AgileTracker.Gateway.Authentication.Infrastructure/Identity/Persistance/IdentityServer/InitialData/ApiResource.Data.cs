@@ -13,15 +13,8 @@
         public IEnumerable<object> GetData()
             => new List<IdentityServer4.EntityFramework.Entities.ApiResource>
             {
-                new IdentityServer4.Models.ApiResource(IdentityServerConstants.LocalApi.ScopeName)
-                {
-                    Scopes = new List<string> { $"{IdentityServerConstants.LocalApi.ScopeName}.access" }
-                }.ToEntity(),
-                new IdentityServer4.Models.ApiResource("AgileTrackerGateway")
-                {
-                    Scopes = new List<string> { "AgileTrackerGateway.access" }
-                }
-                .ToEntity()
+                new IdentityServer4.Models.ApiResource(IdentityServerConstants.LocalApi.ScopeName).ToEntity(),
+                new IdentityServer4.Models.ApiResource("AgileTrackerGateway").ToEntity()
             };
     }
 }

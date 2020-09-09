@@ -4,6 +4,8 @@
 
     using AgileTracker.Common.Application.Behaviours;
 
+    using AutoMapper;
+
     using MediatR;
 
     using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,7 @@
         {
             return services
                 .AddMediatR(Assembly.GetExecutingAssembly())
+                .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
         }

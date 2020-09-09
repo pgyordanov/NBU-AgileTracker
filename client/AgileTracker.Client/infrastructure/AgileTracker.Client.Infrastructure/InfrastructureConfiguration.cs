@@ -37,8 +37,8 @@
 
                     configureOptions.ResponseType = "code";
 
-                    configureOptions.Scope.Add("AgileTrackerGateway.access");
-                    configureOptions.Scope.Add("IdentityServerApi.access");
+                    configureOptions.Scope.Add("AgileTrackerGateway");
+                    configureOptions.Scope.Add("IdentityServerApi");
                     configureOptions.Scope.Add("offline_access");
 
                     configureOptions.SaveTokens = true;

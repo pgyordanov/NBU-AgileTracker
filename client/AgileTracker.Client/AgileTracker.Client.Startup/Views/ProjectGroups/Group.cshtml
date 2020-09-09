@@ -1,6 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@inject AgileTracker.Client.Application.Contracts.ICurrentUser currentUserService
+
+@model AgileTracker.Client.Startup.Models.Tasks.Group.ProjectGroupViewModel
 @{
+    ViewData["Title"] = $"{@Model.GroupName} - Project group";
 }
-create project group
+
+<div class="text-left">
+    <h1 class="display-4">
+        @Model.GroupName
+    </h1>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="">Members</div>
+            <ul>
+                @foreach (var member in Model.Members)
+                {
+                    var isCurrentUser = member.MemberId == currentUserService.UserId;
+                    <li class='@(isCurrentUser ? "currentUser" :"")'>
+                        @member.UserName @(member.IsOwner ? "(group owner)" : "") @(isCurrentUser ? "(me)" : "")
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
