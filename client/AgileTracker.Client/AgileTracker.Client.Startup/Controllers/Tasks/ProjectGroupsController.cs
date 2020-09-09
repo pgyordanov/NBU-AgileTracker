@@ -65,13 +65,17 @@
             var command = new CreateProjectGroupCommand(model.ProjectGroupName);
             var result = await this._mediator.Send(command);
 
-            this.HandleResultValidation(result);
+            var actionResult = this.HandleResultValidation(result);
+
+            if (actionResult != null)
+                return actionResult;
 
             return this.RedirectToAction(nameof(this.Group), new { ProjectGroupId = result.Data.GroupId });
         }
 
         [HttpGet]
         [Route("project-group/{projectGroupId}")]
+        [Authorize(Policy = "IsProjectGroupMember")]
         public IActionResult Group(int projectGroupId)
         {
             return View();

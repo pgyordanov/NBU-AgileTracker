@@ -40,7 +40,8 @@
                         IdentityServerConstants.StandardScopes.OfflineAccess
                     },
 
-                    AlwaysIncludeUserClaimsInIdToken = true,
+                    //Two round-trips to get the user claims from the userinfo endpoint
+                    //AlwaysIncludeUserClaimsInIdToken = true,
                     AllowOfflineAccess = true,
 
                     RequireConsent = false

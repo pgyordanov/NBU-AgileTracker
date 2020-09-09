@@ -13,17 +13,22 @@
     public abstract class BaseHttpGatewayService
     {
         private readonly HttpClient _httpClient;
-        private readonly ITokenService _tokenService;
+        private string _accessToken;
 
         public BaseHttpGatewayService(HttpClient httpClient, ITokenService tokenService)
         {
             this._httpClient = httpClient;
-            this._tokenService = tokenService;
+            this._accessToken = tokenService.AccessToken;
+        }
+
+        public BaseHttpGatewayService(HttpClient httpClient)
+        {
+            this._httpClient = httpClient;
         }
 
         protected async Task<Result> MakeAuthenticatedRequest(HttpRequestMessage request)
         {
-            this._httpClient.SetBearerToken(this._tokenService.AccessToken);
+            this._httpClient.SetBearerToken(this._accessToken);
 
             var httpResponse = await this._httpClient.SendAsync(request);
 
@@ -36,9 +41,15 @@
             return true;
         }
 
+        protected async Task<Result<TData>> MakeAuthenticatedRequest<TData>(HttpRequestMessage request, string accessToken)
+        {
+            this._accessToken = accessToken;
+            return await this.MakeAuthenticatedRequest<TData>(request);
+        }
+
         protected async Task<Result<TData>> MakeAuthenticatedRequest<TData>(HttpRequestMessage request)
         {
-            this._httpClient.SetBearerToken(this._tokenService.AccessToken);
+            this._httpClient.SetBearerToken(this._accessToken);
 
             var httpResponse =  await this._httpClient.SendAsync(request);
 

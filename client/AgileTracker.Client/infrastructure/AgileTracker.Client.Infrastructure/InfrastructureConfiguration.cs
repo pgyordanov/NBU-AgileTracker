@@ -1,10 +1,17 @@
 ﻿namespace AgileTracker.Client.Infrastructure
 {
-    using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using AgileTracker.Client.Application.Contracts;
+    using AgileTracker.Client.Infrastructure.AuthenticationEvents;
+    using AgileTracker.Client.Infrastructure.AuthorizationPolicies.ProjectGroupMember;
+    using AgileTracker.Client.Infrastructure.AuthorizationPolicies.ProjectGroupOwner;
+    using AgileTracker.Client.Infrastructure.Contracts;
+
     using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -35,15 +42,44 @@
                     configureOptions.Scope.Add("offline_access");
 
                     configureOptions.SaveTokens = true;
+                    configureOptions.GetClaimsFromUserInfoEndpoint = true;
 
                     configureOptions.TokenValidationParameters = new TokenValidationParameters
                     {
-                        NameClaimType = ClaimTypes.Name 
+                        NameClaimType = ClaimTypes.Name
+                    };
+
+                    configureOptions.Events = new OpenIdConnectEvents
+                    {
+                        OnUserInformationReceived = AgileTrackerOpenIdConnectEvents.OnUserInformationReceived
                     };
                 });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsProjectGroupMember", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new ProjectGroupMemberRequirement());
+                });
+
+                options.AddPolicy("IsProjectGroupOwner", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new ProjectGroupOwnerRequirement());
+                });
+            });
+
+            services
+                .AddTransient<IAuthorizationHandler, ProjectGroupMemberRequirementHandler>()
+                .AddTransient<IAuthorizationHandler, ProjectGroupOwnerRequirementHandler>();
+
+
             services
                 .AddHttpClient<IGatewayService, GatewayService>();
+
+            services
+                .AddHttpClient<IClaimsGatewayService, ClaimsGatewayService>();
 
             return services;
         }
