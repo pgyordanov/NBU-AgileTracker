@@ -18,6 +18,8 @@
 
     using Newtonsoft.Json;
     using AgileTracker.Client.Application.Features.Identity.IsEmailRegistered;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
 
     public class GatewayService : BaseHttpGatewayService, IGatewayService
     {
@@ -104,6 +106,32 @@
             };
 
             return await this.MakeAuthenticatedRequest(request);
+        }
+
+        public async Task<Result<IEnumerable<GetProjectGroupInvitationsOutputModel>>> GetProjectGroupInvitations()
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.GetInvitationsForProjectGroupsForMemberEndpoint),
+                Method = HttpMethod.Get
+            };
+
+            return await this.MakeAuthenticatedRequest<IEnumerable<GetProjectGroupInvitationsOutputModel>>(request);
+        }
+
+        public async Task<Result> AcceptProjectGroupInvitation(AcceptProjectGroupInvitationInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.AcceptProjectGroupInvitationEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                    JsonConvert.SerializeObject(new { projectGroupId = input.GroupId, memberId = this._currentUserService.UserId }),
+                    Encoding.UTF8,
+                    "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest<Result>(request);
         }
     }
 }

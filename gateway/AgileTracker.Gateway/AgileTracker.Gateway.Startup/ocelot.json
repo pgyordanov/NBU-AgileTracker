@@ -87,6 +87,21 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/ProjectGroups/add-group-member",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44386
+        }
+      ],
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/invitations/accept",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/ProjectGroups",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [

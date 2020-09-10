@@ -4,19 +4,23 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Commands.InviteProjectGroupMember;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroup;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
     using AgileTracker.Client.Startup.Infrastructure;
     using AgileTracker.Client.Startup.Infrastructure.UI;
     using AgileTracker.Client.Startup.Models;
     using AgileTracker.Client.Startup.Models.Tasks.CreateProjectGroup;
     using AgileTracker.Client.Startup.Models.Tasks.Index;
+    using AgileTracker.Client.Startup.Models.Tasks.InvitationInbox;
     using AgileTracker.Client.Startup.Models.Tasks.InviteProjectGroupMember;
 
     using MediatR;
 
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +51,7 @@
                 {
                     Id = g.Id,
                     GroupName = g.GroupName,
-                    Members = g.Members.Select(m=> new ProjectGroupMemberViewModel
+                    Members = g.Members.Select(m => new ProjectGroupMemberViewModel
                     {
                         Id = m.Id,
                         IsOwner = m.IsOwner,
@@ -76,6 +80,46 @@
                 return actionResult;
 
             return this.RedirectToAction(nameof(this.Group), new { ProjectGroupId = result.Data.GroupId });
+        }
+
+        [HttpGet]
+        [Route("invitations")]
+        public async Task<IActionResult> InvitationInbox()
+        {
+            var command = new GetProjectGroupInvitationsCommand();
+            var result = await this._mediator.Send(command);
+
+            var actionResult = this.HandleResultValidation(result);
+
+            if (actionResult != null)
+                return actionResult;
+
+            var model = result.Data.Select(i => new ProjectGroupInvitationViewModel
+            {
+                GroupId = i.GroupId,
+                GroupName = i.GroupName
+            });
+
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("invitations/{projectGroupId}/accept")]
+        public async Task<IActionResult> AcceptInvitation(int projectGroupId)
+        {
+            var command = new AcceptProjectGroupInvitationCommand(projectGroupId);
+            var result = await this._mediator.Send(command);
+
+            var actionResult = this.HandleResultValidation(result);
+
+            if (actionResult != null)
+                return actionResult;
+
+            //sign out of the cookie scheme, so idsrv can be asked to authenticate user and project group claims can be populated. 
+            //Idsrv keeps it's cookie, so user is not prompted to login manually
+            await this.HttpContext.SignOutAsync();
+
+            return RedirectToAction(nameof(this.Group), new { ProjectGroupId = projectGroupId });
         }
 
         [HttpGet]

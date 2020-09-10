@@ -1,0 +1,34 @@
+﻿@model IEnumerable<AgileTracker.Client.Startup.Models.Tasks.InvitationInbox.ProjectGroupInvitationViewModel>
+@{
+    ViewData["Title"] = "Invitation Inbox";
+}
+
+<div class="text-left">
+    <h1 class="display-4 mb-4">
+        Project group invitation inbox
+    </h1>
+
+
+    @if (Model != null)
+    {
+        if (Model.Count() > 0)
+        {
+            foreach (var group in Model)
+            {
+                <div class="alert alert-primary" role="alert">
+                    You've been invited to <strong>@group.GroupName</strong>.
+                    <a class="ml-3 alert-link" asp-controller="ProjectGroups" asp-action="AcceptInvitation" asp-route-projectGroupId="@group.GroupId">Accept invitation</a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="text-muted mt-4">You're don't have any unanswered invitations</div>
+        }
+
+    }
+    else
+    {
+        <div class="text-muted mt-4" asp-validation-summary="All"></div>
+    }
+</div>

@@ -8,6 +8,8 @@
     using AgileTracker.Client.Application.Features.Identity.GetUserInfo;
     using AgileTracker.Common.Application;
     using AgileTracker.Client.Application.Features.Identity.IsEmailRegistered;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
 
     public interface IGatewayService
     {
@@ -19,6 +21,10 @@
 
         Task<Result<CreateProjectGroupOutputModel>> CreateProjectGroup(CreateProjectGroupInputModel input);
 
+        Task<Result<IEnumerable<GetProjectGroupInvitationsOutputModel>>> GetProjectGroupInvitations();
+
         Task<Result> InviteMemberToProjectGroup(int projectGroupId, string memberId);
+
+        Task<Result> AcceptProjectGroupInvitation(AcceptProjectGroupInvitationInputModel input);
     }
 }
