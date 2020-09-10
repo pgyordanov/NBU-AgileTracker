@@ -1,4 +1,4 @@
-﻿namespace AgileTracker.Client.Application.Features.Tasks.Commands
+﻿namespace AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup
 {
     public class CreateProjectGroupInputModel
     {

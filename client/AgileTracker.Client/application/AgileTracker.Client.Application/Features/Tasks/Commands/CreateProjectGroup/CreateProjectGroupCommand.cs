@@ -1,4 +1,4 @@
-﻿namespace AgileTracker.Client.Application.Features.Tasks.Commands
+﻿namespace AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -19,7 +19,6 @@
             IRequestHandler<CreateProjectGroupCommand, Result<CreateProjectGroupOutputModel>>
         {
             private readonly IGatewayService _gatewayService;
-            private readonly ICurrentUser _currentUserService;
 
             public CreateProjectGroupCommandHandler(IGatewayService gatewayService)
             {

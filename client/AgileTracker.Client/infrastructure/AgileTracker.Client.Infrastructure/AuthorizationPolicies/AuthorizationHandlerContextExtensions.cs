@@ -16,7 +16,7 @@
 
             switch (context.Resource)
             {
-                case Endpoint endpoint:
+                case Endpoint _:
                     object resourceObj;
                     var res = contextAccessor.HttpContext.GetRouteData().Values.TryGetValue(resourceName, out resourceObj);
 

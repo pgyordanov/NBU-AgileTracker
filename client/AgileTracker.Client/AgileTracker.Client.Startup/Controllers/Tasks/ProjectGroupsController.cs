@@ -3,7 +3,8 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
-    using AgileTracker.Client.Application.Features.Tasks.Commands;
+
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
     using AgileTracker.Client.Startup.Infrastructure;

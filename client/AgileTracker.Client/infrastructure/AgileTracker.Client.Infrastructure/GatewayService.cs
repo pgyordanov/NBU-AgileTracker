@@ -12,7 +12,7 @@
 
     using AgileTracker.Client.Application.Configuration;
     using AgileTracker.Client.Application.Contracts;
-    using AgileTracker.Client.Application.Features.Tasks.Commands;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetUserInfo;

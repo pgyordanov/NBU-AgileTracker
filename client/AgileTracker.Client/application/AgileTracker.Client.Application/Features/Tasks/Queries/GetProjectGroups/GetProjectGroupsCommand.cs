@@ -15,7 +15,6 @@
             IRequestHandler<GetProjectGroupsCommand, Result<IEnumerable<GetProjectGroupsOutputModel>>>
         {
             private readonly IGatewayService _gatewayService;
-            private readonly ICurrentUser _currentUserService;
 
             public GetProjectGroupsCommandHandler(IGatewayService gatewayService)
             {

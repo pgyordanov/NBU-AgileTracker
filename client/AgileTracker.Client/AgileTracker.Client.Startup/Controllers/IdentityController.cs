@@ -14,13 +14,6 @@
     [Route("/auth")]
     public class IdentityController : Controller
     {
-        private readonly ILogger<IdentityController> _logger;
-
-        public IdentityController(ILogger<IdentityController> logger)
-        {
-            _logger = logger;
-        }
-
         [Route("logout")]
         public IActionResult Logout() => SignOut("AgileTrackerClientCookie", "oidc");
 
