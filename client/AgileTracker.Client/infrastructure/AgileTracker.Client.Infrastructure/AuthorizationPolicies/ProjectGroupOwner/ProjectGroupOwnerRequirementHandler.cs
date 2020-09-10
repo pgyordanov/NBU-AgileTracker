@@ -4,7 +4,6 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Routing;
 
     public class ProjectGroupOwnerRequirementHandler : AuthorizationHandler<ProjectGroupOwnerRequirement>
     {
@@ -17,25 +16,13 @@
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ProjectGroupOwnerRequirement requirement)
         {
-            if (context.Resource is Endpoint endpoint)
-            {
-                object projectGroupId;
-                var res = this._contextAccessor.HttpContext.GetRouteData().Values.TryGetValue("projectGroupId", out projectGroupId);
+            string projectGroupId = context.GetResource<int>("projectGroupId", this._contextAccessor).ToString();
 
-                if (!res)
-                {
-                    context.Fail();
-                }
+            if (!context.HasFailed)
+            {
                 var claimType = $"projectgroup.{projectGroupId}";
 
-                if (context.User.HasClaim(c => c.Type == claimType && c.Value == "owner" ))
-                {
-                    context.Succeed(requirement);
-                }
-                else
-                {
-                    context.Fail();
-                }
+                context.ValidateRequirementWithClaim(requirement, claimType, "owner");
             }
 
             return Task.CompletedTask;

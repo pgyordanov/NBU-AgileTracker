@@ -10,6 +10,7 @@
     using AgileTracker.Client.Startup.Models;
     using AgileTracker.Client.Startup.Models.Tasks.CreateProjectGroup;
     using AgileTracker.Client.Startup.Models.Tasks.Index;
+    using AgileTracker.Client.Startup.Models.Tasks.InviteProjectGroupMember;
 
     using MediatR;
 
@@ -104,6 +105,22 @@
                 })
             };
             return View(model);
+        }
+
+        [HttpPost]
+        [Route("project-group/{projectGroupId}/invite-member")]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        public async Task<IActionResult> InviteProjectGroupMember(int projectGroupId, InviteProjectGroupMemberViewModel model)
+        {
+            //var command = new InviteProjectGroupMemberCommand(projectGroupId, model.MemberEmailAddress);
+            //var result = await this._mediator.Send(command);
+
+            //var actionResult = this.HandleResultValidation(result);
+
+            //if (actionResult != null)
+            //    return actionResult;
+
+            return this.RedirectToAction(nameof(this.Group), new { ProjectGroupId = projectGroupId });
         }
 
         [Route("error")]

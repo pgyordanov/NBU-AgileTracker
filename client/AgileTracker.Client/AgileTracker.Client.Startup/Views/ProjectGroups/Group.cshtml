@@ -1,4 +1,5 @@
-﻿@inject AgileTracker.Client.Application.Contracts.ICurrentUser currentUserService
+﻿@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
+@inject AgileTracker.Client.Application.Contracts.ICurrentUser currentUserService
 
 @model AgileTracker.Client.Startup.Models.Tasks.Group.ProjectGroupViewModel
 @{
@@ -12,7 +13,43 @@
 
     <div class="row mt-4">
         <div class="col-6">
-            <div class="section-title mb-3">Members</div>
+            <div class="section-title mb-3">
+                Members
+                @if ((await authorizationService.AuthorizeAsync(User, Model.Id, "IsProjectGroupOwner")).Succeeded)
+                {
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#invitationModal">
+                        Invite member
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="invitationModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Invite new member</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form class="mt-4" method="post" asp-controller="ProjectGroups" asp-action="InviteProjectGroupMember" asp-route-projectGroupId="@Model.Id">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="form-group col-12">
+                                                <label asp-for="InvitationViewModel.MemberEmailAddress">Email address</label>
+                                                <input asp-for="InvitationViewModel.MemberEmailAddress" class="form-control" placeholder="Enter email address">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Invite member</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
             <ul class="list-unstyled">
                 @foreach (var member in Model.Members)
                 {
