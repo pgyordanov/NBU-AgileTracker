@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using AgileTracker.Gateway.Authentication.Application.IdentityApi.Features.Queries.GetUsersInformation;
+    using AgileTracker.Gateway.Authentication.Application.IdentityApi.Features.Queries.IsEmailRegistered;
     using AgileTracker.Gateway.Authentication.Startup.Common;
 
     using MediatR;
@@ -26,6 +27,12 @@
 
         [HttpPost]
         public async Task<ActionResult<GetUsersInformationOutputModel>> GetUsersInformation([FromBody]GetUsersInformationCommand command)
+        {
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<IsEmailRegisteredOutputModel>> IsEmailRegistered([FromBody]IsEmailRegisteredCommand command)
         {
             return await this._mediator.Send(command).ToActionResult();
         }

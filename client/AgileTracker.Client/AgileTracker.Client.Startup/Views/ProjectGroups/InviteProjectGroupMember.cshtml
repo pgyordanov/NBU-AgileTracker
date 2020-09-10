@@ -1,0 +1,25 @@
+﻿@model AgileTracker.Client.Startup.Models.Tasks.InviteProjectGroupMember.InviteProjectGroupMemberViewModel
+@{
+    ViewData["Title"] = "Invite member to project group";
+}
+
+<div class="text-left">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert" asp-validation-summary="All"></div>
+    }
+
+    <h1 class="display-4">
+        Invite member to project group
+    </h1>
+
+    <form class="mt-4" method="post" asp-controller="ProjectGroups" asp-action="InviteProjectGroupMember">
+        <div class="row">
+            <div class="form-group col-6">
+                <label asp-for="MemberEmailAddress">Email address</label>
+                <input asp-for="MemberEmailAddress" class="form-control" placeholder="Enter email address">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Invite to group</button>
+    </form>
+</div>

@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
 
     using AgileTracker.Client.Application.Contracts;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetUserInfo;
+    using AgileTracker.Client.Application.Features.Identity.GetUserInfo;
     using AgileTracker.Common.Application;
 
     using MediatR;

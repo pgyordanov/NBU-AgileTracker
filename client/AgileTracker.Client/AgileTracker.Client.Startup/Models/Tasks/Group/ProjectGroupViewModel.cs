@@ -11,7 +11,5 @@
         public string GroupName { get; set; }
 
         public IEnumerable<ProjectGroupMemberViewModel> Members { get; set; }
-
-        public InviteProjectGroupMemberViewModel InvitationViewModel { get; set; }
     }
 }

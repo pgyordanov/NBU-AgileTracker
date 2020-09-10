@@ -1,4 +1,4 @@
-﻿namespace AgileTracker.Client.Application.Features.Tasks.Queries.GetUserInfo
+﻿namespace AgileTracker.Client.Application.Features.Identity.GetUserInfo
 {
     public class UserInfoOutputModel
     {

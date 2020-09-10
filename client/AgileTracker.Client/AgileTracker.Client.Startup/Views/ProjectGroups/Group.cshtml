@@ -7,6 +7,11 @@
 }
 
 <div class="text-left">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert" asp-validation-summary="All"></div>
+    }
+
     <h1 class="display-4">
         @Model.GroupName
     </h1>
@@ -17,36 +22,9 @@
                 Members
                 @if ((await authorizationService.AuthorizeAsync(User, Model.Id, "IsProjectGroupOwner")).Succeeded)
                 {
-                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#invitationModal">
-                        Invite member
-                    </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="invitationModal" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Invite new member</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form class="mt-4" method="post" asp-controller="ProjectGroups" asp-action="InviteProjectGroupMember" asp-route-projectGroupId="@Model.Id">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="form-group col-12">
-                                                <label asp-for="InvitationViewModel.MemberEmailAddress">Email address</label>
-                                                <input asp-for="InvitationViewModel.MemberEmailAddress" class="form-control" placeholder="Enter email address">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Invite member</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    <a class="ml-2" asp-controller="ProjectGroups" asp-action="InviteProjectGroupMember" asp-route-projectGroupId="@Model.Id">
+                        <small>Invite member</small>
+                    </a>
                 }
 
             </div>

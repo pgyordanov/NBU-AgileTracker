@@ -19,5 +19,50 @@
 
             return null;
         }
+
+        protected IActionResult HandleResultValidation(Result result, string viewName)
+        {
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    this.ModelState.AddModelError(string.Empty, error);
+                }
+
+                return View(viewName);
+            }
+
+            return null;
+        }
+
+        protected IActionResult HandleResultValidation(Result result, object model)
+        {
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    this.ModelState.AddModelError(string.Empty, error);
+                }
+
+                return View(model);
+            }
+
+            return null;
+        }
+
+        protected IActionResult HandleResultValidation(Result result, string viewName, object model)
+        {
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    this.ModelState.AddModelError(string.Empty, error);
+                }
+
+                return View(viewName, model);
+            }
+
+            return null;
+        }
     }
 }

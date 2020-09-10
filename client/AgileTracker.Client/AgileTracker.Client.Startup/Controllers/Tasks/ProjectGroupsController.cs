@@ -5,9 +5,11 @@
     using System.Threading.Tasks;
 
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.InviteProjectGroupMember;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
     using AgileTracker.Client.Startup.Infrastructure;
+    using AgileTracker.Client.Startup.Infrastructure.UI;
     using AgileTracker.Client.Startup.Models;
     using AgileTracker.Client.Startup.Models.Tasks.CreateProjectGroup;
     using AgileTracker.Client.Startup.Models.Tasks.Index;
@@ -108,20 +110,26 @@
             return View(model);
         }
 
+        [HttpGet]
+        [Route("project-group/{projectGroupId}/invite-member")]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        public IActionResult InviteProjectGroupMember()
+            => View();
+
         [HttpPost]
         [Route("project-group/{projectGroupId}/invite-member")]
         [Authorize(Policy = "IsProjectGroupOwner")]
         public async Task<IActionResult> InviteProjectGroupMember(int projectGroupId, InviteProjectGroupMemberViewModel model)
         {
-            //var command = new InviteProjectGroupMemberCommand(projectGroupId, model.MemberEmailAddress);
-            //var result = await this._mediator.Send(command);
+            var command = new InviteProjectGroupMemberCommand(projectGroupId, model.MemberEmailAddress);
+            var result = await this._mediator.Send(command);
 
-            //var actionResult = this.HandleResultValidation(result);
+            var actionResult = this.HandleResultValidation(result);
 
-            //if (actionResult != null)
-            //    return actionResult;
+            if (actionResult != null)
+                return actionResult;
 
-            return this.RedirectToAction(nameof(this.Group), new { ProjectGroupId = projectGroupId });
+            return this.RedirectToAction(nameof(this.Group), new { ProjectGroupId = projectGroupId }).WithSuccess("Member invited", $"Successfully invited {model.MemberEmailAddress}");
         }
 
         [Route("error")]

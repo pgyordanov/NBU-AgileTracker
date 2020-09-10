@@ -7,11 +7,14 @@
     using AgileTracker.Common.Application;
     using AgileTracker.Gateway.Authentication.Application.IdentityApi.Contracts;
     using AgileTracker.Gateway.Authentication.Application.IdentityApi.Features.Queries.GetUsersInformation;
+    using AgileTracker.Gateway.Authentication.Application.IdentityApi.Features.Queries.IsEmailRegistered;
     using AgileTracker.Gateway.Authentication.Infrastructure.Identity.Persistance.Identity.Models;
 
     using AutoMapper;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration.UserSecrets;
 
     public class IdentityApiService : IIdentityApi
     {
@@ -33,6 +36,16 @@
             var result = Result<GetUsersInformationOutputModel>.SuccessWith(new GetUsersInformationOutputModel(userInfo));
 
             return Task.FromResult(result);
+        }
+
+        public async Task<Result<IsEmailRegisteredOutputModel>> IsEmailRegistered(IsEmailRegisteredInputModel input)
+        {
+            var user = await this._userManager.Users.FirstOrDefaultAsync(u => u.UserName == input.UserEmail);
+
+            var isRegistered = user != null;
+            var userId = isRegistered ? user!.Id : default;
+
+            return Result<IsEmailRegisteredOutputModel>.SuccessWith(new IsEmailRegisteredOutputModel(userId!, isRegistered));
         }
     }
 }

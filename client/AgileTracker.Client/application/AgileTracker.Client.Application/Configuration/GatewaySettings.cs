@@ -8,6 +8,8 @@
 
         public string GetUserInfoEndpoint { get; set; }
 
+        public string IsEmailRegisteredEndpoint { get; set; }
+
         public string GetInvitationsForProjectGroupsForMemberEndpoint { get; set; }
 
         public string CreateProjectGroupEndpoint { get; set; }
