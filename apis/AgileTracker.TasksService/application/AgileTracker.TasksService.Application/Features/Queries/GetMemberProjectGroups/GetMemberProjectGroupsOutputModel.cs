@@ -12,5 +12,7 @@
         public string GroupName { get; private set; }
 
         public List<ProjectGroupMemberOuputModel> Members { get; private set; }
+
+        public List<ProjectOutputModel> Projects { get; private set; }
     }
 }

@@ -21,6 +21,11 @@
 
         public DbSet<ProjectGroupInvitation> ProjectGroupInvitations { get; set; } = default!;
 
+        public DbSet<Project> Projects { get; set; } = default!;
+
+        public DbSet<Sprint> Sprints { get; set; } = default!;
+
+        public DbSet<Task> Tasks { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

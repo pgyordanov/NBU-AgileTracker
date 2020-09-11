@@ -9,5 +9,7 @@
         public string GroupName { get; set; }
 
         public IEnumerable<ProjectGroupMemberOutputModel> Members { get; set; }
+
+        public IEnumerable<ProjectGroupProjectOutputModel> Projects { get; set; }
     }
 }

@@ -28,6 +28,7 @@
         {
             return await this.All()
                 .Include(g => g.Members)
+                .Include(g=>g.Projects)
                 .FirstOrDefaultAsync(g => g.Id == projectGroupId);
         }
 
@@ -35,6 +36,7 @@
         {
             var projectGroupsForMember = this.All()
                 .Include(g => g.Members)
+                .Include(g => g.Projects)
                 .Where(g => g.Members.Any(m => m.MemberId == memberId))
                 .AsNoTracking();
 

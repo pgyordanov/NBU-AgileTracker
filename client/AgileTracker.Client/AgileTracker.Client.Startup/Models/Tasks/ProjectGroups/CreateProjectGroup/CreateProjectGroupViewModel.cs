@@ -1,4 +1,4 @@
-﻿namespace AgileTracker.Client.Startup.Models.Tasks.CreateProjectGroup
+﻿namespace AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.CreateProjectGroup
 {
     public class CreateProjectGroupViewModel
     {

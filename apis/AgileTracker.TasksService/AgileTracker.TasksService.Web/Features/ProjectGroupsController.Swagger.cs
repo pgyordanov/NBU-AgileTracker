@@ -1,6 +1,7 @@
 ﻿namespace AgileTracker.TasksService.Web.Features
 {
     using AgileTracker.TasksService.Application.Features.Commands.AddMemberToProjectGroup;
+    using AgileTracker.TasksService.Application.Features.Commands.CreateProject;
     using AgileTracker.TasksService.Application.Features.Commands.CreateProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.InviteMemberToProjectGroup;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroups;
@@ -27,10 +28,10 @@
                 => new AddMemberToProjectGroupCommand(1, "b6f4c506-6dcd-4373-907a-92d007840160");
         }
 
-        public class GetMemberProjectGroupsExample : IExamplesProvider<GetMemberProjectGroupsCommand>
+        public class CreateProjectExample : IExamplesProvider<CreateProjectCommand>
         {
-            public GetMemberProjectGroupsCommand GetExamples()
-                => new GetMemberProjectGroupsCommand("c210a166-28a6-4417-b71a-6ca777a0f493");
+            public CreateProjectCommand GetExamples()
+                => new CreateProjectCommand(1, "c210a166-28a6-4417-b71a-6ca777a0f493", "Project #1");
         }
     }
 }

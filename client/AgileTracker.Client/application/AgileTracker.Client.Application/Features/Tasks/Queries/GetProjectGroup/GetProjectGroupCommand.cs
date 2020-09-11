@@ -50,15 +50,16 @@
                 {
                     Id = group.Id,
                     GroupName = group.GroupName,
-                    Members = userInfoResult.Data.UserInfo.Select(u=> new ProjectGroupMemberOutputModel
+                    Members = userInfoResult.Data.UserInfo.Select(u => new ProjectGroupMemberOutputModel
                     {
                         Id = group.Members.First(gm => gm.MemberId == u.Id).Id,
                         MemberId = u.Id,
                         UserName = u.UserName,
                         Firstname = u.Firstname,
                         Lastname = u.Lastname,
-                        IsOwner = group.Members.First(gm=> gm.MemberId == u.Id).IsOwner
-                    })
+                        IsOwner = group.Members.First(gm => gm.MemberId == u.Id).IsOwner
+                    }),
+                    Projects = group.Projects.Select(p => new ProjectGroupProjectOutputModel { Id = p.Id, Title = p.Title })
                 };
 
                 var groupResult = Result<GetProjectGroupOutputModel>.SuccessWith(model);

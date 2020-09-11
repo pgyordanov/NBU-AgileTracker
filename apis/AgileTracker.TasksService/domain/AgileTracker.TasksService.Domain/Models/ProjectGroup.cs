@@ -14,6 +14,7 @@
         private string _groupName = default!;
         private HashSet<ProjectGroupMember> _members;
         private HashSet<ProjectGroupInvitation> _invitations;
+        private HashSet<Project> _projects;
 
         internal ProjectGroup(string groupName, string ownerId)
         {
@@ -24,12 +25,14 @@
             };
 
             this._invitations = new HashSet<ProjectGroupInvitation>();
+            this._projects = new HashSet<Project>();
         }
 
         private ProjectGroup()
         {
             this._members = new HashSet<ProjectGroupMember>();
             this._invitations = new HashSet<ProjectGroupInvitation>();
+            this._projects = new HashSet<Project>();
         }
 
         public string GroupName
@@ -44,8 +47,12 @@
 
         public IReadOnlyCollection<ProjectGroupMember> Members
             => this._members.ToList().AsReadOnly();
+
         public IReadOnlyCollection<ProjectGroupInvitation> Invitations
             => this._invitations.ToList().AsReadOnly();
+
+        public IReadOnlyCollection<Project> Projects
+            => this._projects.ToList().AsReadOnly();
 
         public void AddGroupMember(string memberId)
         {
@@ -58,5 +65,13 @@
 
         public void AddInvitation(string memberId)
             => this._invitations.Add(new ProjectGroupInvitation(memberId));
+
+        public Project AddProject(string title)
+        {
+            var project = new Project(title);
+            this._projects.Add(project);
+
+            return project;
+        }
     }
 }

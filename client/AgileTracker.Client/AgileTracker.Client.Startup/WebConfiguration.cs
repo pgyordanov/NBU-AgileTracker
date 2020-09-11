@@ -26,6 +26,7 @@
                 .AddScoped<ITokenService, TokenService>();
 
             services
+                .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddControllersWithViews();
 
             return services;

@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using AgileTracker.TasksService.Application.Features.Commands.AddMemberToProjectGroup;
+    using AgileTracker.TasksService.Application.Features.Commands.CreateProject;
     using AgileTracker.TasksService.Application.Features.Commands.CreateProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.InviteMemberToProjectGroup;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroupInvitations;
@@ -119,6 +120,30 @@
             [FromRoute] string memberId)
         {
             GetMemberProjectGroupInvitationsCommand command = new GetMemberProjectGroupInvitationsCommand(memberId);
+
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts create a project for the provided project group
+        /// </summary>
+        /// <param name="ownerId"></param>
+        /// <param name="command"></param>
+        /// <response code="200">If the project groups for member are fetched successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpPost]
+        [Route("create-project/{ownerId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        [SwaggerRequestExample(
+            typeof(CreateProjectCommand),
+            typeof(ProjectGroupsSwaggerExamples.CreateProjectExample))]
+        public async Task<ActionResult<CreateProjectOutputModel>> CreateProject(
+            [FromRoute] string ownerId,
+            [FromBody] CreateProjectCommand command)
+        {
+            command = new CreateProjectCommand(command.ProjectGroupId, ownerId, command.Title);
 
             return await this._mediator.Send(command).ToActionResult();
         }

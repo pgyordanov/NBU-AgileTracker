@@ -1,7 +1,7 @@
 ﻿@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
 @inject AgileTracker.Client.Application.Contracts.ICurrentUser currentUserService
 
-@model AgileTracker.Client.Startup.Models.Tasks.Group.ProjectGroupViewModel
+@model AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.Group.ProjectGroupViewModel
 @{
     ViewData["Title"] = $"{@Model.GroupName} - Project group";
 }
@@ -34,6 +34,28 @@
                     var isCurrentUser = member.MemberId == currentUserService.UserId;
                     <li class='mb-1 @(isCurrentUser ? "currentUser" :"")'>
                         @member.UserName @(member.IsOwner ? "(group owner)" : "") @(isCurrentUser ? "(me)" : "")
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-6">
+            <div class="section-title mb-3">
+                Projects
+                @if ((await authorizationService.AuthorizeAsync(User, Model.Id, "IsProjectGroupOwner")).Succeeded)
+                {
+                    <a class="ml-2" asp-controller="ProjectGroups" asp-action="CreateProject" asp-route-projectGroupId="@Model.Id">
+                        <small>Create new</small>
+                    </a>
+                }
+
+            </div>
+            <ul class="list-unstyled">
+                @foreach (var project in Model.Projects)
+                {
+                    <li class='mb-1'>
+                        <a asp-controller="Projects" asp-action="Index" asp-route-projectGroupId="@Model.Id" asp-route-projectId="@project.Id">
+                            @project.Title
+                        </a>
                     </li>
                 }
             </ul>

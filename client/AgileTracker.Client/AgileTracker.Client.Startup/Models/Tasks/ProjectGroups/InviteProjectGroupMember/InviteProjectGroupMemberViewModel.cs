@@ -1,4 +1,4 @@
-﻿namespace AgileTracker.Client.Startup.Models.Tasks.InviteProjectGroupMember
+﻿namespace AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.InviteProjectGroupMember
 {
     public class InviteProjectGroupMemberViewModel
     {

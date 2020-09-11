@@ -13,10 +13,12 @@
     using AgileTracker.Client.Startup.Infrastructure;
     using AgileTracker.Client.Startup.Infrastructure.UI;
     using AgileTracker.Client.Startup.Models;
-    using AgileTracker.Client.Startup.Models.Tasks.CreateProjectGroup;
-    using AgileTracker.Client.Startup.Models.Tasks.Index;
-    using AgileTracker.Client.Startup.Models.Tasks.InvitationInbox;
-    using AgileTracker.Client.Startup.Models.Tasks.InviteProjectGroupMember;
+    using AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.CreateProjectGroup;
+    using AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.Index;
+    using AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.InvitationInbox;
+    using AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.InviteProjectGroupMember;
+
+    using AutoMapper;
 
     using MediatR;
 
@@ -29,10 +31,12 @@
     public class ProjectGroupsController : BaseController
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public ProjectGroupsController(IMediator mediator)
+        public ProjectGroupsController(IMediator mediator, IMapper mapper)
         {
             this._mediator = mediator;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -46,18 +50,7 @@
             if (actionResult != null)
                 return actionResult;
 
-            var model = result.Data
-                .Select(g => new ProjectGroupViewModel
-                {
-                    Id = g.Id,
-                    GroupName = g.GroupName,
-                    Members = g.Members.Select(m => new ProjectGroupMemberViewModel
-                    {
-                        Id = m.Id,
-                        IsOwner = m.IsOwner,
-                        MemberId = m.MemberId,
-                    }).ToList()
-                });
+            var model = this._mapper.ProjectTo<ProjectGroupViewModel>(result.Data.AsQueryable());
 
             return View(model);
         }
@@ -94,11 +87,7 @@
             if (actionResult != null)
                 return actionResult;
 
-            var model = result.Data.Select(i => new ProjectGroupInvitationViewModel
-            {
-                GroupId = i.GroupId,
-                GroupName = i.GroupName
-            });
+            var model = this._mapper.ProjectTo<ProjectGroupInvitationViewModel>(result.Data.AsQueryable());
 
             return View(model);
         }
@@ -136,21 +125,9 @@
             if (actionResult != null)
                 return actionResult;
 
-            var group = result.Data;
-            var model = new Models.Tasks.Group.ProjectGroupViewModel
-            {
-                Id = group.Id,
-                GroupName = group.GroupName,
-                Members = group.Members.Select(m => new Models.Tasks.Group.ProjectGroupMemberViewModel
-                {
-                    Id = m.Id,
-                    MemberId = m.MemberId,
-                    UserName = m.UserName,
-                    Firstname = m.Firstname,
-                    Lastname = m.Lastname,
-                    IsOwner = m.IsOwner
-                })
-            };
+            var model = 
+                this._mapper.Map<GetProjectGroupOutputModel, Models.Tasks.ProjectGroups.Group.ProjectGroupViewModel>(result.Data);
+
             return View(model);
         }
 
@@ -173,7 +150,8 @@
             if (actionResult != null)
                 return actionResult;
 
-            return this.RedirectToAction(nameof(this.Group), new { ProjectGroupId = projectGroupId }).WithSuccess("Member invited", $"Successfully invited {model.MemberEmailAddress}");
+            return this.RedirectToAction(nameof(this.Group), new { ProjectGroupId = projectGroupId })
+                .WithSuccess("Member invited", $"Successfully invited {model.MemberEmailAddress}");
         }
 
         [Route("error")]
