@@ -114,20 +114,64 @@ li.project {
     font-size: 1.7rem;
 }
 
-.task-box a {
+.task-box > button {
+    width: 100%;
+    display: block;
+    color: initial !important;
+    text-decoration: none !important;
+    padding: 0;
+}
+
+.task-box .task {
     display: block;
     width: 100%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     text-decoration: none;
-    color: initial;
     padding: 7px 12px;
 }
 
-.task-box.finished a {
+.task-box.finished .task {
     box-shadow: none;
 }
 
-.task-box a .title {
+.task-box .task .title {
     font-size: 1.7rem;
+    font-weight: 300;
+    text-align: left;
+}
+
+.taskmodal .modal-dialog {
+    margin: 0;
+    right: 0;
+    left: auto;
+    position: absolute;
+    width: 50%;
+    max-width: 1000px;
+    height: 100%;
+}
+
+    .taskmodal .modal-dialog .modal-content {
+        min-height: 100%;
+        border-radius: 0;
+    }
+
+        .taskmodal .modal-dialog .modal-content .modal-body {
+            padding-bottom: 100px;
+        }
+
+        .taskmodal .modal-dialog .modal-content .modal-footer {
+            bottom: 0;
+            position: absolute;
+            width: 100%;
+            height: 75px;
+        }
+
+.taskmodal .modal-title {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.taskmodal .form-group label {
+    font-size: 1.5rem;
     font-weight: 300;
 }

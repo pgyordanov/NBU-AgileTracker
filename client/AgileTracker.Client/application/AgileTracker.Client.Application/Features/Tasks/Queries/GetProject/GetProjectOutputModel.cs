@@ -11,5 +11,7 @@
         public IEnumerable<ProjectTaskOutputModel> Backlog { get; set; }
 
         public IEnumerable<ProjectSprintOutputModel> Sprints { get; set; }
+
+        public IEnumerable<ProjectMemberOutputModel> Members { get; set; }
     }
 }

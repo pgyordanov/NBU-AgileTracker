@@ -1,8 +1,12 @@
 ﻿namespace AgileTracker.Client.Startup.Controllers.Tasks
 {
+    using System.Linq;
     using System.Threading.Tasks;
+
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
     using AgileTracker.Client.Startup.Infrastructure;
+    using AgileTracker.Client.Startup.Infrastructure.UI;
+    using AgileTracker.Client.Startup.Models.Tasks.Projects.AddToBacklog;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.Index;
 
     using AutoMapper;
@@ -14,7 +18,7 @@
 
     [Authorize]
     [Route("project-group/{projectGroupId}/project/{projectId}")]
-    public class ProjectsController: BaseController
+    public class ProjectsController : BaseController
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
@@ -42,6 +46,20 @@
             model.ProjectGroupId = projectGroupId;
 
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "IsProjectGroupMember")]
+        [Route("add-to-backlog")]
+        public async Task<IActionResult> AddToBacklog(int projectGroupId, int projectId, AddTaskViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId })
+                    .WithDanger("Could not add task", "An error has occured while adding the task");
+            }
+
+            return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId });
         }
     }
 }

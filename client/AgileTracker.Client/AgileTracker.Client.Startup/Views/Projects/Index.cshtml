@@ -21,20 +21,107 @@
             <div class="section-title mb-3">
                 Backlog
 
-                <a class="ml-2" asp-controller="Projects" asp-action="AddToBacklog" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id">
+                <a class="ml-2" href="#" data-toggle="modal" data-target="#taskmodal">
                     <small>Add task</small>
                 </a>
-
+                <div class="modal fade taskmodal" id="taskmodal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add new task</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form class="mt-4" method="post" asp-controller="Projects" asp-action="AddToBacklog" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <label>Title</label>
+                                            <input type="text" name="Title" class="form-control" rows="3" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <label>Description</label>
+                                            <textarea name="Description" class="form-control" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="section-title mt-3 mb-3">Task information</div>
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <label>Points estimate</label>
+                                            <input name="PointsEstimate" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <label>Assigned to</label>
+                                            <select name="AssignedToMemberId" class="form-control"
+                                                    asp-items="@(new SelectList(Model.Members,"MemberId","UserName", currentUserService.UserId))">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Add task</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
             <ul class="list-unstyled">
                 @foreach (var task in Model.Backlog)
                 {
                     <li class='mb-3 task-box @(task.IsFinished ? "finished": "")'>
-                        <a asp-controller="Projects" asp-action="Task" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id" asp-route-taskId="@task.Id">
-                            <div class="title">
-                                @task.Title
+                        <button class="btn btn-link toggler" data-toggle="modal" data-target="#taskmodal-@task.Id">
+                            <div class="task">
+                                <div class="title">
+                                    @task.Title
+                                </div>
                             </div>
-                        </a>
+                        </button>
+                        <div class="modal fade taskmodal" id="taskmodal-@task.Id" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">@task.Title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="mt-4" method="post" asp-controller="Projects" asp-action="UpdateTask">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="form-group col-12">
+                                                    <label>Description</label>
+                                                    <textarea class="form-control" rows="3">@task.Description.Trim()</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="section-title mt-3 mb-3">Task information</div>
+                                            <div class="row">
+                                                <div class="form-group col-12">
+                                                    <label>Points estimate</label>
+                                                    <input type="text" class="form-control" value="@task.PointsEstimate" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-12">
+                                                    <label>Assigned to</label>
+                                                    <select class="form-control" 
+                                                            asp-items="@(new SelectList(Model.Members,"MemberId","UserName", currentUserService.UserId))">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 }
             </ul>

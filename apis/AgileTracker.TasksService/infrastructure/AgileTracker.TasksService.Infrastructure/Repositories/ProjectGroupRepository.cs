@@ -36,7 +36,7 @@
         {
             return await this.All()
                 .Include(g => g.Members)
-                .Include(g => g.Projects).ThenInclude(p=>p.Backlog)
+                .Include(g => g.Projects).ThenInclude(p => p.Backlog)
                 .Include(g => g.Projects).ThenInclude(p => p.Sprints)
                 .FirstOrDefaultAsync(g => g.Id == projectGroupId);
         }
@@ -44,13 +44,18 @@
         public async Task<GetMemberProjectOutputModel> GetProject(int projectGroupId, int projectId)
         {
             var projectGroup = await this.All()
+                                        .Include(g => g.Members)
                                         .Include(g => g.Projects).ThenInclude(p => p.Backlog)
                                         .Include(g => g.Projects).ThenInclude(p => p.Sprints)
                                         .FirstOrDefaultAsync(g => g.Id == projectGroupId);
 
             var project = projectGroup.Projects.FirstOrDefault(p => p.Id == projectId);
 
-            return this._mapper.Map<Project, GetMemberProjectOutputModel>(project);
+            var mappedProject = this._mapper.Map<Project, GetMemberProjectOutputModel>(project);
+
+            mappedProject.AddMembers(this._mapper.ProjectTo<ProjectMemberOutputModel>(projectGroup.Members.AsQueryable()));
+
+            return mappedProject;
         }
 
         public async Task<IEnumerable<GetMemberProjectGroupsOutputModel>> GetMemberProjectGroups(string memberId)

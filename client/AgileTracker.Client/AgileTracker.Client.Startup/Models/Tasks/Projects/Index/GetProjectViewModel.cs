@@ -3,6 +3,7 @@
     using System.Collections.Generic;
 
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
+    using AgileTracker.Client.Startup.Models.Tasks.Projects.AddToBacklog;
     using AgileTracker.Common.Application.Mapping;
 
     public class GetProjectViewModel: IMapFrom<GetProjectOutputModel>
@@ -16,5 +17,7 @@
         public IEnumerable<GetProjectTaskViewModel> Backlog { get; private set; }
 
         public IEnumerable<GetProjectSprintViewModel> Sprints { get; private set; }
+
+        public IEnumerable<GetProjectMemberViewModel> Members { get; private set; }
     }
 }
