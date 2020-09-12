@@ -109,3 +109,7 @@ body {
 li.currentUser {
     font-weight: 500;
 }
+
+li.project {
+    font-size: 1.7rem;
+}

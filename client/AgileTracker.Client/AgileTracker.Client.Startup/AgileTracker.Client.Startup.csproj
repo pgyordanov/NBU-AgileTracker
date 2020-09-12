@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="Controllers\Statistics\" />
     <Folder Include="Models\Tasks\Projects\" />
-    <Folder Include="Views\Home\" />
   </ItemGroup>
 
 </Project>

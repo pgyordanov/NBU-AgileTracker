@@ -1,0 +1,20 @@
+﻿@model AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.CreateProject.CreateProjectViewModel
+@{
+    ViewData["Title"] = "Create project";
+}
+
+<div class="text-left">
+    <h1 class="display-4">
+        Create a new project
+    </h1>
+
+    <form class="mt-4" method="post" asp-controller="ProjectGroups" asp-action="CreateProject">
+        <div class="row">
+            <div class="form-group col-6">
+                <label asp-for="Title">Project title</label>
+                <input asp-for="Title" class="form-control" placeholder="Enter project title">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Create project</button>
+    </form>
+</div>

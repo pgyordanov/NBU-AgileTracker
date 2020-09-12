@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Commands.InviteProjectGroupMember;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroup;
@@ -13,6 +14,7 @@
     using AgileTracker.Client.Startup.Infrastructure;
     using AgileTracker.Client.Startup.Infrastructure.UI;
     using AgileTracker.Client.Startup.Models;
+    using AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.CreateProject;
     using AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.CreateProjectGroup;
     using AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.Index;
     using AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.InvitationInbox;
@@ -125,7 +127,7 @@
             if (actionResult != null)
                 return actionResult;
 
-            var model = 
+            var model =
                 this._mapper.Map<GetProjectGroupOutputModel, Models.Tasks.ProjectGroups.Group.ProjectGroupViewModel>(result.Data);
 
             return View(model);
@@ -153,6 +155,32 @@
             return this.RedirectToAction(nameof(this.Group), new { ProjectGroupId = projectGroupId })
                 .WithSuccess("Member invited", $"Successfully invited {model.MemberEmailAddress}");
         }
+
+        [HttpGet]
+        [Route("project-group/{projectGroupId}/project/create")]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        public IActionResult CreateProject()
+           => View();
+
+        [HttpPost]
+        [Route("project-group/{projectGroupId}/project/create")]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        public async Task<IActionResult> CreateProject(int projectGroupId, CreateProjectViewModel model)
+        {
+            var command = new CreateProjectCommand(projectGroupId, model.Title);
+            var result = await this._mediator.Send(command);
+
+            var actionResult = this.HandleResultValidation(result);
+
+            if (actionResult != null)
+                return actionResult;
+
+            return this.RedirectToAction(
+                nameof(ProjectsController.Index),
+                "Projects",
+                new { ProjectGroupId = projectGroupId, ProjectId = result.Data.ProjectId });
+        }
+
 
         [Route("error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

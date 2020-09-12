@@ -20,6 +20,7 @@
     using AgileTracker.Client.Application.Features.Identity.IsEmailRegistered;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
 
     public class GatewayService : BaseHttpGatewayService, IGatewayService
     {
@@ -132,6 +133,21 @@
             };
 
             return await this.MakeAuthenticatedRequest<Result>(request);
+        }
+
+        public async Task<Result<CreateProjectOutputModel>> CreateProject(CreateProjectInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.CreateProjectEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                    JsonConvert.SerializeObject(new { projectGroupId = input.ProjectGroupId, title = input.ProjectTitle }),
+                    Encoding.UTF8,
+                    "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest<CreateProjectOutputModel>(request);
         }
     }
 }

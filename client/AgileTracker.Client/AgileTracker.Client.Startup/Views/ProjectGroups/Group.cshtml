@@ -52,7 +52,7 @@
             <ul class="list-unstyled">
                 @foreach (var project in Model.Projects)
                 {
-                    <li class='mb-1'>
+                    <li class='mb-2 project'>
                         <a asp-controller="Projects" asp-action="Index" asp-route-projectGroupId="@Model.Id" asp-route-projectId="@project.Id">
                             @project.Title
                         </a>

@@ -17,5 +17,7 @@
         public string InviteMemberToProjectGroupEndpoint { get; set; }
 
         public string AcceptProjectGroupInvitationEndpoint { get; set; }
+
+        public string CreateProjectEndpoint { get; set; }
     }
 }
