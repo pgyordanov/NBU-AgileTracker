@@ -179,7 +179,7 @@
           "Port": 44386
         }
       ],
-      "UpstreamPathTemplate": "/api/tasks/projectgroups/add-to-backlog",
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/create-sprint",
       "UpstreamHttpMethod": [ "Get" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
