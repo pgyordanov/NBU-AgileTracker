@@ -7,6 +7,7 @@
     using AgileTracker.TasksService.Application.Features.Commands.CreateProject;
     using AgileTracker.TasksService.Application.Features.Commands.CreateProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.InviteMemberToProjectGroup;
+    using AgileTracker.TasksService.Application.Features.Queries.GetMemberProject;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroupInvitations;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroups;
     using AgileTracker.TasksService.Web.Common;
@@ -145,6 +146,25 @@
         {
             command = new CreateProjectCommand(command.ProjectGroupId, ownerId, command.Title);
 
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to fetch a project with the provided project group id, project id and member id
+        /// </summary>
+        /// <param name="projectGroupId"></param>
+        /// <param name="projectId"></param>
+        /// <param name="memberId"></param>
+        /// <response code="200">If the project groups for member are fetched successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpGet]
+        [Route("{projectGroupId}/project/{projectId}/get/{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<GetMemberProjectOutputModel>> GetProject([FromRoute]int projectGroupId, [FromRoute]int projectId, [FromRoute]string memberId)
+        {
+            var command = new GetMemberProjectCommand(projectGroupId, projectId, memberId);
             return await this._mediator.Send(command).ToActionResult();
         }
     }
