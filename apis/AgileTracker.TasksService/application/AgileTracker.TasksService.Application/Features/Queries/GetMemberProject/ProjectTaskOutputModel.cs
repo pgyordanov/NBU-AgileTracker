@@ -15,6 +15,8 @@
 
         public string Description { get; private set; } = default!;
 
+        public string AssignedToMemberId { get; private set; } = default!;
+
         public int PointsEstimate { get; private set; }
 
         public ProjectTaskStatusOutputModel Status { get; private set; } = default!;
@@ -30,15 +32,19 @@
             mapping.CreateMap<Task, ProjectTaskOutputModel>()
                 .ForMember(m => m.Title, memberOptions =>
                 {
-                    memberOptions.MapFrom(t => t.Description.Title);
+                    memberOptions.MapFrom(t => t.Data.Title);
                 })
                 .ForMember(m => m.Description, memberOptions =>
                 {
-                    memberOptions.MapFrom(t => t.Description.Description);
+                    memberOptions.MapFrom(t => t.Data.Description);
                 })
                 .ForMember(m => m.PointsEstimate, memberOptions =>
                 {
-                    memberOptions.MapFrom(t => t.Description.PointsEstimate);
+                    memberOptions.MapFrom(t => t.Data.PointsEstimate);
+                })
+                .ForMember(m => m.AssignedToMemberId, memberOptions =>
+                {
+                    memberOptions.MapFrom(t => t.Data.AssignedToMemberId);
                 });
         }
     }

@@ -7,19 +7,23 @@
 
     public class Task : Entity<int>
     {
-        internal Task(TaskDescription description, DateTime startsOn)
+        internal Task(TaskData description, DateTime startsOn)
         {
-            this.Description = description;
+            this.Data = description;
             this.StartedOn = startsOn.ToUniversalTime();
+
+            this.Status = new TaskStatus("New", false);
         }
 
         private Task()
         {
+            this.Data = default!;
+            this.Status = default!;
         }
 
-        public TaskDescription Description { get; private set; } = default!;
+        public TaskData Data { get; private set; }
 
-        public TaskStatus Status { get; private set; } = default!;
+        public TaskStatus Status { get; private set; }
 
         public DateTime StartedOn { get; private set; }
 
@@ -27,9 +31,9 @@
 
         public bool IsFinished { get; private set; }
 
-        public void UpdateTask(TaskDescription description)
+        public void UpdateTask(TaskData description)
         {
-            this.Description = description;
+            this.Data = description;
         }
 
         public void ChangeStatus(TaskStatus taskStatus)

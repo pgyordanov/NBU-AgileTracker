@@ -44,7 +44,7 @@
         public IReadOnlyCollection<Sprint> Sprints
             => this._sprints.ToList().AsReadOnly();
 
-        public void AddToBacklog(TaskDescription taskDescription, DateTime startsOn)
+        public void AddToBacklog(TaskData taskDescription, DateTime startsOn)
         {
             this._backlog.Add(new Task(taskDescription, startsOn));
         }
@@ -58,7 +58,7 @@
             this._backlog.Remove(task);
         }
 
-        public void UpdateTask(int taskId, TaskDescription description)
+        public void UpdateTask(int taskId, TaskData description)
         {
             var task = this._backlog.FirstOrDefault(t => t.Id == taskId);
 
@@ -67,10 +67,13 @@
             task.UpdateTask(description);
         }
 
-        public void CreateSprint(IEnumerable<int> taskIds, DateTime startsOn, int durationWeeks)
+        public Sprint CreateSprint(IEnumerable<int> taskIds, DateTime startsOn, int durationWeeks)
         {
             var backlogTasks = this._backlog.Where(bt => taskIds.Contains(bt.Id)).ToList();
-            this._sprints.Add(new Sprint(backlogTasks, startsOn, durationWeeks));
+            var sprint = new Sprint(backlogTasks, startsOn, durationWeeks);
+            this._sprints.Add(sprint);
+
+            return sprint;
         }
 
         public void FinishSprint(int sprintId)

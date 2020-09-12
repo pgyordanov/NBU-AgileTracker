@@ -22,7 +22,7 @@
                 new TaskStatus("New", false),
                 new TaskStatus("Pending", false),
                 new TaskStatus("InProgress", false),
-                new TaskStatus("Done", false)
+                new TaskStatus("Done", true)
             };
 
             this.DurationWeeks = durationWeeks;

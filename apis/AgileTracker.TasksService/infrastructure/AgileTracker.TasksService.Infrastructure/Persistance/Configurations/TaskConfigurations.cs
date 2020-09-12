@@ -12,9 +12,10 @@
             builder.HasKey(g => g.Id);
 
             builder
-                .OwnsOne(t => t.Description, description =>
+                .OwnsOne(t => t.Data, description =>
                   {
                       description.WithOwner();
+                      description.Property(d => d.AssignedToMemberId).IsRequired(false);
                   });
 
             builder

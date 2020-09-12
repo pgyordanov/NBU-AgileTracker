@@ -4,8 +4,10 @@
     using System.Threading.Tasks;
 
     using AgileTracker.TasksService.Application.Features.Commands.AddMemberToProjectGroup;
+    using AgileTracker.TasksService.Application.Features.Commands.AddToProjectBacklog;
     using AgileTracker.TasksService.Application.Features.Commands.CreateProject;
     using AgileTracker.TasksService.Application.Features.Commands.CreateProjectGroup;
+    using AgileTracker.TasksService.Application.Features.Commands.CreateSprint;
     using AgileTracker.TasksService.Application.Features.Commands.InviteMemberToProjectGroup;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProject;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroupInvitations;
@@ -158,13 +160,70 @@
         /// <response code="200">If the project groups for member are fetched successfully</response>
         /// <response code="400">If there was an encountered error with processing the request</response>
         [HttpGet]
-        [Route("{projectGroupId}/project/{projectId}/get/{memberId}")]
+        [Route("{projectGroupId}/project/{projectId}/{memberId}")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<GetMemberProjectOutputModel>> GetProject([FromRoute]int projectGroupId, [FromRoute]int projectId, [FromRoute]string memberId)
+        public async Task<ActionResult<GetMemberProjectOutputModel>> GetProject(
+            [FromRoute] int projectGroupId,
+            [FromRoute] int projectId,
+            [FromRoute]string memberId)
         {
             var command = new GetMemberProjectCommand(projectGroupId, projectId, memberId);
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to add to the project backlog with the provided project group id, project id and member id
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="command"></param>
+        /// <response code="200">If the project groups for member are fetched successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpPost]
+        [Route("add-to-backlog/{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        [SwaggerRequestExample(
+            typeof(AddToProjectBacklogCommand),
+            typeof(ProjectGroupsSwaggerExamples.AddToProjectBacklogExample))]
+        public async Task<ActionResult> AddToProjectBacklog(
+            [FromRoute] string memberId, 
+            [FromBody] AddToProjectBacklogCommand command)
+        {
+            command = new AddToProjectBacklogCommand(
+                                                    command.ProjectGroupId, 
+                                                    command.ProjectId, 
+                                                    memberId, 
+                                                    command.Title, 
+                                                    command.Description, 
+                                                    command.PointsEstimate,
+                                                    command.StartsOn);
+
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to create a sprint for the project with the provided project group id, project id and member id
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="command"></param>
+        /// <response code="200">If the project groups for member are fetched successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpPost]
+        [Route("create-sprint/{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        [SwaggerRequestExample(
+            typeof(CreateSprintCommand),
+            typeof(ProjectGroupsSwaggerExamples.CreateSprintExample))]
+        public async Task<ActionResult<CreateSprintOutputModel>> GetProject(
+            [FromRoute] string memberId,
+            [FromBody] CreateSprintCommand command)
+        {
+            command = new CreateSprintCommand(command.ProjectGroupId, command.ProjectId, memberId, command.TaskIds, command.StartsOn, command.DurationWeeks);
             return await this._mediator.Send(command).ToActionResult();
         }
     }

@@ -36,15 +36,17 @@
         {
             return await this.All()
                 .Include(g => g.Members)
-                .Include(g=>g.Projects)
+                .Include(g => g.Projects).ThenInclude(p=>p.Backlog)
+                .Include(g => g.Projects).ThenInclude(p => p.Sprints)
                 .FirstOrDefaultAsync(g => g.Id == projectGroupId);
         }
 
         public async Task<GetMemberProjectOutputModel> GetProject(int projectGroupId, int projectId)
         {
             var projectGroup = await this.All()
-                                    .Include(g => g.Projects)
-                                    .FirstOrDefaultAsync(g => g.Id == projectGroupId);
+                                        .Include(g => g.Projects).ThenInclude(p => p.Backlog)
+                                        .Include(g => g.Projects).ThenInclude(p => p.Sprints)
+                                        .FirstOrDefaultAsync(g => g.Id == projectGroupId);
 
             var project = projectGroup.Projects.FirstOrDefault(p => p.Id == projectId);
 

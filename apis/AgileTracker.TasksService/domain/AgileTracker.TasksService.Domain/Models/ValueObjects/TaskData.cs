@@ -4,13 +4,13 @@
     using AgileTracker.Domain.Common.Models;
     using AgileTracker.TasksService.Domain.Exceptions;
 
-    public class TaskDescription: ValueObject
+    public class TaskData: ValueObject
     {
         private string _title = default!;
         private string _description = default!;
         private int _pointsEstimate;
 
-        internal TaskDescription(string title, string description, int pointsEstimate, string assignedToMemberId)
+        internal TaskData(string title, string description, int pointsEstimate, string assignedToMemberId)
         {
             this.Title = title;
             this.Description = description;
@@ -18,7 +18,7 @@
             this.AssignedToMemberId = assignedToMemberId;
         }
 
-        private TaskDescription()
+        private TaskData()
         {
         }
 
