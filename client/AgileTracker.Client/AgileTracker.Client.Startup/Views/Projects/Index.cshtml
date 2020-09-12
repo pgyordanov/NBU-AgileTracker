@@ -1,1 +1,65 @@
-﻿<div>this is the index</div>
+﻿@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
+@inject AgileTracker.Client.Application.Contracts.ICurrentUser currentUserService
+
+@model AgileTracker.Client.Startup.Models.Tasks.Projects.Index.GetProjectViewModel
+@{
+    ViewData["Title"] = $"{@Model.Title} - Project";
+}
+
+<div class="text-left">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert" asp-validation-summary="All"></div>
+    }
+
+    <h1 class="display-4">
+        @Model.Title
+    </h1>
+
+    <div class="row mt-4">
+        <div class="col-6">
+            <div class="section-title mb-3">
+                Backlog
+
+                <a class="ml-2" asp-controller="Projects" asp-action="AddToBacklog" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id">
+                    <small>Add task</small>
+                </a>
+
+            </div>
+            <ul class="list-unstyled">
+                @foreach (var task in Model.Backlog)
+                {
+                    <li class='mb-3 task-box @(task.IsFinished ? "finished": "")'>
+                        <a asp-controller="Projects" asp-action="Task" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id" asp-route-taskId="@task.Id">
+                            <div class="title">
+                                @task.Title
+                            </div>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-6">
+            <div class="section-title mb-3">
+                Sprints
+                @if ((await authorizationService.AuthorizeAsync(User, Model.ProjectGroupId, "IsProjectGroupOwner")).Succeeded)
+                {
+                    <a class="ml-2" asp-controller="Projects" asp-action="CreateSprint" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id">
+                        <small>Start new</small>
+                    </a>
+                }
+
+            </div>
+            <ul class="list-unstyled">
+                @foreach (var sprint in Model.Sprints)
+                {
+                    <li class='mb-2 project'>
+                        <a asp-controller="Projects" asp-action="Sprint" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id" asp-route-sprintId="@sprint.Id">
+                            @sprint.Id
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

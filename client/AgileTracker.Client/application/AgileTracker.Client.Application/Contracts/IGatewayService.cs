@@ -11,6 +11,7 @@
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
 
     public interface IGatewayService
     {
@@ -29,5 +30,7 @@
         Task<Result> AcceptProjectGroupInvitation(AcceptProjectGroupInvitationInputModel input);
 
         Task<Result<CreateProjectOutputModel>> CreateProject(CreateProjectInputModel input);
+
+        Task<Result<GetProjectOutputModel>> GetProject(GetProjectInputModel input);
     }
 }

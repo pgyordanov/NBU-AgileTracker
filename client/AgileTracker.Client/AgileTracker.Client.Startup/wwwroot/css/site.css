@@ -113,3 +113,21 @@ li.currentUser {
 li.project {
     font-size: 1.7rem;
 }
+
+.task-box a {
+    display: block;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    text-decoration: none;
+    color: initial;
+    padding: 7px 12px;
+}
+
+.task-box.finished a {
+    box-shadow: none;
+}
+
+.task-box a .title {
+    font-size: 1.7rem;
+    font-weight: 300;
+}

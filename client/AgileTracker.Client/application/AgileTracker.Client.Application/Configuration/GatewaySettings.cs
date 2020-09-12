@@ -19,5 +19,11 @@
         public string AcceptProjectGroupInvitationEndpoint { get; set; }
 
         public string CreateProjectEndpoint { get; set; }
+
+        public string GetProjectEndpoint { get; set; }
+
+        public string AddToBacklogEndpoint { get; set; }
+
+        public string CreateSprintEndpoint { get; set; }
     }
 }

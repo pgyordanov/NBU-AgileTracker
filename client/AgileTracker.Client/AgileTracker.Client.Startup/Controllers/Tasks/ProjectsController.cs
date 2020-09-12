@@ -1,6 +1,9 @@
 ﻿namespace AgileTracker.Client.Startup.Controllers.Tasks
 {
+    using System.Threading.Tasks;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
     using AgileTracker.Client.Startup.Infrastructure;
+    using AgileTracker.Client.Startup.Models.Tasks.Projects.Index;
 
     using AutoMapper;
 
@@ -25,9 +28,20 @@
         [HttpGet]
         [Authorize(Policy = "IsProjectGroupMember")]
         [Route("")]
-        public IActionResult Index(int projectGroupId, int projectId)
+        public async Task<IActionResult> Index(int projectGroupId, int projectId)
         {
-            return View();
+            var command = new GetProjectCommand(projectGroupId, projectId);
+            var result = await this._mediator.Send(command);
+
+            var actionResult = this.HandleResultValidation(result);
+
+            if (actionResult != null)
+                return actionResult;
+
+            var model = this._mapper.Map<GetProjectOutputModel, GetProjectViewModel>(result.Data);
+            model.ProjectGroupId = projectGroupId;
+
+            return View(model);
         }
     }
 }

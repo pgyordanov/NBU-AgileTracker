@@ -11,7 +11,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/identity/user-info",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
       }
@@ -143,7 +143,7 @@
           "Port": 44386
         }
       ],
-      "UpstreamPathTemplate": "/api/tasks/projectgroups/get-project?projectGroupId={projectGroupId}&projectId={projectId}",
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/projects?projectGroupId={projectGroupId}&projectId={projectId}",
       "UpstreamHttpMethod": [ "Get" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
@@ -161,7 +161,7 @@
           "Port": 44386
         }
       ],
-      "UpstreamPathTemplate": "/api/tasks/projectgroups/add-to-backlog",
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/add-to-backlog",
       "UpstreamHttpMethod": [ "Get" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
@@ -179,7 +179,7 @@
           "Port": 44386
         }
       ],
-      "UpstreamPathTemplate": "/api/tasks/projectgroups/create-sprint",
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/create-sprint",
       "UpstreamHttpMethod": [ "Get" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"

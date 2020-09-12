@@ -21,6 +21,8 @@
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
+    using System.Web;
 
     public class GatewayService : BaseHttpGatewayService, IGatewayService
     {
@@ -43,7 +45,7 @@
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.GetUserInfoEndpoint),
-                Method = HttpMethod.Get,
+                Method = HttpMethod.Post,
                 Content = new StringContent(
                     JsonConvert.SerializeObject(new { userIds = input.UserIds }),
                     Encoding.UTF8,
@@ -58,7 +60,7 @@
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.IsEmailRegisteredEndpoint),
-                Method = HttpMethod.Get,
+                Method = HttpMethod.Post,
                 Content = new StringContent(
                     JsonConvert.SerializeObject(input),
                     Encoding.UTF8,
@@ -148,6 +150,23 @@
             };
 
             return await this.MakeAuthenticatedRequest<CreateProjectOutputModel>(request);
+        }
+
+        public async Task<Result<GetProjectOutputModel>> GetProject(GetProjectInputModel input)
+        {
+            var uriBuilder = new UriBuilder(this._gatewaySettings.BaseAddress + this._gatewaySettings.GetProjectEndpoint);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["projectGroupId"] = input.ProjectGroupId.ToString();
+            query["projectId"] = input.ProjectId.ToString();
+            uriBuilder.Query = query.ToString();
+
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(uriBuilder.ToString()),
+                Method = HttpMethod.Get
+            };
+
+            return await this.MakeAuthenticatedRequest<GetProjectOutputModel>(request);
         }
     }
 }
