@@ -12,6 +12,7 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
 
     public interface IGatewayService
     {
@@ -32,5 +33,7 @@
         Task<Result<CreateProjectOutputModel>> CreateProject(CreateProjectInputModel input);
 
         Task<Result<GetProjectOutputModel>> GetProject(GetProjectInputModel input);
+
+        Task<Result> AddToProjectBacklog(AddToProjectBacklogInputModel input);
     }
 }

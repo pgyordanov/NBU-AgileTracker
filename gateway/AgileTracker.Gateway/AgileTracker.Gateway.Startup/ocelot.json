@@ -162,7 +162,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/add-to-backlog",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
       },
@@ -180,7 +180,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/create-sprint",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
       },

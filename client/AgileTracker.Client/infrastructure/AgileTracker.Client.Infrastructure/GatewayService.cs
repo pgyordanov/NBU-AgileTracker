@@ -23,6 +23,7 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
     using System.Web;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
 
     public class GatewayService : BaseHttpGatewayService, IGatewayService
     {
@@ -167,6 +168,21 @@
             };
 
             return await this.MakeAuthenticatedRequest<GetProjectOutputModel>(request);
+        }
+
+        public async Task<Result> AddToProjectBacklog(AddToProjectBacklogInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.AddToBacklogEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                   JsonConvert.SerializeObject(input),
+                   Encoding.UTF8,
+                   "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest(request);
         }
     }
 }

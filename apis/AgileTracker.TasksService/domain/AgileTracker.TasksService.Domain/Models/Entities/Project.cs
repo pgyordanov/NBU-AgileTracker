@@ -54,7 +54,14 @@
             var task = this._backlog.Where(t => t.Id == taskId).FirstOrDefault();
 
             Guard.Against<InvalidProjectGroupException>(task, null!, nameof(task));
-            
+
+            var inSprints = this.Sprints.Where(s => s.SprintBacklog.Contains(task));
+
+            foreach(var sprint in inSprints)
+            {
+                sprint.RemoveTask(task);
+            }
+
             this._backlog.Remove(task);
         }
 

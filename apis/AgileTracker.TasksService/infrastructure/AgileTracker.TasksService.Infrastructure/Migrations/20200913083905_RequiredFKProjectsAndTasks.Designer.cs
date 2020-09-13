@@ -4,14 +4,16 @@ using AgileTracker.TasksService.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AgileTracker.TasksService.Infrastructure.Migrations
 {
     [DbContext(typeof(AgileTrackerTasksDbContext))]
-    partial class AgileTrackerTasksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200913083905_RequiredFKProjectsAndTasks")]
+    partial class RequiredFKProjectsAndTasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

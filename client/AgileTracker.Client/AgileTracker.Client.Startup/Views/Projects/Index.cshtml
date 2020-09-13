@@ -110,7 +110,7 @@
                                                 <div class="form-group col-12">
                                                     <label>Assigned to</label>
                                                     <select class="form-control" 
-                                                            asp-items="@(new SelectList(Model.Members,"MemberId","UserName", currentUserService.UserId))">
+                                                            asp-items="@(new SelectList(Model.Members,"MemberId","UserName", task.AssignedToMemberId))">
                                                     </select>
                                                 </div>
                                             </div>

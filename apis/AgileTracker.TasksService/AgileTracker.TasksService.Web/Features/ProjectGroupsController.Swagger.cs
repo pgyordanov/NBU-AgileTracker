@@ -9,6 +9,7 @@
     using AgileTracker.TasksService.Application.Features.Commands.CreateProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.CreateSprint;
     using AgileTracker.TasksService.Application.Features.Commands.InviteMemberToProjectGroup;
+    using AgileTracker.TasksService.Application.Features.Commands.RemoveFromProjectBacklog;
 
     using Swashbuckle.AspNetCore.Filters;
 
@@ -41,7 +42,13 @@
         public class AddToProjectBacklogExample : IExamplesProvider<AddToProjectBacklogCommand>
         {
             public AddToProjectBacklogCommand GetExamples()
-                => new AddToProjectBacklogCommand(1, 4, "c210a166-28a6-4417-b71a-6ca777a0f493", "Task 1", "Sample task", 2, DateTime.Now);
+                => new AddToProjectBacklogCommand(1, 4, "", "Task 1", "Sample task", 2, "c210a166-28a6-4417-b71a-6ca777a0f493", DateTime.Now);
+        }
+
+        public class RemoveFromProjectBacklogExample : IExamplesProvider<RemoveFromProjectBacklogCommand>
+        {
+            public RemoveFromProjectBacklogCommand GetExamples()
+                => new RemoveFromProjectBacklogCommand(1, 4, "c210a166-28a6-4417-b71a-6ca777a0f493", 2);
         }
 
         public class CreateSprintExample : IExamplesProvider<CreateSprintCommand>

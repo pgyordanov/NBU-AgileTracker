@@ -15,7 +15,8 @@
 
             builder
                 .HasMany(t => t.Backlog)
-                .WithOne();
+                .WithOne()
+                .IsRequired();
 
             builder
                 .HasMany(t => t.Sprints)

@@ -21,8 +21,9 @@
             string title,
             string description,
             int pointsEstimate,
+            string assignedToMemberId,
             DateTime startsOn)
-            : base(projectGroupId, projectId, memberId, title, description, pointsEstimate, startsOn)
+            : base(projectGroupId, projectId, memberId, title, description, pointsEstimate, assignedToMemberId, startsOn)
         {
         }
 
@@ -42,8 +43,9 @@
             public async Task<Result> Handle(AddToProjectBacklogCommand request, CancellationToken cancellationToken)
             {
                 bool isMember = await this._projectGroupRepository.IsMember(request.ProjectGroupId, request.MemberId);
+                bool isAssigneeMember = await this._projectGroupRepository.IsMember(request.ProjectGroupId, request.AssignedToMemberId);
 
-                if (!isMember)
+                if (!isMember || !isAssigneeMember)
                 {
                     throw new ModelValidationException();
                 }
@@ -56,7 +58,7 @@
                                                 .WithTitle(request.Title)
                                                 .WithDescription(request.Description)
                                                 .WithPointsEstimation(request.PointsEstimate)
-                                                .WithAssignedToMemberId(request.MemberId)
+                                                .WithAssignedToMemberId(request.AssignedToMemberId)
                                                 .Build();
 
                 project.AddToBacklog(taskDescription, request.StartsOn);
