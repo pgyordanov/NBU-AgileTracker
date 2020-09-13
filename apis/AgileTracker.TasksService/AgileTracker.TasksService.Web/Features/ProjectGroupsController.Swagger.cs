@@ -8,8 +8,12 @@
     using AgileTracker.TasksService.Application.Features.Commands.CreateProject;
     using AgileTracker.TasksService.Application.Features.Commands.CreateProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.CreateSprint;
+    using AgileTracker.TasksService.Application.Features.Commands.FinishSprint;
     using AgileTracker.TasksService.Application.Features.Commands.InviteMemberToProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.RemoveFromProjectBacklog;
+    using AgileTracker.TasksService.Application.Features.Commands.RemoveProject;
+    using AgileTracker.TasksService.Application.Features.Commands.RemoveProjectGroup;
+    using AgileTracker.TasksService.Application.Features.Commands.RemoveSprint;
     using AgileTracker.TasksService.Application.Features.Commands.UpdateBacklogTask;
     using AgileTracker.TasksService.Application.Features.Commands.UpdateSprintTaskStatus;
 
@@ -21,6 +25,12 @@
         {
             public CreateProjectGroupCommand GetExamples()
                 => new CreateProjectGroupCommand("groupName", "c210a166-28a6-4417-b71a-6ca777a0f493");
+        }
+
+        public class RemoveProjectGroupExample : IExamplesProvider<RemoveProjectGroupCommand>
+        {
+            public RemoveProjectGroupCommand GetExamples()
+                => new RemoveProjectGroupCommand(1, "");
         }
 
         public class InviteMemberToProjectGroupExample : IExamplesProvider<InviteMemberToProjectGroupCommand>
@@ -59,6 +69,12 @@
                 => new UpdateBacklogTaskCommand(1, 4, 5, "", "Task 1", "Sample task", 2, "c210a166-28a6-4417-b71a-6ca777a0f493");
         }
 
+        public class RemoveProjectExample : IExamplesProvider<RemoveProjectCommand>
+        {
+            public RemoveProjectCommand GetExamples()
+                => new RemoveProjectCommand(1, 4, "");
+        }
+
         public class CreateSprintExample : IExamplesProvider<CreateSprintCommand>
         {
             public CreateSprintCommand GetExamples()
@@ -69,6 +85,18 @@
         {
             public UpdateSprintTaskStatusCommand GetExamples()
                 => new UpdateSprintTaskStatusCommand(1, 4, 5, 1, "", "Pending");
+        }
+
+        public class FinishSprintExample : IExamplesProvider<FinishSprintCommand>
+        {
+            public FinishSprintCommand GetExamples()
+                => new FinishSprintCommand(1, 4, 5, "");
+        }
+
+        public class RemoveSprintExample : IExamplesProvider<RemoveSprintCommand>
+        {
+            public RemoveSprintCommand GetExamples()
+                => new RemoveSprintCommand(1, 4, 5, "");
         }
     }
 }

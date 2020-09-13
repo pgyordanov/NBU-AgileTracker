@@ -73,5 +73,14 @@
 
             return project;
         }
+
+        public void RemoveProject(int projectId)
+        {
+            var project = this._projects.Where(p => p.Id == projectId).FirstOrDefault();
+
+            Guard.Against<InvalidProjectGroupException>(project, null!, nameof(project));
+
+            this._projects.Remove(project);
+        }
     }
 }

@@ -92,6 +92,15 @@
             sprint.FinishSprint();
         }
 
+        public void RemoveSprint(int sprintId)
+        {
+            var sprint = this._sprints.Where(s => s.Id == sprintId).FirstOrDefault();
+
+            Guard.Against<InvalidProjectGroupException>(sprint, null!, nameof(sprint));
+
+            this._sprints.Remove(sprint);
+        }
+
         public void ChangeSprintTaskStatus(int sprintId, int taskId, string statusTitle)
         {
             var sprint = this._sprints.FirstOrDefault(s => s.Id == sprintId);

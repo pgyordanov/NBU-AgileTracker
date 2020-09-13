@@ -16,12 +16,14 @@
 
         Task<ProjectGroup> GetById(int projectGroupId);
 
-        Task<Features.Queries.GetMemberProject.GetMemberProjectOutputModel> GetProject(int projectGroupId, int projectId);
+        Task<GetMemberProjectOutputModel> GetProject(int projectGroupId, int projectId);
 
-        Task<Features.Queries.GetMemberSprint.GetMemberSprintOutputModel> GetSprint(int projectGroupId, int projectId, int sprintId);
+        Task<GetMemberSprintOutputModel> GetSprint(int projectGroupId, int projectId, int sprintId);
 
         Task<IEnumerable<GetMemberProjectGroupsOutputModel>> GetMemberProjectGroups(string memberId);
 
         Task<IEnumerable<GetMemberProjectGroupInvitationsOutputModel>> GetMemberInvitedToProjectGroups(string memberId);
+
+        Task Remove(ProjectGroup projectGroup);
     }
 }

@@ -8,8 +8,12 @@
     using AgileTracker.TasksService.Application.Features.Commands.CreateProject;
     using AgileTracker.TasksService.Application.Features.Commands.CreateProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.CreateSprint;
+    using AgileTracker.TasksService.Application.Features.Commands.FinishSprint;
     using AgileTracker.TasksService.Application.Features.Commands.InviteMemberToProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.RemoveFromProjectBacklog;
+    using AgileTracker.TasksService.Application.Features.Commands.RemoveProject;
+    using AgileTracker.TasksService.Application.Features.Commands.RemoveProjectGroup;
+    using AgileTracker.TasksService.Application.Features.Commands.RemoveSprint;
     using AgileTracker.TasksService.Application.Features.Commands.UpdateBacklogTask;
     using AgileTracker.TasksService.Application.Features.Commands.UpdateSprintTaskStatus;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProject;
@@ -49,6 +53,26 @@
         [SwaggerRequestExample(typeof(CreateProjectGroupCommand), typeof(ProjectGroupsSwaggerExamples.CreateProjectGroupExample))]
         public async Task<ActionResult<CreateProjectGroupOutputModel>> CreateProjectGroup(CreateProjectGroupCommand command)
         {
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to remove a project group with the provided project group id and member id
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="command"></param>
+        /// <response code="200">If the project group is removed successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpPost]
+        [Route("remove-project-group/{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        [SwaggerRequestExample(typeof(RemoveProjectGroupCommand), typeof(ProjectGroupsSwaggerExamples.RemoveProjectGroupExample))]
+        public async Task<ActionResult> RemoveProjectGroup([FromRoute] string memberId, [FromBody] RemoveProjectGroupCommand command)
+        {
+            command = new RemoveProjectGroupCommand(command.ProjectGroupId, memberId);
+
             return await this._mediator.Send(command).ToActionResult();
         }
 
@@ -171,7 +195,7 @@
         public async Task<ActionResult<GetMemberProjectOutputModel>> GetProject(
             [FromRoute] int projectGroupId,
             [FromRoute] int projectId,
-            [FromRoute]string memberId)
+            [FromRoute] string memberId)
         {
             var command = new GetMemberProjectCommand(projectGroupId, projectId, memberId);
             return await this._mediator.Send(command).ToActionResult();
@@ -193,15 +217,15 @@
             typeof(AddToProjectBacklogCommand),
             typeof(ProjectGroupsSwaggerExamples.AddToProjectBacklogExample))]
         public async Task<ActionResult> AddToProjectBacklog(
-            [FromRoute] string memberId, 
+            [FromRoute] string memberId,
             [FromBody] AddToProjectBacklogCommand command)
         {
             command = new AddToProjectBacklogCommand(
-                                                    command.ProjectGroupId, 
-                                                    command.ProjectId, 
-                                                    memberId, 
-                                                    command.Title, 
-                                                    command.Description, 
+                                                    command.ProjectGroupId,
+                                                    command.ProjectId,
+                                                    memberId,
+                                                    command.Title,
+                                                    command.Description,
                                                     command.PointsEstimate,
                                                     command.AssignedToMemberId,
                                                     command.StartsOn);
@@ -270,6 +294,26 @@
         }
 
         /// <summary>
+        /// Attempts to remove a project with the provided project group id, project id and member id
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="command"></param>
+        /// <response code="200">If the project is removed successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpPost]
+        [Route("remove-project/{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        [SwaggerRequestExample(typeof(RemoveProjectCommand), typeof(ProjectGroupsSwaggerExamples.RemoveProjectExample))]
+        public async Task<ActionResult> RemoveProject([FromRoute] string memberId, [FromBody] RemoveProjectCommand command)
+        {
+            command = new RemoveProjectCommand(command.ProjectGroupId, command.ProjectId, memberId);
+
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
         /// Attempts to create a sprint for the project with the provided project group id, project id and member id
         /// </summary>
         /// <param name="memberId"></param>
@@ -331,8 +375,7 @@
         [SwaggerRequestExample(
             typeof(UpdateSprintTaskStatusCommand),
             typeof(ProjectGroupsSwaggerExamples.UpdateSprintTaskStatusExample))]
-        public async Task<ActionResult> UpdateSprintTaskStatus(
-            [FromRoute] string memberId,
+        public async Task<ActionResult> UpdateSprintTaskStatus([FromRoute] string memberId,
             [FromBody] UpdateSprintTaskStatusCommand command)
         {
             command = new UpdateSprintTaskStatusCommand(
@@ -340,8 +383,48 @@
                                                     command.ProjectId,
                                                     command.TaskId,
                                                     command.SprintId,
-                                                    memberId, 
+                                                    memberId,
                                                     command.TaskStatus);
+
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to finish a sprint with the provided project group id, project id, sprint id, and member id
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="command"></param>
+        /// <response code="200">If the sprint is finished successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpPost]
+        [Route("finish-sprint/{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        [SwaggerRequestExample(typeof(FinishSprintCommand), typeof(ProjectGroupsSwaggerExamples.FinishSprintExample))]
+        public async Task<ActionResult> FinishSprint([FromRoute] string memberId, [FromBody] FinishSprintCommand command)
+        {
+            command = new FinishSprintCommand(command.ProjectGroupId, command.ProjectId, command.SprintId, memberId);
+
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to remove a sprint with the provided project group id, project id, sprint id, and member id
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="command"></param>
+        /// <response code="200">If the sprint is removed successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpPost]
+        [Route("remove-sprint/{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        [SwaggerRequestExample(typeof(RemoveSprintCommand), typeof(ProjectGroupsSwaggerExamples.RemoveSprintExample))]
+        public async Task<ActionResult> RemoveSprint([FromRoute] string memberId, [FromBody] RemoveSprintCommand command)
+        {
+            command = new RemoveSprintCommand(command.ProjectGroupId, command.ProjectId, command.SprintId, memberId);
 
             return await this._mediator.Send(command).ToActionResult();
         }

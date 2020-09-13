@@ -94,5 +94,12 @@
 
             return await System.Threading.Tasks.Task.FromResult(projectGroupsForMember);
         }
+
+        public async System.Threading.Tasks.Task Remove(ProjectGroup projectGroup)
+        {
+            this.Data.Remove(projectGroup);
+
+            await this.Data.SaveChangesAsync();
+        }
     }
 }
