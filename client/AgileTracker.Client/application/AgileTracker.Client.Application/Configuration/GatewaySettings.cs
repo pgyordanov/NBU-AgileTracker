@@ -24,6 +24,8 @@
 
         public string AddToBacklogEndpoint { get; set; }
 
+        public string RemoveFromBacklogEndpoint { get; set; }
+
         public string CreateSprintEndpoint { get; set; }
     }
 }

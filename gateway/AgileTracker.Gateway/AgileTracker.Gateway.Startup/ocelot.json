@@ -171,6 +171,24 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/ProjectGroups/remove-from-backlog/{memberId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44386
+        }
+      ],
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/remove-from-backlog",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "ChangeDownstreamPathTemplate": {
+        "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/ProjectGroups/create-sprint/{memberId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [

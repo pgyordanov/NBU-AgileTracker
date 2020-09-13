@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
     using AgileTracker.Client.Startup.Infrastructure;
     using AgileTracker.Client.Startup.Infrastructure.UI;
@@ -64,6 +65,23 @@
             var command =
                 new AddToProjectBacklogCommand(projectGroupId, projectId, model.Title, model.Description, model.PointsEstimate, model.AssignedToMemberId, DateTime.Now);
 
+            var result = await this._mediator.Send(command);
+
+            if (!result.Succeeded)
+            {
+                return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId })
+                    .WithDanger("An error has occured", string.Join("\n ", result.Errors));
+            }
+
+            return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId });
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "IsProjectGroupMember")]
+        [Route("remove-from-backlog/{taskId}")]
+        public async Task<IActionResult> RemoveFromBacklog(int projectGroupId, int projectId, int taskId)
+        {
+            var command = new RemoveFromProjectBacklogCommand(projectGroupId, projectId, taskId);
             var result = await this._mediator.Send(command);
 
             if (!result.Succeeded)

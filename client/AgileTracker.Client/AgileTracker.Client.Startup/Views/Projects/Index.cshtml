@@ -109,16 +109,44 @@
                                             <div class="row">
                                                 <div class="form-group col-12">
                                                     <label>Assigned to</label>
-                                                    <select class="form-control" 
+                                                    <select class="form-control"
                                                             asp-items="@(new SelectList(Model.Members,"MemberId","UserName", task.AssignedToMemberId))">
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
+
+                                            <button type="button" class="btn-icon danger pull-left" data-toggle="modal" data-target="#removeTaskModal-@task.Id">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+
                                             <button type="submit" class="btn btn-primary">Save changes</button>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Remove task modal -->
+                        <div class="modal fade" id="removeTaskModal-@task.Id" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to remove the task?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to remove the task? All task data will be lost and it will be removed from any sprint backlogs it currently is in.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <form method="post" asp-controller="Projects" asp-action="RemoveFromBacklog" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id" asp-route-taskId="@task.Id">
+                                            <button type="submit" class="btn btn-danger">Remove</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +170,7 @@
                 {
                     <li class='mb-2 project'>
                         <a asp-controller="Projects" asp-action="Sprint" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id" asp-route-sprintId="@sprint.Id">
-                            @sprint.Id
+                            Sprint #@sprint.Id
                         </a>
                     </li>
                 }

@@ -175,3 +175,23 @@ li.project {
     font-size: 1.5rem;
     font-weight: 300;
 }
+
+.btn-icon {
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+    .btn-icon i {
+        font-size: 1.7rem;
+    }
+
+    .btn-icon.danger i {
+        color: #d32f2f;
+    }
+
+.modal-footer .btn-icon {
+    display: inline-block;
+    left: 15px;
+    position: absolute;
+}
