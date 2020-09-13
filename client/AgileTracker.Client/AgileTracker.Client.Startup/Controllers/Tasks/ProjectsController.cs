@@ -8,12 +8,16 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
     using AgileTracker.Client.Startup.Infrastructure;
     using AgileTracker.Client.Startup.Infrastructure.UI;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.AddToBacklog;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.CreateSprint;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.Index;
+    using AgileTracker.Client.Startup.Models.Tasks.Projects.Sprint;
+    using AgileTracker.Client.Startup.Models.Tasks.Projects.UpdateTaskStatus;
 
     using AutoMapper;
 
@@ -149,18 +153,44 @@
         [Route("sprint/{sprintId}")]
         public async Task<IActionResult> Sprint(int projectGroupId, int projectId, int sprintId)
         {
-            //var command = new GetProjectCommand(projectGroupId, projectId);
-            //var result = await this._mediator.Send(command);
+            var command = new GetSprintCommand(projectGroupId, projectId, sprintId);
+            var result = await this._mediator.Send(command);
 
-            //var actionResult = this.HandleResultValidation(result);
+            var actionResult = this.HandleResultValidation(result);
 
-            //if (actionResult != null)
-            //    return actionResult;
+            if (actionResult != null)
+                return actionResult;
 
-            //var model = this._mapper.Map<GetProjectOutputModel, GetProjectViewModel>(result.Data);
-            //model.ProjectGroupId = projectGroupId;
+            var model = this._mapper.Map<GetSprintOutputModel, GetSprintViewModel>(result.Data);
+            model.ProjectGroupId = projectGroupId;
+            model.ProjectId = projectId;
 
-            return View();
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "IsProjectGroupMember")]
+        [Route("sprint/{sprintId}/update-task-status/{taskId}")]
+        public async Task<IActionResult> UpdateSprintTaskStatus(int projectGroupId, int projectId, int sprintId, int taskId, UpdateTaskStatusViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(this.Sprint), new { ProjectGroupId = projectGroupId, ProjectId = projectId, SprintId = sprintId })
+                    .WithDanger("Could not update task", "An error has occured while updating the task");
+            }
+
+            var command =
+                new UpdateSprintTaskStatusCommand(projectGroupId, projectId, sprintId, taskId, model.TaskStatus);
+
+            var result = await this._mediator.Send(command);
+
+            if (!result.Succeeded)
+            {
+                return RedirectToAction(nameof(this.Sprint), new { ProjectGroupId = projectGroupId, ProjectId = projectId, SprintId = sprintId })
+                    .WithDanger("An error has occured", string.Join("\n ", result.Errors));
+            }
+
+            return RedirectToAction(nameof(this.Sprint), new { ProjectGroupId = projectGroupId, ProjectId = projectId, SprintId = sprintId });
         }
     }
 }

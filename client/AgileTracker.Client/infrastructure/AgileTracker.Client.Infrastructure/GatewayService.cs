@@ -27,6 +27,8 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
 
     public class GatewayService : BaseHttpGatewayService, IGatewayService
     {
@@ -231,6 +233,39 @@
             };
 
             return await this.MakeAuthenticatedRequest<CreateSprintOutputModel>(request);
+        }
+
+        public async Task<Result<GetSprintOutputModel>> GetSprint(GetSprintInputModel input)
+        {
+            var uriBuilder = new UriBuilder(this._gatewaySettings.BaseAddress + this._gatewaySettings.GetSprintEndpoint);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["projectGroupId"] = input.ProjectGroupId.ToString();
+            query["projectId"] = input.ProjectId.ToString();
+            query["sprintId"] = input.SprintId.ToString();
+            uriBuilder.Query = query.ToString();
+
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(uriBuilder.ToString()),
+                Method = HttpMethod.Get
+            };
+
+            return await this.MakeAuthenticatedRequest<GetSprintOutputModel>(request);
+        }
+
+        public async Task<Result> UpdateSprintTaskStatus(UpdateSprintTaskStatusInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.UpdateSprintTaskStatusEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                   JsonConvert.SerializeObject(input),
+                   Encoding.UTF8,
+                   "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest(request);
         }
     }
 }

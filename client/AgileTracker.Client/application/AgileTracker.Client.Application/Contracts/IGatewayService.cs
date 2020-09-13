@@ -16,6 +16,8 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
 
     public interface IGatewayService
     {
@@ -44,5 +46,9 @@
         Task<Result> UpdateBacklogTask(UpdateBacklogTaskInputModel input);
 
         Task<Result<CreateSprintOutputModel>> CreateSprint(CreateSprintInputModel input);
+
+        Task<Result<GetSprintOutputModel>> GetSprint(GetSprintInputModel input);
+
+        Task<Result> UpdateSprintTaskStatus(UpdateSprintTaskStatusInputModel input);
     }
 }

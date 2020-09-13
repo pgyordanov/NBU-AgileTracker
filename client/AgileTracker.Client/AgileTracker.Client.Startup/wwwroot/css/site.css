@@ -201,3 +201,42 @@ li.project {
     left: 15px;
     position: absolute;
 }
+
+.card {
+    border: none;
+}
+
+.card-body {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.card-header {
+    background: #f5f5f5;
+    border-bottom: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+    .card-header .btn-link {
+        color: inherit;
+        font-size: 1.4rem;
+        font-weight: 300;
+        text-decoration: none !important;
+    }
+
+        .card-header .btn-link .fa {
+            font-weight: 300;
+            font-size: 0.9rem;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+.sprint-meta .entry .title {
+    font-size: 1.4rem;
+    font-weight: 300;
+}
+
+.sprint-meta .entry .value {
+    font-size: 1.4rem;
+    font-weight: 300;
+}

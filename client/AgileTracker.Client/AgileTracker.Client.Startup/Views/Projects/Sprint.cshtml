@@ -1,7 +1,155 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
+@inject AgileTracker.Client.Application.Contracts.ICurrentUser currentUserService
+
+@model AgileTracker.Client.Startup.Models.Tasks.Projects.Sprint.GetSprintViewModel
 @{
+    ViewData["Title"] = $"Sprint #{Model.Id}";
 }
 
-sprint
+<div class="text-left">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert" asp-validation-summary="All"></div>
+    }
+
+    <h1 class="display-4">
+        Sprint #@Model.Id
+        @if (!Model.IsFinished && Model.StartedOn.AddDays(Model.DurationWeeks * 7) < DateTime.UtcNow)
+        {
+            <span class="badge badge-danger">Overdue</span>
+        }
+    </h1>
+
+    <div class="row mt-4">
+        <div class="col-8">
+            <div class="section-title mb-5">
+                Sprint backlog
+            </div>
+
+            <div id="accordion">
+                @foreach (var status in Model.TaskStatuses)
+                {
+                    <div class="card mb-5">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#@status.Title" aria-expanded="true">
+                                    @status.Title @(Convert.ToBoolean(status.IsEnd) ? "(End status)" : "") <i class="fa fa-chevron-down"></i>
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="@status.Title" class="collapse show" data-parent="#accordion">
+                            <div class="card-body">
+                                @if (Model.SprintBacklog.Where(t => t.Status.Title == status.Title).Any())
+                                {
+                                    <ul class="list-unstyled">
+                                        @foreach (var task in Model.SprintBacklog.Where(t => t.Status.Title == status.Title))
+                                        {
+                                            <li class='mb-3 task-box @(task.IsFinished ? "finished": "")'>
+                                                <button class="btn btn-link toggler" data-toggle="modal" data-target="#taskmodal-@task.Id">
+                                                    <div class="task">
+                                                        <div class="title">
+                                                            @task.Title
+                                                        </div>
+                                                    </div>
+                                                </button>
+
+                                                <div class="modal fade taskmodal" id="taskmodal-@task.Id" tabindex="-1" role="dialog">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">@task.Title</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <input type="hidden" name="Title" value="@task.Title" />
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="form-group col-12">
+                                                                        <label>Description</label>
+                                                                        <p>@task.Description.Trim()</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="section-title mt-3 mb-3">Task information</div>
+                                                                <div class="row">
+                                                                    <div class="form-group col-6">
+                                                                        <label>Points estimate</label>
+                                                                        <div>@task.PointsEstimate</div>
+                                                                    </div>
+                                                                    <div class="form-group col-6">
+                                                                        <label>Assigned to</label>
+                                                                        <div>@task.AssignedToMemberId</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-5">
+                                                                    <div class="col-12">
+                                                                        <form class="form-inline" method="post" asp-controller="Projects" asp-action="UpdateSprintTaskStatus" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.ProjectId" asp-route-sprintId="@Model.Id" asp-route-taskId="@task.Id">
+                                                                            <div class="row">
+                                                                                <div class="form-group col-12">
+                                                                                    <label>Move to queue</label>
+                                                                                    <select class="form-control ml-3" name="TaskStatus"
+                                                                                            asp-items="@(new SelectList(Model.TaskStatuses,"Title","Title", task.Status.Title))">
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <button type="submit" class="btn btn-primary ml-3">
+                                                                                Move
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <div class="text-muted">No tasks in @status.Title status</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="section-title mb-3">
+                Sprint information
+            </div>
+
+            <div class="sprint-meta">
+                <div class="entry row mb-2">
+                    <div class="title col-6">Duration (weeks)</div>
+                    <div class="value col-6">@Model.DurationWeeks</div>
+                </div>
+                <div class="entry row mb-2">
+                    <div class="title col-6">Started on (UTC)</div>
+                    <div class="value col-6">@Model.StartedOn.ToString("dd/MM/yyy", System.Globalization.CultureInfo.InvariantCulture)</div>
+                </div>
+                <div class="entry row mb-2">
+                    <div class="title col-6">Status</div>
+                    <div class="value col-6">
+                        @if (!Model.IsFinished)
+                        {
+                            <span class="badge badge-success">Running</span>
+                        }
+                        else
+                        {
+                            <span>
+                                Finished on @Model.FinishedOn.ToString("dd/MM/yyy", System.Globalization.CultureInfo.InvariantCulture)"
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

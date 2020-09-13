@@ -31,5 +31,7 @@
         public string CreateSprintEndpoint { get; set; }
 
         public string GetSprintEndpoint { get; set; }
+
+        public string UpdateSprintTaskStatusEndpoint { get; set; }
     }
 }

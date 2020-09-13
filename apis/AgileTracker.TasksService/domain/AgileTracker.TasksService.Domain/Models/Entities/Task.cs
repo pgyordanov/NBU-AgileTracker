@@ -45,6 +45,11 @@
                 this.FinishedOn = DateTime.UtcNow;
                 this.IsFinished = true;
             }
+            else
+            {
+                this.FinishedOn = default!;
+                this.IsFinished = false;
+            }
         }
     }
 }

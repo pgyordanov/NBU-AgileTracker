@@ -3,10 +3,13 @@ namespace AgileTracker.Client.Startup
     using System.Threading.Tasks;
 
     using AgileTracker.Client.Application;
+    using AgileTracker.Client.Application.Contracts;
     using AgileTracker.Client.Infrastructure;
+    using AgileTracker.Client.Startup.Services;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
