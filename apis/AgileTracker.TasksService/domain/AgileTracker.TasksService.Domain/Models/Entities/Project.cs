@@ -92,7 +92,7 @@
             sprint.FinishSprint();
         }
 
-        public void ChangeSprintTaskStatus(int sprintId, int taskId, TaskStatus status)
+        public void ChangeSprintTaskStatus(int sprintId, int taskId, string statusTitle)
         {
             var sprint = this._sprints.FirstOrDefault(s => s.Id == sprintId);
 
@@ -101,6 +101,8 @@
             var task = this._backlog.FirstOrDefault(s => s.Id == taskId);
 
             Guard.Against<InvalidProjectGroupException>(task, null!, nameof(sprint));
+
+            var status = sprint.TaskStatuses.FirstOrDefault(s => s.Title == statusTitle);
 
             sprint.ChangeTaskStatus(task, status);
         }

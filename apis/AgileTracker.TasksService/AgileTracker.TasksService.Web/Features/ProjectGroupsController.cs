@@ -11,6 +11,7 @@
     using AgileTracker.TasksService.Application.Features.Commands.InviteMemberToProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.RemoveFromProjectBacklog;
     using AgileTracker.TasksService.Application.Features.Commands.UpdateBacklogTask;
+    using AgileTracker.TasksService.Application.Features.Commands.UpdateSprintTaskStatus;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProject;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroupInvitations;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroups;
@@ -312,6 +313,36 @@
             [FromRoute] string memberId)
         {
             var command = new GetMemberSprintCommand(projectGroupId, projectId, sprintId, memberId);
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to update a sprint task status with the provided project group id, project id, sprint id, task id and member id
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="command"></param>
+        /// <response code="200">If the task status is updated successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpPost]
+        [Route("update-sprint-task-status/{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        [SwaggerRequestExample(
+            typeof(UpdateSprintTaskStatusCommand),
+            typeof(ProjectGroupsSwaggerExamples.UpdateSprintTaskStatusExample))]
+        public async Task<ActionResult> UpdateSprintTaskStatus(
+            [FromRoute] string memberId,
+            [FromBody] UpdateSprintTaskStatusCommand command)
+        {
+            command = new UpdateSprintTaskStatusCommand(
+                                                    command.ProjectGroupId,
+                                                    command.ProjectId,
+                                                    command.TaskId,
+                                                    command.SprintId,
+                                                    memberId, 
+                                                    command.TaskStatus);
+
             return await this._mediator.Send(command).ToActionResult();
         }
     }

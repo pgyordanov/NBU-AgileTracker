@@ -11,6 +11,7 @@
     using AgileTracker.TasksService.Application.Features.Commands.InviteMemberToProjectGroup;
     using AgileTracker.TasksService.Application.Features.Commands.RemoveFromProjectBacklog;
     using AgileTracker.TasksService.Application.Features.Commands.UpdateBacklogTask;
+    using AgileTracker.TasksService.Application.Features.Commands.UpdateSprintTaskStatus;
 
     using Swashbuckle.AspNetCore.Filters;
 
@@ -62,6 +63,12 @@
         {
             public CreateSprintCommand GetExamples()
                 => new CreateSprintCommand(1, 4, "c210a166-28a6-4417-b71a-6ca777a0f493", new List<int>(){ 1 }, DateTime.Now, 2);
+        }
+
+        public class UpdateSprintTaskStatusExample : IExamplesProvider<UpdateSprintTaskStatusCommand>
+        {
+            public UpdateSprintTaskStatusCommand GetExamples()
+                => new UpdateSprintTaskStatusCommand(1, 4, 5, 1, "", "Pending");
         }
     }
 }
