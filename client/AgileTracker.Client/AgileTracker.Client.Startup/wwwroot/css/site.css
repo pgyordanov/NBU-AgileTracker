@@ -140,6 +140,7 @@ li.project {
     text-align: left;
 }
 
+
 .taskmodal .modal-dialog {
     margin: 0;
     right: 0;
@@ -165,6 +166,11 @@ li.project {
             width: 100%;
             height: 75px;
         }
+
+.taskmodal.left .modal-dialog {
+    right: auto;
+    left: 0;
+}
 
 .taskmodal .modal-title {
     font-size: 2rem;

@@ -5,12 +5,14 @@
     using System.Threading.Tasks;
 
     using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
     using AgileTracker.Client.Startup.Infrastructure;
     using AgileTracker.Client.Startup.Infrastructure.UI;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.AddToBacklog;
+    using AgileTracker.Client.Startup.Models.Tasks.Projects.CreateSprint;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.Index;
 
     using AutoMapper;
@@ -102,7 +104,7 @@
             if (!ModelState.IsValid)
             {
                 return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId })
-                    .WithDanger("Could not updated", "An error has occured while updating the task");
+                    .WithDanger("Could not update task", "An error has occured while updating the task");
             }
 
             var command =
@@ -117,6 +119,48 @@
             }
 
             return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId });
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        [Route("create-sprint")]
+        public async Task<IActionResult> CreateSprint(int projectGroupId, int projectId, CreateSprintViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId })
+                    .WithDanger("Could not create sprint", "An error has occured while creating the sprint");
+            }
+
+            var command = new CreateSprintCommand(projectGroupId, projectId, model.DurationWeeks, model.SprintBacklog, DateTime.Now);
+            var result = await this._mediator.Send(command);
+
+            if (!result.Succeeded)
+            {
+                return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId })
+                    .WithDanger("An error has occured", string.Join("\n ", result.Errors));
+            }
+
+            return RedirectToAction(nameof(this.Sprint), new { ProjectGroupId = projectGroupId, ProjectId = projectId, SprintId = result.Data.SprintId });
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "IsProjectGroupMember")]
+        [Route("sprint/{sprintId}")]
+        public async Task<IActionResult> Sprint(int projectGroupId, int projectId, int sprintId)
+        {
+            //var command = new GetProjectCommand(projectGroupId, projectId);
+            //var result = await this._mediator.Send(command);
+
+            //var actionResult = this.HandleResultValidation(result);
+
+            //if (actionResult != null)
+            //    return actionResult;
+
+            //var model = this._mapper.Map<GetProjectOutputModel, GetProjectViewModel>(result.Data);
+            //model.ProjectGroupId = projectGroupId;
+
+            return View();
         }
     }
 }

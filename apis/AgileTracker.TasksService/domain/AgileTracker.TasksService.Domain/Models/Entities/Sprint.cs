@@ -46,7 +46,7 @@
             get => this._durationWeeks;
             private set
             {
-                Guard.AgainstOutOfRange<InvalidProjectGroupException>(value, 1, 4, nameof(value));
+                Guard.AgainstOutOfRange<InvalidProjectGroupException>(value, 1, 10, nameof(value));
                 this._durationWeeks = value;
             }
         }

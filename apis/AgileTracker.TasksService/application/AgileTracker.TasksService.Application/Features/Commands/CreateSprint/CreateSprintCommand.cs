@@ -46,7 +46,7 @@
 
                 var project = projectGroup.Projects.FirstOrDefault(p => p.Id == request.ProjectId);
 
-                if (projectGroup == null)
+                if (project == null)
                 {
                     throw new NotFoundException("project", request.ProjectId);
                 }

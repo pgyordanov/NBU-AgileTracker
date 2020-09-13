@@ -160,9 +160,44 @@
                 Sprints
                 @if ((await authorizationService.AuthorizeAsync(User, Model.ProjectGroupId, "IsProjectGroupOwner")).Succeeded)
                 {
-                    <a class="ml-2" asp-controller="Projects" asp-action="CreateSprint" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id">
+                    <a class="ml-2" href="#" data-toggle="modal" data-target="#sprintmodal">
                         <small>Start new</small>
                     </a>
+                    <div class="modal fade taskmodal left" id="sprintmodal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Start new sprint</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form class="mt-4" method="post" asp-controller="Projects" asp-action="CreateSprint" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="form-group col-12">
+                                                <label>Sprint duration (weeks)</label>
+                                                <input type="text" name="DurationWeeks" class="form-control" rows="3" />
+                                            </div>
+                                        </div>
+                                        <div class="section-title mt-3 mb-3">Sprint backlog</div>
+                                        <div class="row">
+                                            @foreach (var task in Model.Backlog)
+                                            {
+                                                <div class="form-group col-12">
+                                                    <input type="checkbox" name="SprintBacklog" value="@task.Id" id="SprintBacklog-@task.Id" />
+                                                    <label for="SprintBacklog-@task.Id">@task.Title</label>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Start sprint</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 }
 
             </div>
