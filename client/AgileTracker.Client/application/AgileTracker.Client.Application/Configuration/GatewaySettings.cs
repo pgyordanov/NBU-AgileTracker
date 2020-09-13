@@ -29,5 +29,7 @@
         public string UpdateBacklogTaskEndpoint { get; set; }
 
         public string CreateSprintEndpoint { get; set; }
+
+        public string GetSprintEndpoint { get; set; }
     }
 }
