@@ -91,25 +91,26 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form class="mt-4" method="post" asp-controller="Projects" asp-action="UpdateTask">
+                                    <form class="mt-4" method="post" asp-controller="Projects" asp-action="UpdateBacklogTask" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id" asp-route-taskId="@task.Id">
+                                        <input type="hidden" name="Title" value="@task.Title" />
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="form-group col-12">
                                                     <label>Description</label>
-                                                    <textarea class="form-control" rows="3">@task.Description.Trim()</textarea>
+                                                    <textarea name="Description" class="form-control" rows="3">@task.Description.Trim()</textarea>
                                                 </div>
                                             </div>
                                             <div class="section-title mt-3 mb-3">Task information</div>
                                             <div class="row">
                                                 <div class="form-group col-12">
                                                     <label>Points estimate</label>
-                                                    <input type="text" class="form-control" value="@task.PointsEstimate" />
+                                                    <input name="PointsEstimate" type="text" class="form-control" value="@task.PointsEstimate" />
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="form-group col-12">
                                                     <label>Assigned to</label>
-                                                    <select class="form-control"
+                                                    <select class="form-control" name="AssignedToMemberId"
                                                             asp-items="@(new SelectList(Model.Members,"MemberId","UserName", task.AssignedToMemberId))">
                                                     </select>
                                                 </div>

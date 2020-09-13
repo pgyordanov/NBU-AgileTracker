@@ -25,6 +25,7 @@
     using System.Web;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
 
     public class GatewayService : BaseHttpGatewayService, IGatewayService
     {
@@ -191,6 +192,21 @@
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.RemoveFromBacklogEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                   JsonConvert.SerializeObject(input),
+                   Encoding.UTF8,
+                   "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest(request);
+        }
+
+        public async Task<Result> UpdateBacklogTask(UpdateBacklogTaskInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.UpdateBacklogTaskEndpoint),
                 Method = HttpMethod.Post,
                 Content = new StringContent(
                    JsonConvert.SerializeObject(input),

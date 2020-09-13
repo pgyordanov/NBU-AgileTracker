@@ -14,6 +14,7 @@
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
 
     public interface IGatewayService
     {
@@ -38,5 +39,7 @@
         Task<Result> AddToProjectBacklog(AddToProjectBacklogInputModel input);
 
         Task<Result> RemoveFromProjectBacklog(RemoveFromProjectBacklogInputModel input);
+
+        Task<Result> UpdateBacklogTask(UpdateBacklogTaskInputModel input);
     }
 }
