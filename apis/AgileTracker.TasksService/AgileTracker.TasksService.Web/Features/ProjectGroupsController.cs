@@ -14,6 +14,7 @@
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProject;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroupInvitations;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroups;
+    using AgileTracker.TasksService.Application.Features.Queries.GetMemberSprint;
     using AgileTracker.TasksService.Web.Common;
 
     using MediatR;
@@ -159,7 +160,7 @@
         /// <param name="projectGroupId"></param>
         /// <param name="projectId"></param>
         /// <param name="memberId"></param>
-        /// <response code="200">If the project groups for member are fetched successfully</response>
+        /// <response code="200">If the project for this member is fetched successfully</response>
         /// <response code="400">If there was an encountered error with processing the request</response>
         [HttpGet]
         [Route("{projectGroupId}/project/{projectId}/{memberId}")]
@@ -180,7 +181,7 @@
         /// </summary>
         /// <param name="memberId"></param>
         /// <param name="command"></param>
-        /// <response code="200">If the task is added successfully successfully</response>
+        /// <response code="200">If the task is added successfully</response>
         /// <response code="400">If there was an encountered error with processing the request</response>
         [HttpPost]
         [Route("add-to-backlog/{memberId}")]
@@ -287,6 +288,30 @@
             [FromBody] CreateSprintCommand command)
         {
             command = new CreateSprintCommand(command.ProjectGroupId, command.ProjectId, memberId, command.TaskIds, command.StartsOn, command.DurationWeeks);
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to fetch a sprint with the provided project group id, project id, sprint id and member id
+        /// </summary>
+        /// <param name="projectGroupId"></param>
+        /// <param name="projectId"></param>
+        /// <param name="sprintId"></param>
+        /// <param name="memberId"></param>
+        /// <response code="200">If the sprint for this member is fetched successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpGet]
+        [Route("{projectGroupId}/project/{projectId}/sprint/{sprintId}/{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<GetMemberSprintOutputModel>> GetSprint(
+            [FromRoute] int projectGroupId,
+            [FromRoute] int projectId,
+            [FromRoute] int sprintId,
+            [FromRoute] string memberId)
+        {
+            var command = new GetMemberSprintCommand(projectGroupId, projectId, sprintId, memberId);
             return await this._mediator.Send(command).ToActionResult();
         }
     }

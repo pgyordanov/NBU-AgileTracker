@@ -8,6 +8,7 @@
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProject;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroupInvitations;
     using AgileTracker.TasksService.Application.Features.Queries.GetMemberProjectGroups;
+    using AgileTracker.TasksService.Application.Features.Queries.GetMemberSprint;
     using AgileTracker.TasksService.Domain.Models;
     using AgileTracker.TasksService.Domain.Models.Entities;
     using AgileTracker.TasksService.Infrastructure.Persistance;
@@ -41,22 +42,37 @@
                 .FirstOrDefaultAsync(g => g.Id == projectGroupId);
         }
 
-        public async Task<GetMemberProjectOutputModel> GetProject(int projectGroupId, int projectId)
+        public async Task<Application.Features.Queries.GetMemberProject.GetMemberProjectOutputModel> GetProject(int projectGroupId, int projectId)
         {
             var projectGroup = await this.All()
                                         .Include(g => g.Members)
                                         .Include(g => g.Projects).ThenInclude(p => p.Backlog)
                                         .Include(g => g.Projects).ThenInclude(p => p.Sprints)
+                                        .AsNoTracking()
                                         .FirstOrDefaultAsync(g => g.Id == projectGroupId);
 
             var project = projectGroup.Projects.FirstOrDefault(p => p.Id == projectId);
 
-            var mappedProject = this._mapper.Map<Project, GetMemberProjectOutputModel>(project);
+            var mappedProject = this._mapper.Map<Project, Application.Features.Queries.GetMemberProject.GetMemberProjectOutputModel>(project);
 
             mappedProject.AddMembers(this._mapper.ProjectTo<ProjectMemberOutputModel>(projectGroup.Members.AsQueryable()));
 
             return mappedProject;
         }
+
+
+        public async Task<GetMemberSprintOutputModel> GetSprint(int projectGroupId, int projectId, int sprintId)
+        {
+            var projectGroup = await this.All()
+                                        .Include(g => g.Projects).ThenInclude(p => p.Sprints).ThenInclude(s=>s.SprintBacklog)
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(g => g.Id == projectGroupId);
+
+            var sprint = projectGroup.Projects.FirstOrDefault(p => p.Id == projectId).Sprints.FirstOrDefault(s => s.Id == sprintId);
+
+            return this._mapper.Map<Sprint, GetMemberSprintOutputModel>(sprint);
+        }
+
 
         public async Task<IEnumerable<GetMemberProjectGroupsOutputModel>> GetMemberProjectGroups(string memberId)
         {
