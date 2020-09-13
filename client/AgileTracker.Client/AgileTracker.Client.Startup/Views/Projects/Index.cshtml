@@ -182,7 +182,7 @@
                                         </div>
                                         <div class="section-title mt-3 mb-3">Sprint backlog</div>
                                         <div class="row">
-                                            @foreach (var task in Model.Backlog)
+                                            @foreach (var task in Model.Backlog.Where(t => !t.IsFinished))
                                             {
                                                 <div class="form-group col-12">
                                                     <input type="checkbox" name="SprintBacklog" value="@task.Id" id="SprintBacklog-@task.Id" />

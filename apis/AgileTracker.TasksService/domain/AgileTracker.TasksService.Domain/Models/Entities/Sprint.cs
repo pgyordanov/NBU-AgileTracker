@@ -17,7 +17,7 @@
 
         internal Sprint(IEnumerable<Task> sprintBacklog, DateTime startsOn, int durationWeeks)
         {
-            this._sprintBacklog = sprintBacklog.ToHashSet();
+            this._sprintBacklog = sprintBacklog.Where(t=>!t.IsFinished).ToHashSet();
             this._taskStatuses = new HashSet<TaskStatus>(){
                 new TaskStatus("New", false),
                 new TaskStatus("Pending", false),
