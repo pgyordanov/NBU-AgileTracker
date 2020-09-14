@@ -7,6 +7,12 @@
     bool authorizedOwner = (await authorizationService.AuthorizeAsync(User, Model.ProjectGroupId, "IsProjectGroupOwner")).Succeeded;
 }
 
+<div class="back mb-4 mt-4">
+    <a asp-controller="ProjectGroups" asp-action="Group" asp-route-projectGroupId="@Model.ProjectGroupId">
+        <i class="fa fa-chevron-left"></i>Go back
+    </a>
+</div>
+
 <div class="text-left">
     @if (!ViewData.ModelState.IsValid)
     {

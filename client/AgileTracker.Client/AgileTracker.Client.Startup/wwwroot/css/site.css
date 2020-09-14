@@ -241,3 +241,16 @@ li.project {
     font-size: 1.4rem;
     font-weight: 300;
 }
+
+.back a {
+    text-decoration: none !important;
+    color: inherit;
+    font-size: 1.4rem;
+}
+
+    .back a i {
+        font-size: 1rem;
+        vertical-align: middle;
+        padding-bottom: 2px;
+        margin-right: 5px;
+    }
