@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="AgileTracker.Common.Domain" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
+    <PackageReference Include="Scrutor" Version="3.2.2" />
   </ItemGroup>
 
 </Project>
