@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "application", "application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTracker.StatisticsService.Infrastructure", "infrastructure\AgileTracker.StatisticsService.Infrastructure\AgileTracker.StatisticsService.Infrastructure.csproj", "{C605499B-D6E6-4F90-B530-86C4BBC37C78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTracker.StatisticsService.Web", "AgileTracker.StatisticsService.Web\AgileTracker.StatisticsService.Web.csproj", "{D9D68E96-2E92-4C51-99FF-37DF56640EBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTracker.StatisticsService.Startup", "AgileTracker.StatisticsService.Startup\AgileTracker.StatisticsService.Startup.csproj", "{58FAE252-EF9F-4E40-962E-79A341109343}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{C605499B-D6E6-4F90-B530-86C4BBC37C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C605499B-D6E6-4F90-B530-86C4BBC37C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C605499B-D6E6-4F90-B530-86C4BBC37C78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9D68E96-2E92-4C51-99FF-37DF56640EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9D68E96-2E92-4C51-99FF-37DF56640EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9D68E96-2E92-4C51-99FF-37DF56640EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9D68E96-2E92-4C51-99FF-37DF56640EBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58FAE252-EF9F-4E40-962E-79A341109343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58FAE252-EF9F-4E40-962E-79A341109343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58FAE252-EF9F-4E40-962E-79A341109343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58FAE252-EF9F-4E40-962E-79A341109343}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
