@@ -12,13 +12,17 @@
         private DateTime _estimatedToFinishOn;
         private DateTime _actuallyFinishedOn;
 
-        public TaskEstimation(int projectGroupId, int projectId, int taskId, DateTime startedOn, DateTime estimatedToFinishOn)
+        internal TaskEstimation(int projectGroupId, int projectId, int taskId, DateTime startedOn, DateTime estimatedToFinishOn)
         {
             this.ProjectGroupId = projectGroupId;
             this.ProjectId = projectId;
             this.TaskId = taskId;
             this.StartedOn = startedOn;
             this.EstimatedToFinishOn = estimatedToFinishOn;
+        }
+
+        private TaskEstimation()
+        {
         }
 
         public int TaskId { get; set; }
