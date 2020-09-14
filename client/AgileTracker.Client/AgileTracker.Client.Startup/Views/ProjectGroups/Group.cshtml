@@ -4,6 +4,7 @@
 @model AgileTracker.Client.Startup.Models.Tasks.ProjectGroups.Group.ProjectGroupViewModel
 @{
     ViewData["Title"] = $"{@Model.GroupName} - Project group";
+    bool authorizedOwner = (await authorizationService.AuthorizeAsync(User, Model.Id, "IsProjectGroupOwner")).Succeeded;
 }
 
 <div class="text-left">
@@ -14,7 +15,40 @@
 
     <h1 class="display-4">
         @Model.GroupName
+        @if (authorizedOwner)
+        {
+
+            <button type="button" class="btn-icon danger pull-right" data-toggle="modal" data-target="#removeModal">
+                <i class="fa fa-trash"></i>
+            </button>
+        }
     </h1>
+
+    @if (authorizedOwner)
+    {
+        <!-- Remove modal -->
+        <div class="modal fade" id="removeModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Are you sure you want to remove the project group?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to remove the project group? All project data will be lost.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <form method="post" asp-controller="ProjectGroups" asp-action="RemoveProjectGroup" asp-route-projectGroupId="@Model.Id">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
     <div class="row mt-4">
         <div class="col-6">

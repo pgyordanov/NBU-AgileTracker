@@ -2,6 +2,6 @@
 {
     public class InviteProjectGroupMemberViewModel
     {
-        public string MemberEmailAddress { get; set; }
+        public string MemberEmailAddress { get; set; } = default!;
     }
 }

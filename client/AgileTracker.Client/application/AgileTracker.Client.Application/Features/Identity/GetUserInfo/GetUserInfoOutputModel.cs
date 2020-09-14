@@ -4,6 +4,6 @@
 
     public class GetUserInfoOutputModel
     {
-        public IEnumerable<UserInfoOutputModel> UserInfo { get; set; }
+        public IEnumerable<UserInfoOutputModel> UserInfo { get; set; } = default!;
     }
 }

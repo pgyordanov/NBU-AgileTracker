@@ -7,9 +7,9 @@
     {
         public int Id { get; set; }
 
-        public IEnumerable<ProjectTaskOutputModel> SprintBacklog { get; set; }
+        public IEnumerable<ProjectTaskOutputModel> SprintBacklog { get; set; } = default!;
 
-        public IEnumerable<ProjectTaskStatusOutputModel> TaskStatuses { get; set; }
+        public IEnumerable<ProjectTaskStatusOutputModel> TaskStatuses { get; set; } = default!;
 
         public int DurationWeeks { get; set; }
 

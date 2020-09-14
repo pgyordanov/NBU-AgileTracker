@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public string MemberId { get; set; }
+        public string MemberId { get; set; } = default!;
 
         public bool IsOwner { get; set; }
     }

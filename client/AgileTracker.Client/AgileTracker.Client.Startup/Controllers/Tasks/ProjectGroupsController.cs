@@ -8,6 +8,7 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Commands.InviteProjectGroupMember;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
@@ -74,6 +75,10 @@
             if (actionResult != null)
                 return actionResult;
 
+            //sign out of the cookie scheme, so idsrv can be asked to authenticate user and project group claims can be populated. 
+            //Idsrv keeps it's cookie, so user is not prompted to login manually
+            await this.HttpContext.SignOutAsync();
+
             return this.RedirectToAction(nameof(this.Group), new { ProjectGroupId = result.Data.GroupId });
         }
 
@@ -131,6 +136,24 @@
                 this._mapper.Map<GetProjectGroupOutputModel, Models.Tasks.ProjectGroups.Group.ProjectGroupViewModel>(result.Data);
 
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        [Route("project-group/{projectGroupId}/remove")]
+        public async Task<IActionResult> RemoveProjectGroup(int projectGroupId)
+        {
+            var command = new RemoveProjectGroupCommand(projectGroupId);
+
+            var result = await this._mediator.Send(command);
+
+            if (!result.Succeeded)
+            {
+                return RedirectToAction(nameof(this.Group), new { ProjectGroupId = projectGroupId })
+                    .WithDanger("An error has occured", string.Join("\n ", result.Errors));
+            }
+
+            return RedirectToAction(nameof(ProjectGroupsController.Index));
         }
 
         [HttpGet]

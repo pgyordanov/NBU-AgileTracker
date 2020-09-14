@@ -9,8 +9,8 @@
     {
         public int Id { get; set; }
 
-        public string GroupName { get; set; }
+        public string GroupName { get; set; } = default!;
 
-        public List<ProjectGroupMemberViewModel> Members { get; set; }
+        public List<ProjectGroupMemberViewModel> Members { get; set; } = default!;
     }
 }

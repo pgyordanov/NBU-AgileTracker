@@ -12,12 +12,12 @@
 
         public int ProjectGroupId { get; set; }
 
-        public string Title { get; private set; }
+        public string Title { get; private set; } = default!;
 
-        public IEnumerable<GetProjectTaskViewModel> Backlog { get; private set; }
+        public IEnumerable<GetProjectTaskViewModel> Backlog { get; private set; } = default!;
 
-        public IEnumerable<GetProjectSprintViewModel> Sprints { get; private set; }
+        public IEnumerable<GetProjectSprintViewModel> Sprints { get; private set; } = default!;
 
-        public IEnumerable<GetProjectMemberViewModel> Members { get; private set; }
+        public IEnumerable<GetProjectMemberViewModel> Members { get; private set; } = default!;
     }
 }

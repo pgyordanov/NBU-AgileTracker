@@ -2,12 +2,12 @@
 {
     public class AddTaskViewModel
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = default!;
 
-        public string Description { get; set; }
+        public string Description { get; set; } = default!;
 
         public int PointsEstimate { get; set; }
 
-        public string AssignedToMemberId { get; set; }
+        public string AssignedToMemberId { get; set; } = default!;
     }
 }

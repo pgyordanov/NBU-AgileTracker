@@ -10,9 +10,9 @@
     {
         public int Id { get; private set; }
 
-        public IEnumerable<GetProjectTaskViewModel> SprintBacklog { get; private set; }
+        public IEnumerable<GetProjectTaskViewModel> SprintBacklog { get; private set; } = default!;
 
-        public IEnumerable<GetProjectTaskStatusViewModel> TaskStatuses { get; private set; }
+        public IEnumerable<GetProjectTaskStatusViewModel> TaskStatuses { get; private set; } = default!;
 
         public int DurationWeeks { get; private set; }
 

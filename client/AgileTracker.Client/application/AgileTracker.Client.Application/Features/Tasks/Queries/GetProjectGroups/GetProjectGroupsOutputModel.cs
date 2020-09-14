@@ -6,10 +6,10 @@
     {
         public int Id { get; set; }
 
-        public string GroupName { get; set; }
+        public string GroupName { get; set; } = default!;
 
-        public List<ProjectGroupMemberOutputModel> Members { get; set; }
+        public List<ProjectGroupMemberOutputModel> Members { get; set; } = default!;
 
-        public IEnumerable<ProjectGroupProjectOutputModel> Projects { get; set; }
+        public IEnumerable<ProjectGroupProjectOutputModel> Projects { get; set; } = default!;
     }
 }

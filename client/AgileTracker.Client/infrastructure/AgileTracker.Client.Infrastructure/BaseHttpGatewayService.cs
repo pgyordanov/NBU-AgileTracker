@@ -13,7 +13,7 @@
     public abstract class BaseHttpGatewayService
     {
         private readonly HttpClient _httpClient;
-        private string _accessToken;
+        private string _accessToken = default!;
 
         public BaseHttpGatewayService(HttpClient httpClient, ITokenService tokenService)
         {
@@ -65,7 +65,7 @@
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
 
-            return Result<TData>.SuccessWith(model);
+            return Result<TData>.SuccessWith(model!);
         }
     }
 }

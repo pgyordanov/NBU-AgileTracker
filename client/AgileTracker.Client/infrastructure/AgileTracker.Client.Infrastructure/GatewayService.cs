@@ -29,6 +29,10 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
     using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.FinishSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProject;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProjectGroup;
 
     public class GatewayService : BaseHttpGatewayService, IGatewayService
     {
@@ -89,6 +93,21 @@
             };
 
             return await this.MakeAuthenticatedRequest<CreateProjectGroupOutputModel>(request);
+        }
+
+        public async Task<Result> RemoveProjectGroup(RemoveProjectGroupInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.RemoveProjectGroupEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                   JsonConvert.SerializeObject(input),
+                   Encoding.UTF8,
+                   "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest(request);
         }
 
         public async Task<Result<IEnumerable<GetProjectGroupsOutputModel>>> GetProjectGroups()
@@ -156,6 +175,21 @@
             };
 
             return await this.MakeAuthenticatedRequest<CreateProjectOutputModel>(request);
+        }
+
+        public async Task<Result> RemoveProject(RemoveProjectInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.RemoveProjectEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                   JsonConvert.SerializeObject(input),
+                   Encoding.UTF8,
+                   "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest(request);
         }
 
         public async Task<Result<GetProjectOutputModel>> GetProject(GetProjectInputModel input)
@@ -258,6 +292,36 @@
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.UpdateSprintTaskStatusEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                   JsonConvert.SerializeObject(input),
+                   Encoding.UTF8,
+                   "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest(request);
+        }
+
+        public async Task<Result> FinishSprint(FinishSprintInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.FinishSprintEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                   JsonConvert.SerializeObject(input),
+                   Encoding.UTF8,
+                   "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest(request);
+        }
+
+        public async Task<Result> RemoveSprint(RemoveSprintInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.RemoveSprintEndpoint),
                 Method = HttpMethod.Post,
                 Content = new StringContent(
                    JsonConvert.SerializeObject(input),

@@ -6,12 +6,12 @@
     {
         public int Id { get; set; }
 
-        public string Title { get; set; }
+        public string Title { get; set; } = default!;
 
-        public IEnumerable<ProjectTaskOutputModel> Backlog { get; set; }
+        public IEnumerable<ProjectTaskOutputModel> Backlog { get; set; } = default!;
 
-        public IEnumerable<ProjectSprintOutputModel> Sprints { get; set; }
+        public IEnumerable<ProjectSprintOutputModel> Sprints { get; set; } = default!;
 
-        public IEnumerable<ProjectMemberOutputModel> Members { get; set; }
+        public IEnumerable<ProjectMemberOutputModel> Members { get; set; } = default!;
     }
 }

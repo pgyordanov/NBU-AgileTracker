@@ -4,6 +4,7 @@
 @model AgileTracker.Client.Startup.Models.Tasks.Projects.Sprint.GetSprintViewModel
 @{
     ViewData["Title"] = $"Sprint #{Model.Id}";
+    bool authorizedOwner = (await authorizationService.AuthorizeAsync(User, Model.ProjectGroupId, "IsProjectGroupOwner")).Succeeded;
 }
 
 <div class="text-left">
@@ -18,7 +19,40 @@
         {
             <span class="badge badge-danger">Overdue</span>
         }
+
+        @if (authorizedOwner)
+        {
+            <button type="button" class="btn-icon danger pull-right" data-toggle="modal" data-target="#removeModal">
+                <i class="fa fa-trash"></i>
+            </button>
+        }
     </h1>
+
+    @if (authorizedOwner)
+    {
+        <!-- Remove modal -->
+        <div class="modal fade" id="removeModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Are you sure you want to remove the sprint?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to remove the sprint? All sprint data will be lost.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <form method="post" asp-controller="Projects" asp-action="RemoveSprint" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.ProjectId" asp-route-sprintId="@Model.Id">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
     <div class="row mt-4">
         <div class="col-8">
@@ -144,12 +178,18 @@
                         else
                         {
                             <span>
-                                Finished on @Model.FinishedOn.ToString("dd/MM/yyy", System.Globalization.CultureInfo.InvariantCulture)"
+                                Finished on @Model.FinishedOn.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
                             </span>
                         }
                     </div>
                 </div>
             </div>
+            @if (authorizedOwner && !Model.IsFinished)
+            {
+                <form method="post" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.ProjectId" asp-route-sprintId="@Model.Id" asp-controller="Projects" asp-action="FinishSprint" class="mt-5 text-center">
+                    <button type="submit" class="btn btn-warning">Finish sprint</button>
+                </form>
+            }
         </div>
     </div>
 </div>

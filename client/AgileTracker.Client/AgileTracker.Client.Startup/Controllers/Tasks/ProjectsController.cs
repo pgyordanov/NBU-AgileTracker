@@ -6,7 +6,10 @@
 
     using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.FinishSprint;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProject;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveSprint;
     using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
     using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
@@ -56,6 +59,24 @@
             model.ProjectGroupId = projectGroupId;
 
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        [Route("remove")]
+        public async Task<IActionResult> RemoveProject(int projectGroupId, int projectId)
+        {
+            var command = new RemoveProjectCommand(projectGroupId, projectId);
+
+            var result = await this._mediator.Send(command);
+
+            if (!result.Succeeded)
+            {
+                return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId })
+                    .WithDanger("An error has occured", string.Join("\n ", result.Errors));
+            }
+
+            return RedirectToAction(nameof(ProjectGroupsController.Group), "ProjectGroups", new { ProjectGroupId = projectGroupId });
         }
 
         [HttpPost]
@@ -191,6 +212,42 @@
             }
 
             return RedirectToAction(nameof(this.Sprint), new { ProjectGroupId = projectGroupId, ProjectId = projectId, SprintId = sprintId });
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        [Route("sprint/{sprintId}/finish")]
+        public async Task<IActionResult> FinishSprint(int projectGroupId, int projectId, int sprintId)
+        {
+            var command = new FinishSprintCommand(projectGroupId, projectId, sprintId);
+
+            var result = await this._mediator.Send(command);
+
+            if (!result.Succeeded)
+            {
+                return RedirectToAction(nameof(this.Sprint), new { ProjectGroupId = projectGroupId, ProjectId = projectId, SprintId = sprintId })
+                    .WithDanger("An error has occured", string.Join("\n ", result.Errors));
+            }
+
+            return RedirectToAction(nameof(this.Sprint), new { ProjectGroupId = projectGroupId, ProjectId = projectId, SprintId = sprintId });
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        [Route("sprint/{sprintId}/remove")]
+        public async Task<IActionResult> RemoveSprint(int projectGroupId, int projectId, int sprintId)
+        {
+            var command = new RemoveSprintCommand(projectGroupId, projectId, sprintId);
+
+            var result = await this._mediator.Send(command);
+
+            if (!result.Succeeded)
+            {
+                return RedirectToAction(nameof(this.Sprint), new { ProjectGroupId = projectGroupId, ProjectId = projectId, SprintId = sprintId })
+                    .WithDanger("An error has occured", string.Join("\n ", result.Errors));
+            }
+
+            return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId });
         }
     }
 }

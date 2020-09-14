@@ -9,10 +9,10 @@
     {
         public int Id { get; set; }
 
-        public string GroupName { get; set; }
+        public string GroupName { get; set; } = default!;
 
-        public IEnumerable<ProjectGroupMemberViewModel> Members { get; set; }
+        public IEnumerable<ProjectGroupMemberViewModel> Members { get; set; } = default!;
 
-        public IEnumerable<ProjectGroupProjectViewModel> Projects { get; set; }
+        public IEnumerable<ProjectGroupProjectViewModel> Projects { get; set; } = default!;
     }
 }

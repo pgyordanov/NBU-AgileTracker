@@ -18,6 +18,10 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
     using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.FinishSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProject;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProjectGroup;
 
     public interface IGatewayService
     {
@@ -29,6 +33,8 @@
 
         Task<Result<CreateProjectGroupOutputModel>> CreateProjectGroup(CreateProjectGroupInputModel input);
 
+        Task<Result> RemoveProjectGroup(RemoveProjectGroupInputModel input);
+
         Task<Result<IEnumerable<GetProjectGroupInvitationsOutputModel>>> GetProjectGroupInvitations();
 
         Task<Result> InviteMemberToProjectGroup(int projectGroupId, string memberId);
@@ -36,6 +42,8 @@
         Task<Result> AcceptProjectGroupInvitation(AcceptProjectGroupInvitationInputModel input);
 
         Task<Result<CreateProjectOutputModel>> CreateProject(CreateProjectInputModel input);
+
+        Task<Result> RemoveProject(RemoveProjectInputModel input);
 
         Task<Result<GetProjectOutputModel>> GetProject(GetProjectInputModel input);
 
@@ -50,5 +58,9 @@
         Task<Result<GetSprintOutputModel>> GetSprint(GetSprintInputModel input);
 
         Task<Result> UpdateSprintTaskStatus(UpdateSprintTaskStatusInputModel input);
+
+        Task<Result> FinishSprint(FinishSprintInputModel input);
+
+        Task<Result> RemoveSprint(RemoveSprintInputModel input);
     }
 }

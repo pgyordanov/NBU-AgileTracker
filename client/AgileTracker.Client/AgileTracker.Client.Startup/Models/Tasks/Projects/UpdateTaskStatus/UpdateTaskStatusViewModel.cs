@@ -2,6 +2,6 @@
 {
     public class UpdateTaskStatusViewModel
     {
-        public string TaskStatus { get; set; }
+        public string TaskStatus { get; set; } = default!;
     }
 }

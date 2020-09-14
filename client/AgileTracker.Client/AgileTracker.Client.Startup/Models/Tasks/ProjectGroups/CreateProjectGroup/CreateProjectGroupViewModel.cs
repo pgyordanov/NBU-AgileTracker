@@ -2,6 +2,6 @@
 {
     public class CreateProjectGroupViewModel
     {
-        public string ProjectGroupName { get; set; }
+        public string ProjectGroupName { get; set; } = default!;
     }
 }

@@ -16,9 +16,9 @@
 
         public int DurationWeeks { get; set; }
 
-        public IEnumerable<GetSprintTaskViewModel> SprintBacklog { get; set; }
+        public IEnumerable<GetSprintTaskViewModel> SprintBacklog { get; set; } = default!;
 
-        public IEnumerable<GetSprintTaskStatusViewModel> TaskStatuses { get; set; }
+        public IEnumerable<GetSprintTaskStatusViewModel> TaskStatuses { get; set; } = default!;
 
         public DateTime StartedOn { get; set; }
 

@@ -1,6 +1,5 @@
 ﻿namespace AgileTracker.TasksService.Infrastructure.Persistance.Configurations
 {
-    using System;
 
     using AgileTracker.TasksService.Domain.Models.Entities;
 
@@ -20,7 +19,8 @@
 
             builder
                 .HasMany(t => t.Sprints)
-                .WithOne();
+                .WithOne()
+                .IsRequired();
         }
     }
 }

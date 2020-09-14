@@ -4,14 +4,16 @@ using AgileTracker.TasksService.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AgileTracker.TasksService.Infrastructure.Migrations
 {
     [DbContext(typeof(AgileTrackerTasksDbContext))]
-    partial class AgileTrackerTasksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200914083626_ProjectGrouptoProjectRelationship")]
+    partial class ProjectGrouptoProjectRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,7 +82,7 @@ namespace AgileTracker.TasksService.Infrastructure.Migrations
                     b.Property<bool>("IsFinished")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartedOn")
@@ -162,9 +164,7 @@ namespace AgileTracker.TasksService.Infrastructure.Migrations
                 {
                     b.HasOne("AgileTracker.TasksService.Domain.Models.Entities.Project", null)
                         .WithMany("Sprints")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.OwnsMany("AgileTracker.TasksService.Domain.Models.ValueObjects.TaskStatus", "TaskStatuses", b1 =>
                         {

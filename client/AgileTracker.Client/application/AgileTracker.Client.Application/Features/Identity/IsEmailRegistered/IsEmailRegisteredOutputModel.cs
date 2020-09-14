@@ -2,7 +2,7 @@
 {
     public class IsEmailRegisteredOutputModel
     {
-        public string UserId { get; set; }
+        public string UserId { get; set; } = default!;
 
         public bool IsEmailRegistered { get; set; }
     }

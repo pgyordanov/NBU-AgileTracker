@@ -16,7 +16,7 @@
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ProjectGroupOwnerRequirement requirement)
         {
-            string projectGroupId = context.GetResource<int>("projectGroupId", this._contextAccessor).ToString();
+            string projectGroupId = context.GetResource<int>("projectGroupId", this._contextAccessor).ToString()!;
 
             if (!context.HasFailed)
             {

@@ -13,7 +13,12 @@
 
             builder
                 .HasMany(g => g.Members)
-                .WithOne();
+                .WithOne()
+                .IsRequired();
+
+            builder.HasMany(g => g.Projects)
+                .WithOne()
+                .IsRequired();
 
             builder
                 .OwnsMany(g => g.Invitations)

@@ -2,8 +2,8 @@
 {
     public class SprintTaskStatusOutputModel
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = default!;
 
-        public string IsEnd { get; set; }
+        public string IsEnd { get; set; } = default!;
     }
 }

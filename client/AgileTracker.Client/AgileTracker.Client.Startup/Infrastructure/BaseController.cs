@@ -17,7 +17,7 @@
                 return View();
             }
 
-            return null;
+            return null!;
         }
 
         protected IActionResult HandleResultValidation(Result result, string viewName)
@@ -32,7 +32,7 @@
                 return View(viewName);
             }
 
-            return null;
+            return null!;
         }
 
         protected IActionResult HandleResultValidation(Result result, object model)
@@ -47,7 +47,7 @@
                 return View(model);
             }
 
-            return null;
+            return null!;
         }
 
         protected IActionResult HandleResultValidation(Result result, string viewName, object model)
@@ -62,7 +62,7 @@
                 return View(viewName, model);
             }
 
-            return null;
+            return null!;
         }
     }
 }

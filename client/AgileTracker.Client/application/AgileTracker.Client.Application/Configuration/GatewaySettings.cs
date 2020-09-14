@@ -2,36 +2,44 @@
 {
     public class GatewaySettings
     {
-        public string BaseAddress { get; set; }
+        public string BaseAddress { get; set; } = default!;
 
-        public string GetProjectGroupsForMemberEndpoint { get; set; }
+        public string GetProjectGroupsForMemberEndpoint { get; set; } = default!;
 
-        public string GetUserInfoEndpoint { get; set; }
+        public string GetUserInfoEndpoint { get; set; } = default!;
 
-        public string IsEmailRegisteredEndpoint { get; set; }
+        public string IsEmailRegisteredEndpoint { get; set; } = default!;
 
-        public string GetInvitationsForProjectGroupsForMemberEndpoint { get; set; }
+        public string GetInvitationsForProjectGroupsForMemberEndpoint { get; set; } = default!;
 
-        public string CreateProjectGroupEndpoint { get; set; }
+        public string CreateProjectGroupEndpoint { get; set; } = default!;
 
-        public string InviteMemberToProjectGroupEndpoint { get; set; }
+        public string RemoveProjectGroupEndpoint { get; set; } = default!;
 
-        public string AcceptProjectGroupInvitationEndpoint { get; set; }
+        public string InviteMemberToProjectGroupEndpoint { get; set; } = default!;
 
-        public string CreateProjectEndpoint { get; set; }
+        public string AcceptProjectGroupInvitationEndpoint { get; set; } = default!;
 
-        public string GetProjectEndpoint { get; set; }
+        public string CreateProjectEndpoint { get; set; } = default!;
 
-        public string AddToBacklogEndpoint { get; set; }
+        public string RemoveProjectEndpoint { get; set; } = default!;
 
-        public string RemoveFromBacklogEndpoint { get; set; }
+        public string GetProjectEndpoint { get; set; } = default!;
 
-        public string UpdateBacklogTaskEndpoint { get; set; }
+        public string AddToBacklogEndpoint { get; set; } = default!;
 
-        public string CreateSprintEndpoint { get; set; }
+        public string RemoveFromBacklogEndpoint { get; set; } = default!;
 
-        public string GetSprintEndpoint { get; set; }
+        public string UpdateBacklogTaskEndpoint { get; set; } = default!;
 
-        public string UpdateSprintTaskStatusEndpoint { get; set; }
+        public string CreateSprintEndpoint { get; set; } = default!;
+
+        public string GetSprintEndpoint { get; set; } = default!;
+
+        public string UpdateSprintTaskStatusEndpoint { get; set; } = default!;
+
+        public string FinishSprintEndpoint { get; set; } = default!;
+
+        public string RemoveSprintEndpoint { get; set; } = default!;
     }
 }

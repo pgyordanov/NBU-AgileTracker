@@ -5,8 +5,8 @@
 
     public class GetProjectTaskStatusViewModel: IMapFrom<ProjectTaskStatusOutputModel>
     {
-        public string Title { get; private set; }
+        public string Title { get; private set; } = default!;
 
-        public string IsEnd { get; private set; }
+        public string IsEnd { get; private set; } = default!;
     }
 }

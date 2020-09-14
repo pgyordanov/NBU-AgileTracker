@@ -29,16 +29,16 @@
 
                     foreach (var group in res.Data)
                     {
-                        identity.AddClaim(new Claim($"projectgroup.{group.Id}", "participant"));
+                        identity!.AddClaim(new Claim($"projectgroup.{group.Id}", "participant"));
                          
                         if (group.Members.Any(m => m.MemberId == currentUserId && m.IsOwner))
                         {
-                            identity.AddClaim(new Claim($"projectgroup.{group.Id}", "owner"));
+                            identity!.AddClaim(new Claim($"projectgroup.{group.Id}", "owner"));
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //err
             }

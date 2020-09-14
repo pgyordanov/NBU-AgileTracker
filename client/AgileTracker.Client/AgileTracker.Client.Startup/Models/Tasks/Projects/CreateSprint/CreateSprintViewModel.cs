@@ -6,6 +6,6 @@
     {
         public int DurationWeeks { get; set; }
 
-        public IEnumerable<int> SprintBacklog { get; set; }
+        public IEnumerable<int> SprintBacklog { get; set; } = default!;
     }
 }

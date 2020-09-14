@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200914083537_ProjectGrouptoProjectRelationship.cs" />
+    <Compile Remove="Migrations\20200914083537_ProjectGrouptoProjectRelationship.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AgileTracker.Common.Infrastructure" Version="1.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
