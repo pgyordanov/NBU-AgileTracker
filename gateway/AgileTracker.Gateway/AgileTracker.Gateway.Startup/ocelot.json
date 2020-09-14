@@ -117,6 +117,24 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/ProjectGroups/remove-project-group/{memberId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44386
+        }
+      ],
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/remove",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "ChangeDownstreamPathTemplate": {
+        "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/ProjectGroups/create-project/{ownerId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -132,6 +150,24 @@
       },
       "ChangeDownstreamPathTemplate": {
         "ownerId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/ProjectGroups/remove-project/{memberId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44386
+        }
+      ],
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/remove",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "ChangeDownstreamPathTemplate": {
+        "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
       }
     },
     {
@@ -252,6 +288,42 @@
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/sprints/update-task-status",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "ChangeDownstreamPathTemplate": {
+        "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/ProjectGroups/finish-sprint/{memberId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44386
+        }
+      ],
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/sprints/finish",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "ChangeDownstreamPathTemplate": {
+        "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/ProjectGroups/remove-sprint/{memberId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44386
+        }
+      ],
+      "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/sprints/remove",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
