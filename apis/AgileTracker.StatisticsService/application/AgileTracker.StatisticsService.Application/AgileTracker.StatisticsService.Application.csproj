@@ -4,4 +4,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AgileTracker.Common.Application" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\domain\AgileTracker.StatisticsService.Domain\AgileTracker.StatisticsService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

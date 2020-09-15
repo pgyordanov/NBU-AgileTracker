@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AgileTracker.Common.Infrastructure" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization.Policy" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
@@ -16,11 +17,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
+    <PackageReference Include="Scrutor" Version="3.2.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Persistance\Configurations\" />
+    <ProjectReference Include="..\..\application\AgileTracker.StatisticsService.Application\AgileTracker.StatisticsService.Application.csproj" />
   </ItemGroup>
 
 </Project>
