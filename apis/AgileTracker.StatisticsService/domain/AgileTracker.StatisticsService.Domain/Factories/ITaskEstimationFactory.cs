@@ -9,6 +9,8 @@
     {
         ITaskEstimationFactory WithKeys(int projectGroupId, int projectId, int taskId);
 
+        ITaskEstimationFactory WithEstimatorId(string estimatedByMemberId);
+
         ITaskEstimationFactory WithStartTime(DateTime startedOn);
 
         ITaskEstimationFactory WithEstimatedFinishTime(DateTime estimatedFinishTime);

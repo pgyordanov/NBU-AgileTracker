@@ -4,14 +4,16 @@ using AgileTracker.StatisticsService.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AgileTracker.StatisticsService.Infrastructure.Migrations
 {
     [DbContext(typeof(AgileTrackerStatisticsDbContext))]
-    partial class AgileTrackerStatisticsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200915195652_TaskEstimationEstimatedByMemberIdField")]
+    partial class TaskEstimationEstimatedByMemberIdField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

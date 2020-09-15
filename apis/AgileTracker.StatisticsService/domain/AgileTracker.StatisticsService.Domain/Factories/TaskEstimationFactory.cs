@@ -10,6 +10,7 @@
         private int _projectGroupId;
         private int _projectId;
         private int _taskId;
+        private string _estimatedByMemberId = default!;
         private DateTime _estimatedFinishTime;
         private DateTime _startedOn;
 
@@ -18,6 +19,13 @@
             this._projectGroupId = projectGroupId;
             this._projectId = projectId;
             this._taskId = taskId;
+
+            return this;
+        }
+
+        public ITaskEstimationFactory WithEstimatorId(string estimatedByMemberId)
+        {
+            this._estimatedByMemberId = estimatedByMemberId;
 
             return this;
         }
@@ -38,7 +46,13 @@
 
         public TaskEstimation Build()
         {
-            return new TaskEstimation(this._projectGroupId, this._projectId, this._taskId, this._startedOn, this._estimatedFinishTime);
+            return new TaskEstimation(
+                this._projectGroupId,
+                this._projectId, 
+                this._taskId,
+                this._estimatedByMemberId,
+                this._startedOn, 
+                this._estimatedFinishTime);
         }
     }
 }
