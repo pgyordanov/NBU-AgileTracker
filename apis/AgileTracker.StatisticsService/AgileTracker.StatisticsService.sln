@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTracker.StatisticsServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTracker.StatisticsService.Startup", "AgileTracker.StatisticsService.Startup\AgileTracker.StatisticsService.Startup.csproj", "{58FAE252-EF9F-4E40-962E-79A341109343}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTracker.StatisticsService.Application", "application\AgileTracker.StatisticsService.Application\AgileTracker.StatisticsService.Application.csproj", "{35589AE4-E35C-40EC-8B74-B08BC5167755}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{58FAE252-EF9F-4E40-962E-79A341109343}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58FAE252-EF9F-4E40-962E-79A341109343}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58FAE252-EF9F-4E40-962E-79A341109343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35589AE4-E35C-40EC-8B74-B08BC5167755}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35589AE4-E35C-40EC-8B74-B08BC5167755}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35589AE4-E35C-40EC-8B74-B08BC5167755}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35589AE4-E35C-40EC-8B74-B08BC5167755}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{EBC1BCCD-B45E-40A9-97EF-46520A800D6E} = {096871DD-F021-4806-BF85-9E6D79040855}
 		{C605499B-D6E6-4F90-B530-86C4BBC37C78} = {924286D9-17B3-47E1-B80C-EC11DA3C0A9E}
+		{35589AE4-E35C-40EC-8B74-B08BC5167755} = {525765C9-4F29-48CA-B494-BF0595C781D6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {23AE5758-5EBF-4B8E-9A8E-DF74A52F509F}

@@ -2,6 +2,7 @@
 {
     using System.Reflection;
 
+    using AgileTracker.Common.Application.Repositories;
     using AgileTracker.Common.Infrastructure;
     using AgileTracker.StatisticsService.Infrastructure.Persistance;
 
@@ -22,6 +23,11 @@
                 );
             })
             .AddTransient<IInitializer, AgileTrackerStatisticsDbInitializer>();
+
+            services.Scan(scan => scan.FromCallingAssembly()
+                                    .AddClasses(c => c.AssignableTo(typeof(IRepository<>)))
+                                    .AsMatchingInterface()
+                                    .WithTransientLifetime());
 
             return services;
         }
