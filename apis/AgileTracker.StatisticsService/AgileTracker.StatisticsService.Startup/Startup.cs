@@ -26,7 +26,8 @@ namespace AgileTracker.StatisticsService.Startup
             services
                 .AddDomain()
                 .AddInfrastructure(this.Configuration)
-                .AddWebComponents();
+                .AddWebComponents()
+                .AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +41,8 @@ namespace AgileTracker.StatisticsService.Startup
             app.UseRouting();
 
             app.Initialize();
+
+            app.UseSwaggerWithUI();
 
             app.UseEndpoints(endpoints =>
             {
