@@ -2,6 +2,8 @@
 {
     using System.Reflection;
 
+    using AgileTracker.StatisticsService.Application.Configuration;
+
     using MediatR;
 
     using Microsoft.Extensions.Configuration;
@@ -11,8 +13,16 @@
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
-            return services
-                        .AddMediatR(Assembly.GetExecutingAssembly());
+            services.Configure<RabbitSettings>
+                (
+                    configuration.GetSection(nameof(RabbitSettings)),
+                    config => { config.BindNonPublicProperties = true; }
+                );
+
+            services
+                .AddMediatR(Assembly.GetExecutingAssembly());
+
+            return services;
         }
     }
 }

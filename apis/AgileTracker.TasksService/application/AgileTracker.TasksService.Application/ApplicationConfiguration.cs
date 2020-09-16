@@ -2,19 +2,30 @@
 {
     using System.Reflection;
 
+    using AgileTracker.TasksService.Application.Configuration;
+
     using AutoMapper;
 
     using MediatR;
 
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     public static class ApplicationConfiguration
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)
+        public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
         {
-            return services
+            services.Configure<RabbitSettings>
+               (
+                   configuration.GetSection(nameof(RabbitSettings)),
+                   config => { config.BindNonPublicProperties = true; }
+               );
+
+            services
                 .AddAutoMapper(Assembly.GetExecutingAssembly())
                 .AddMediatR(Assembly.GetExecutingAssembly());
+
+            return services;
         }
     }
 }

@@ -32,6 +32,7 @@ namespace AgileTracker.StatisticsService.Startup
                 .AddDomain()
                 .AddApplication(this.Configuration)
                 .AddInfrastructure(this.Configuration)
+                .AddRabbit()
                 .AddWebComponents()
                 .AddSwagger();
         }

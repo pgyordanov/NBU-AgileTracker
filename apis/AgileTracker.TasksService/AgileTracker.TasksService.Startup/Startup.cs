@@ -28,8 +28,9 @@ namespace AgileTracker.TasksService.Startup
         {
             services
                 .AddDomain()
-                .AddApplication()
+                .AddApplication(this.Configuration)
                 .AddInfrastructure(this.Configuration)
+                .AddRabbit()
                 .AddWebComponents()
                 .AddSwagger();
 
