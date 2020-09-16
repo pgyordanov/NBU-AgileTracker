@@ -1,5 +1,8 @@
 namespace AgileTracker.StatisticsService.Startup
 {
+    using System.Collections.Generic;
+
+    using AgileTracker.StatisticsService.Application;
     using AgileTracker.StatisticsService.Domain;
     using AgileTracker.StatisticsService.Infrastructure;
     using AgileTracker.StatisticsService.Web;
@@ -9,6 +12,8 @@ namespace AgileTracker.StatisticsService.Startup
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
+    using Newtonsoft.Json;
 
     public class Startup
     {
@@ -25,6 +30,7 @@ namespace AgileTracker.StatisticsService.Startup
         {
             services
                 .AddDomain()
+                .AddApplication(this.Configuration)
                 .AddInfrastructure(this.Configuration)
                 .AddWebComponents()
                 .AddSwagger();

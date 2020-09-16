@@ -5,6 +5,6 @@
 
     public interface ITaskEstimationRepository: IRepository<TaskEstimation>
     {
-        bool IsOwner(string memberId);
+        bool IsOwner(int projectGroup, string memberId);
     }
 }
