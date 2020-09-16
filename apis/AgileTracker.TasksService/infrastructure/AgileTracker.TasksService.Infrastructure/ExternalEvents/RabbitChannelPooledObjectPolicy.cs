@@ -31,7 +31,6 @@
             }
             else
             {
-                this._connection?.Dispose();
                 obj?.Dispose();
                 return false;
             }

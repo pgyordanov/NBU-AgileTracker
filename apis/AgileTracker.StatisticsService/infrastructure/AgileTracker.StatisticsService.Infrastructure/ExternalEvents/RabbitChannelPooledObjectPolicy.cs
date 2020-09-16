@@ -7,12 +7,12 @@
 
     using RabbitMQ.Client;
 
-    public class RabbitChannelPooledPolicy : IPooledObjectPolicy<IModel>
+    public class RabbitChannelPooledObjectPolicy : IPooledObjectPolicy<IModel>
     {
         private readonly RabbitSettings _rabbitSettings;
         private readonly IConnection _connection;
 
-        public RabbitChannelPooledPolicy(IOptions<RabbitSettings> rabbitSettings)
+        public RabbitChannelPooledObjectPolicy(IOptions<RabbitSettings> rabbitSettings)
         {
             this._rabbitSettings = rabbitSettings.Value;
             this._connection = this.GetConnection();

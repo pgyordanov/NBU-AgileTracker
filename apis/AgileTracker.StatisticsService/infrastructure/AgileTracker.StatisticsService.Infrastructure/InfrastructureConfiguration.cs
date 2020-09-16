@@ -5,6 +5,7 @@
     using AgileTracker.Common.Application.Repositories;
     using AgileTracker.Common.Infrastructure;
     using AgileTracker.StatisticsService.Infrastructure.ExternalEvents;
+    using AgileTracker.StatisticsService.Infrastructure.ExternalEvents.Events.Models;
     using AgileTracker.StatisticsService.Infrastructure.Persistance;
 
     using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,9 @@
             services
                 .AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>()
                 .AddSingleton<IPooledObjectPolicy<IModel>, RabbitChannelPooledObjectPolicy>();
+
+            services
+                .AddHostedService<ProjectGroupCreatedEventListener>();
 
             return services;
         }

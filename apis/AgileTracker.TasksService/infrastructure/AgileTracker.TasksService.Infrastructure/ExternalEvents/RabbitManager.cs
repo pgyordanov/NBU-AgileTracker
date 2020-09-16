@@ -3,6 +3,7 @@
     using System;
     using System.Text;
 
+    using AgileTracker.Common.Infrastructure;
     using AgileTracker.TasksService.Application.Contracts;
 
     using Microsoft.Extensions.ObjectPool;
@@ -11,7 +12,7 @@
 
     using RabbitMQ.Client;
 
-    public class RabbitManager : IPublishExternalEvent
+    public class RabbitManager : IPublishExternalEvent, IInitializer
     {
         private readonly object _lockObject = new object();
         private readonly DefaultObjectPool<IModel> _objectPool;
@@ -28,8 +29,6 @@
 
             try
             {
-                channel.ExchangeDeclare(exchangeName, exchangeType, false, true, null);
-
                 var sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
                 var properties = channel.CreateBasicProperties();
@@ -46,6 +45,19 @@
             finally
             {
                 _objectPool.Return(channel);
+            }
+        }
+
+        public void Initialize()
+        {
+            var channel = this._objectPool.Get();
+            try
+            {
+                channel.ExchangeDeclare("tasksrvcPubExchange", ExchangeType.Fanout, false, true, null);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

@@ -44,7 +44,7 @@
 
                 var eventPayload = new ProjectGroupCreatedEvent(projectGroup.Id, request.OwnerId, projectGroup.GroupName);
 
-                this._publishExternalEventService.Publish(eventPayload, "projectGroupExchange", "fanout", "");
+                this._publishExternalEventService.Publish(eventPayload, "tasksrvcPubExchange", "fanout", "");
 
                 return Result<CreateProjectGroupOutputModel>.SuccessWith(new CreateProjectGroupOutputModel(projectGroup.Id));
             }
