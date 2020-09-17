@@ -6,6 +6,7 @@
 
     using AgileTracker.Common.Application;
     using AgileTracker.Common.Application.Exceptions;
+    using AgileTracker.Common.Events;
     using AgileTracker.Common.Events.Models;
     using AgileTracker.TasksService.Application.Contracts;
     using AgileTracker.TasksService.Domain.Models.Entities;
@@ -76,7 +77,7 @@
                             TaskFinishedOn = task.FinishedOn
                         };
 
-                        this._publishExternalEventService.Publish(eventPayload);
+                        this._publishExternalEventService.Publish(eventPayload, EventType.TaskFinished);
                     }
                 }
             }

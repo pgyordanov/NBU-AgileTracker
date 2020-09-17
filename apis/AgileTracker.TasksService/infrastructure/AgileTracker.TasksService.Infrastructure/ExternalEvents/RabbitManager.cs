@@ -3,6 +3,7 @@
     using System;
     using System.Text;
 
+    using AgileTracker.Common.Events;
     using AgileTracker.TasksService.Application.Configuration;
     using AgileTracker.TasksService.Application.Contracts;
 
@@ -25,7 +26,7 @@
             this._rabbitSettings = rabbitSettings.Value;
         }
 
-        public void Publish<TMessage>(TMessage message) 
+        public void Publish<TMessage>(TMessage message, EventType eventType) 
             where TMessage : class
         {
             var channel = _objectPool.Get();
@@ -38,7 +39,7 @@
 
                 lock (this._lockObject)
                 {
-                    channel.BasicPublish(this._rabbitSettings.PublishExchangeName, "", properties, sendBytes);
+                    channel.BasicPublish(this._rabbitSettings.PublishExchangeName, eventType.ToString(), properties, sendBytes);
                 }
             }
             catch (Exception ex)

@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using AgileTracker.Common.Application;
+    using AgileTracker.Common.Events;
     using AgileTracker.Common.Events.Models;
     using AgileTracker.TasksService.Application.Contracts;
     using AgileTracker.TasksService.Domain.Factories;
@@ -49,7 +50,7 @@
                     ProjectGroupName = projectGroup.GroupName
                 };
 
-                this._publishExternalEventService.Publish(eventPayload);
+                this._publishExternalEventService.Publish(eventPayload, EventType.ProjectGroupCreated);
 
                 return Result<CreateProjectGroupOutputModel>.SuccessWith(new CreateProjectGroupOutputModel(projectGroup.Id));
             }
