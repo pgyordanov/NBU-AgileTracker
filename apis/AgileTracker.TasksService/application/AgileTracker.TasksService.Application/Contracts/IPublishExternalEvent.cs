@@ -2,7 +2,7 @@
 {
     public interface IPublishExternalEvent
     {
-        void Publish<TMessage>(TMessage message, string exchangeName, string exchangeType, string routeKey)
+        void Publish<TMessage>(TMessage message)
             where TMessage : class;
     }
 }

@@ -45,7 +45,7 @@
                 .AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>()
                 .AddSingleton<IPooledObjectPolicy<IModel>, RabbitChannelPooledObjectPolicy>()
                 .AddSingleton<IPublishExternalEvent, RabbitManager>()
-                .AddTransient<IInitializer, RabbitManager>();
+                .AddTransient<IInitializer, RabbitInitializer>();
 
             return services;
         }

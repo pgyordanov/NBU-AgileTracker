@@ -3,26 +3,29 @@
     using System;
     using System.Text;
 
-    using AgileTracker.Common.Infrastructure;
+    using AgileTracker.TasksService.Application.Configuration;
     using AgileTracker.TasksService.Application.Contracts;
 
     using Microsoft.Extensions.ObjectPool;
+    using Microsoft.Extensions.Options;
 
     using Newtonsoft.Json;
 
     using RabbitMQ.Client;
 
-    public class RabbitManager : IPublishExternalEvent, IInitializer
+    public class RabbitManager : IPublishExternalEvent
     {
         private readonly object _lockObject = new object();
         private readonly DefaultObjectPool<IModel> _objectPool;
+        private readonly RabbitSettings _rabbitSettings;
 
-        public RabbitManager(IPooledObjectPolicy<IModel> objectPolicy)
+        public RabbitManager(IPooledObjectPolicy<IModel> objectPolicy, IOptions<RabbitSettings> rabbitSettings)
         {
             _objectPool = new DefaultObjectPool<IModel>(objectPolicy);
+            this._rabbitSettings = rabbitSettings.Value;
         }
 
-        public void Publish<TMessage>(TMessage message, string exchangeName, string exchangeType, string routeKey) 
+        public void Publish<TMessage>(TMessage message) 
             where TMessage : class
         {
             var channel = _objectPool.Get();
@@ -35,7 +38,7 @@
 
                 lock (this._lockObject)
                 {
-                    channel.BasicPublish(exchangeName, routeKey, properties, sendBytes);
+                    channel.BasicPublish(this._rabbitSettings.PublishExchangeName, "", properties, sendBytes);
                 }
             }
             catch (Exception ex)
@@ -45,19 +48,6 @@
             finally
             {
                 _objectPool.Return(channel);
-            }
-        }
-
-        public void Initialize()
-        {
-            var channel = this._objectPool.Get();
-            try
-            {
-                channel.ExchangeDeclare("tasksrvcPubExchange", ExchangeType.Fanout, false, true, null);
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
     }

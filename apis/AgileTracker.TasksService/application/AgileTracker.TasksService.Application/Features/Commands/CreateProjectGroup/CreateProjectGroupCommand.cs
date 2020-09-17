@@ -4,8 +4,8 @@
     using System.Threading.Tasks;
 
     using AgileTracker.Common.Application;
+    using AgileTracker.Common.Events.Models;
     using AgileTracker.TasksService.Application.Contracts;
-    using AgileTracker.TasksService.Application.Events.External;
     using AgileTracker.TasksService.Domain.Factories;
 
     using MediatR;
@@ -24,7 +24,7 @@
             private readonly IPublishExternalEvent _publishExternalEventService;
 
             public CreateProjectGroupCommandHandler(
-                IProjectGroupFactory projectGroupFactory, 
+                IProjectGroupFactory projectGroupFactory,
                 IProjectGroupRepository projectGroupRepository,
                 IPublishExternalEvent publishExternalEventService)
             {
@@ -42,9 +42,14 @@
 
                 await this._projectGroupRepository.Save(projectGroup, cancellationToken);
 
-                var eventPayload = new ProjectGroupCreatedEvent(projectGroup.Id, request.OwnerId, projectGroup.GroupName);
+                var eventPayload = new ProjectGroupCreatedEventModel
+                {
+                    ProjectGroupId = projectGroup.Id,
+                    ProjectGroupOwnerId = request.OwnerId,
+                    ProjectGroupName = projectGroup.GroupName
+                };
 
-                this._publishExternalEventService.Publish(eventPayload, "tasksrvcPubExchange", "fanout", "");
+                this._publishExternalEventService.Publish(eventPayload);
 
                 return Result<CreateProjectGroupOutputModel>.SuccessWith(new CreateProjectGroupOutputModel(projectGroup.Id));
             }

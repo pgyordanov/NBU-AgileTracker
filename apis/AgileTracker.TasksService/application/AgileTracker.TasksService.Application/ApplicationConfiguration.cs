@@ -3,6 +3,7 @@
     using System.Reflection;
 
     using AgileTracker.TasksService.Application.Configuration;
+    using AgileTracker.TasksService.Application.Contracts;
 
     using AutoMapper;
 
