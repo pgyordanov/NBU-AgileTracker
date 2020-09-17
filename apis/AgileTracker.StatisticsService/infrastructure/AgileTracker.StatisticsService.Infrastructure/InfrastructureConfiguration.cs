@@ -5,7 +5,7 @@
     using AgileTracker.Common.Application.Repositories;
     using AgileTracker.Common.Infrastructure;
     using AgileTracker.StatisticsService.Infrastructure.ExternalEvents;
-    using AgileTracker.StatisticsService.Infrastructure.ExternalEvents.Events.Models;
+    using AgileTracker.StatisticsService.Infrastructure.Listeners;
     using AgileTracker.StatisticsService.Infrastructure.Persistance;
 
     using Microsoft.EntityFrameworkCore;

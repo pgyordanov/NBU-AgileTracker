@@ -17,19 +17,19 @@
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
 
-    public class TaskFinishedEventListener : RabbitEventListener
+    public class ProjectGroupCreatedEventListener : RabbitEventListener
     {
         private readonly RabbitSettings _rabbitSettings;
 
-        public TaskFinishedEventListener(IPooledObjectPolicy<IModel> objectPolicy, IOptions<RabbitSettings> rabbitSettings) 
+        public ProjectGroupCreatedEventListener(IPooledObjectPolicy<IModel> objectPolicy, IOptions<RabbitSettings> rabbitSettings) 
             : base(objectPolicy)
         {
             this._rabbitSettings = rabbitSettings.Value;
 
             var channel = this._objectPool.Get();
 
-            channel.QueueDeclare(queue: this._rabbitSettings.TaskFinishedQueueName, durable: false, exclusive: false, autoDelete: true, arguments: null);
-            channel.QueueBind(this._rabbitSettings.TaskFinishedQueueName, this._rabbitSettings.PublishExchangeName, "", null);
+            channel.QueueDeclare(queue: this._rabbitSettings.ProjectGroupCreatedQueueName, durable: false, exclusive: false, autoDelete: true, arguments: null);
+            channel.QueueBind(this._rabbitSettings.ProjectGroupCreatedQueueName, this._rabbitSettings.PublishExchangeName, "", null);
         }
 
         protected override Task ExecuteAsync(CancellationToken cancellationToken)

@@ -14,6 +14,8 @@
 
         public string PublishExchangeName { get; set; }
 
-        public string SubscribeQueueName { get; set; }
+        public string ProjectGroupCreatedQueueName { get; set; }
+
+        public string TaskFinishedQueueName { get; set; }
     }
 }
