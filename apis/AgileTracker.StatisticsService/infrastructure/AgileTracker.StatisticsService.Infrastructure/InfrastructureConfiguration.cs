@@ -44,7 +44,8 @@
                 .AddSingleton<IPooledObjectPolicy<IModel>, RabbitChannelPooledObjectPolicy>();
 
             services
-                .AddHostedService<ProjectGroupCreatedEventListener>();
+                .AddHostedService<ProjectGroupCreatedEventListener>()
+                .AddHostedService<TaskFinishedEventListener>();
 
             return services;
         }
