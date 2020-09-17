@@ -6,7 +6,9 @@
 
     using AgileTracker.Common.Application;
     using AgileTracker.Common.Application.Exceptions;
+    using AgileTracker.Common.Events.Models;
     using AgileTracker.TasksService.Application.Contracts;
+    using AgileTracker.TasksService.Domain.Models.Entities;
 
     using MediatR;
 
@@ -20,10 +22,12 @@
         public class FinishSprintCommandHandler : IRequestHandler<FinishSprintCommand, Result>
         {
             private readonly IProjectGroupRepository _projectGroupRepository;
+            private readonly IPublishExternalEvent _publishExternalEventService;
 
-            public FinishSprintCommandHandler (IProjectGroupRepository projectGroupRepository)
+            public FinishSprintCommandHandler (IProjectGroupRepository projectGroupRepository, IPublishExternalEvent publishExternalEventService)
             {
                 this._projectGroupRepository = projectGroupRepository;
+                this._publishExternalEventService = publishExternalEventService;
             }
 
             public async Task<Result> Handle(FinishSprintCommand request, CancellationToken cancellationToken)
@@ -53,7 +57,28 @@
 
                 await this._projectGroupRepository.Save(projectGroup);
 
+                this.PublishFinishedTaskEvents(request.ProjectGroupId, request.ProjectId, project.Sprints.FirstOrDefault(s => s.Id == request.SprintId));
+
                 return true;
+            }
+
+            private void PublishFinishedTaskEvents(int projectGroupId, int projectId, Sprint sprint)
+            {
+               foreach(var task in sprint.SprintBacklog)
+                {
+                    if (task.IsFinished)
+                    {
+                        var eventPayload = new TaskFinishedEventModel
+                        {
+                            ProjectGroupId = projectGroupId,
+                            ProjectId = projectId,
+                            TaskId = task.Id,
+                            TaskFinishedOn = task.FinishedOn
+                        };
+
+                        this._publishExternalEventService.Publish(eventPayload);
+                    }
+                }
             }
         }
     }
