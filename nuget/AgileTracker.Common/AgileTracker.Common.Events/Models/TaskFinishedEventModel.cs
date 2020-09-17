@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class TaskFinishedEvent
+    public class TaskFinishedEventModel
     {
         public int ProjectGroupId { get; set; }
 
