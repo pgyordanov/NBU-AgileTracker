@@ -5,6 +5,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using AgileTracker.Common.Events;
     using AgileTracker.Common.Events.Models;
     using AgileTracker.StatisticsService.Application.Configuration;
     using AgileTracker.StatisticsService.Infrastructure.ExternalEvents;
@@ -28,8 +29,8 @@
 
             var channel = this._objectPool.Get();
 
-            channel.QueueDeclare(queue: this._rabbitSettings.ProjectGroupCreatedQueueName, durable: false, exclusive: false, autoDelete: true, arguments: null);
-            channel.QueueBind(this._rabbitSettings.ProjectGroupCreatedQueueName, this._rabbitSettings.PublishExchangeName, "", null);
+            channel.QueueDeclare(queue: this._rabbitSettings.TaskFinishedQueueName, durable: false, exclusive: false, autoDelete: true, arguments: null);
+            channel.QueueBind(this._rabbitSettings.TaskFinishedQueueName, this._rabbitSettings.PublishExchangeName, EventType.TaskFinished.ToString(), null);
         }
 
         protected override Task ExecuteAsync(CancellationToken cancellationToken)
