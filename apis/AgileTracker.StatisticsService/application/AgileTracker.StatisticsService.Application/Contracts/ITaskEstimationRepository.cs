@@ -7,6 +7,10 @@
 
     public interface ITaskEstimationRepository: IRepository<TaskEstimation>
     {
+        Task<TaskEstimation> GetById(int taskEstimationId);
+
+        Task<TaskEstimation> GetByKeys(int projectGroupId, int projectId, int taskId);
+
         Task<bool> IsOwner(int projectGroupId, string memberId);
 
         Task AddProjectGroupOwnership(int projectGroupId, string ownerId);

@@ -1,14 +1,15 @@
 ﻿namespace AgileTracker.StatisticsService.Infrastructure.Listeners
 {
-    using System;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
     using AgileTracker.Common.Events.Models;
     using AgileTracker.StatisticsService.Application.Configuration;
+    using AgileTracker.StatisticsService.Application.Contracts;
     using AgileTracker.StatisticsService.Infrastructure.ExternalEvents;
 
+    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.Options;
 
@@ -20,11 +21,13 @@
     public class ProjectGroupCreatedEventListener : RabbitEventListener
     {
         private readonly RabbitSettings _rabbitSettings;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-        public ProjectGroupCreatedEventListener(IPooledObjectPolicy<IModel> objectPolicy, IOptions<RabbitSettings> rabbitSettings) 
+        public ProjectGroupCreatedEventListener(IPooledObjectPolicy<IModel> objectPolicy, IOptions<RabbitSettings> rabbitSettings, IServiceScopeFactory scopeFactory) 
             : base(objectPolicy)
         {
             this._rabbitSettings = rabbitSettings.Value;
+            this._scopeFactory = scopeFactory;
         }
 
         protected override Task ExecuteAsync(CancellationToken cancellationToken)
@@ -48,9 +51,21 @@
             return Task.CompletedTask;
         }
 
-        protected override void HandleMessage<TaskFinishedEventModel>(TaskFinishedEventModel message)
+        protected override async void HandleMessage(object message)
         {
-            throw new NotImplementedException();
+            var castMessage = message as TaskFinishedEventModel;
+
+            using var scope = this._scopeFactory.CreateScope();
+
+            var repository = scope.ServiceProvider.GetService<ITaskEstimationRepository>();
+
+            var taskEstimation = await repository.GetByKeys(castMessage!.ProjectGroupId, castMessage.ProjectId, castMessage.TaskId);
+            if(taskEstimation != null)
+            {
+                taskEstimation.SetActualFinishedOnTime(castMessage.TaskFinishedOn);
+
+                await repository.Save(taskEstimation);
+            }
         }
     }
 }

@@ -15,6 +15,17 @@
             : base(data)
         {
         }
+
+        public async Task<TaskEstimation> GetById(int taskEstimationId)
+        {
+            return await this.All().FirstOrDefaultAsync(t => t.Id == taskEstimationId);
+        }
+
+        public async Task<TaskEstimation> GetByKeys(int projectGroupId, int projectId, int taskId)
+        {
+            return await this.All().FirstOrDefaultAsync(t => t.ProjectGroupId == projectGroupId && t.ProjectId == projectId && t.TaskId == taskId);
+        }
+
         public async Task<bool> IsOwner(int projectGroupId, string memberId)
             => await this.Data.ProjectGroupOwnerships.AnyAsync(po => po.ExternalProjectGroupId == projectGroupId && po.OwnerId == memberId);
 

@@ -15,6 +15,6 @@
             _objectPool = new DefaultObjectPool<IModel>(objectPolicy);
         }
 
-        protected abstract void HandleMessage<TMessage>(TMessage message);
+        protected abstract void HandleMessage(object message);
     }
 }

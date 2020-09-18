@@ -15,6 +15,7 @@
 
     using MediatR;
 
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("auth")]

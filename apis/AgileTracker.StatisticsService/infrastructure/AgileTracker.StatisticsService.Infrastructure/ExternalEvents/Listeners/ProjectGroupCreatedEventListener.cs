@@ -1,15 +1,15 @@
 ﻿namespace AgileTracker.StatisticsService.Infrastructure.Listeners
 {
-    using System;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
-    using AgileTracker.Common.Events;
     using AgileTracker.Common.Events.Models;
     using AgileTracker.StatisticsService.Application.Configuration;
+    using AgileTracker.StatisticsService.Application.Contracts;
     using AgileTracker.StatisticsService.Infrastructure.ExternalEvents;
 
+    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.ObjectPool;
     using Microsoft.Extensions.Options;
 
@@ -21,11 +21,13 @@
     public class TaskFinishedEventListener : RabbitEventListener
     {
         private readonly RabbitSettings _rabbitSettings;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-        public TaskFinishedEventListener(IPooledObjectPolicy<IModel> objectPolicy, IOptions<RabbitSettings> rabbitSettings) 
+        public TaskFinishedEventListener(IPooledObjectPolicy<IModel> objectPolicy, IOptions<RabbitSettings> rabbitSettings, IServiceScopeFactory scopeFactory) 
             : base(objectPolicy)
         {
             this._rabbitSettings = rabbitSettings.Value;
+            this._scopeFactory = scopeFactory;
         }
 
         protected override Task ExecuteAsync(CancellationToken cancellationToken)
@@ -49,9 +51,14 @@
             return Task.CompletedTask;
         }
 
-        protected override void HandleMessage<ProjectGroupCreatedEventMessage>(ProjectGroupCreatedEventMessage message)
+        protected override async void HandleMessage(object message)
         {
-            throw new NotImplementedException();
+            var castMessage = message as ProjectGroupCreatedEventModel;
+
+            using var scope = this._scopeFactory.CreateScope();
+
+            var repository = scope.ServiceProvider.GetService<ITaskEstimationRepository>();
+            await repository.AddProjectGroupOwnership(castMessage!.ProjectGroupId, castMessage.ProjectGroupOwnerId);
         }
     }
 }
