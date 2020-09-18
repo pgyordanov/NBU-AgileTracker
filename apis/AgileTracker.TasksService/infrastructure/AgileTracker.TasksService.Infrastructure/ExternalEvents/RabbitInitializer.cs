@@ -26,7 +26,7 @@
             var channel = this._defaultObjectPool.Get();
             try
             {
-                channel.ExchangeDeclare(this._rabbitSettings.PublishExchangeName, ExchangeType.Topic, false, true, null);
+                channel.ExchangeDeclare(this._rabbitSettings.PublishExchangeName, ExchangeType.Topic, true, false, null);
             }
             catch (Exception)
             {
