@@ -13,5 +13,9 @@
         public string Port { get; set; }
 
         public string PublishExchangeName { get; set; }
+
+        public string ProjectGroupCreatedQueueName { get; set; }
+
+        public string TaskFinishedQueueName { get; set; }
     }
 }

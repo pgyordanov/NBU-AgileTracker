@@ -2,6 +2,7 @@
 {
     using System;
 
+    using AgileTracker.Common.Events;
     using AgileTracker.Common.Infrastructure;
     using AgileTracker.TasksService.Application.Configuration;
 
@@ -27,6 +28,12 @@
             try
             {
                 channel.ExchangeDeclare(this._rabbitSettings.PublishExchangeName, ExchangeType.Topic, true, false, null);
+
+                channel.QueueDeclare(queue: this._rabbitSettings.TaskFinishedQueueName, durable: true, exclusive: false, autoDelete: true, arguments: null);
+                channel.QueueBind(this._rabbitSettings.TaskFinishedQueueName, this._rabbitSettings.PublishExchangeName, EventType.TaskFinished.ToString(), null);
+
+                channel.QueueDeclare(queue: this._rabbitSettings.ProjectGroupCreatedQueueName, durable: true, exclusive: false, autoDelete: true, arguments: null);
+                channel.QueueBind(this._rabbitSettings.ProjectGroupCreatedQueueName, this._rabbitSettings.PublishExchangeName, EventType.ProjectGroupCreated.ToString(), null);
             }
             catch (Exception)
             {

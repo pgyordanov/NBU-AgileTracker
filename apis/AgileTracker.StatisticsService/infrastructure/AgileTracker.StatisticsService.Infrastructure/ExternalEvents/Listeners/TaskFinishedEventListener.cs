@@ -5,7 +5,6 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using AgileTracker.Common.Events;
     using AgileTracker.Common.Events.Models;
     using AgileTracker.StatisticsService.Application.Configuration;
     using AgileTracker.StatisticsService.Infrastructure.ExternalEvents;
@@ -26,11 +25,6 @@
             : base(objectPolicy)
         {
             this._rabbitSettings = rabbitSettings.Value;
-
-            var channel = this._objectPool.Get();
-
-            channel.QueueDeclare(queue: this._rabbitSettings.TaskFinishedQueueName, durable: false, exclusive: false, autoDelete: true, arguments: null);
-            channel.QueueBind(this._rabbitSettings.TaskFinishedQueueName, this._rabbitSettings.PublishExchangeName, EventType.TaskFinished.ToString(), null);
         }
 
         protected override Task ExecuteAsync(CancellationToken cancellationToken)
@@ -42,19 +36,19 @@
             consumer.Received += (ch, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var eventModel = JsonConvert.DeserializeObject<ProjectGroupCreatedEventModel>(content);
+                var eventModel = JsonConvert.DeserializeObject<TaskFinishedEventModel>(content);
 
                 HandleMessage(eventModel);
 
                 channel.BasicAck(ea.DeliveryTag, false);
             };
 
-            channel.BasicConsume(this._rabbitSettings.ProjectGroupCreatedQueueName, false, consumer);
+            channel.BasicConsume(this._rabbitSettings.TaskFinishedQueueName, false, consumer);
 
             return Task.CompletedTask;
         }
 
-        protected override void HandleMessage<ProjectGroupCreatedEventMessage>(ProjectGroupCreatedEventMessage message)
+        protected override void HandleMessage<TaskFinishedEventModel>(TaskFinishedEventModel message)
         {
             throw new NotImplementedException();
         }

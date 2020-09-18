@@ -26,11 +26,6 @@
             : base(objectPolicy)
         {
             this._rabbitSettings = rabbitSettings.Value;
-
-            var channel = this._objectPool.Get();
-
-            channel.QueueDeclare(queue: this._rabbitSettings.ProjectGroupCreatedQueueName, durable: false, exclusive: false, autoDelete: true, arguments: null);
-            channel.QueueBind(this._rabbitSettings.ProjectGroupCreatedQueueName, this._rabbitSettings.PublishExchangeName, EventType.ProjectGroupCreated.ToString(), null);
         }
 
         protected override Task ExecuteAsync(CancellationToken cancellationToken)
