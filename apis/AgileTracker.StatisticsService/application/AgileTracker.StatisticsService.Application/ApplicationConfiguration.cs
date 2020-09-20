@@ -4,6 +4,8 @@
 
     using AgileTracker.StatisticsService.Application.Configuration;
 
+    using AutoMapper;
+
     using MediatR;
 
     using Microsoft.Extensions.Configuration;
@@ -20,7 +22,8 @@
                 );
 
             services
-                .AddMediatR(Assembly.GetExecutingAssembly());
+                .AddMediatR(Assembly.GetExecutingAssembly())
+                .AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;
         }

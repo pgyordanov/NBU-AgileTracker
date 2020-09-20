@@ -1,8 +1,10 @@
 ﻿namespace AgileTracker.StatisticsService.Web.Features
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using AgileTracker.StatisticsService.Application.Features.Commands.CreateEstimation;
+    using AgileTracker.StatisticsService.Application.Features.Queries.GetTaskEstimations;
     using AgileTracker.StatisticsService.Web.Common;
 
     using MediatR;
@@ -21,6 +23,31 @@
         public TaskEstimationsController(IMediator mediator)
         {
             this._mediator = mediator;
+        }
+
+        /// <summary>
+        /// Attempts to fetch all task estimations with the provided parameters
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="projectGroupId"></param>
+        /// <param name="projectId"></param>
+        /// <param name="taskId"></param>
+        /// <response code="200">If the task estimations are fetched successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpGet]
+        [Route("{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<GetTaskEstimationsOutputModel>>> GetEstimations(
+            [FromRoute] string memberId,
+            [FromQuery] int? projectGroupId,
+            [FromQuery] int? projectId,
+            [FromQuery] int? taskId)
+        {
+            var command = new GetTaskEstimationsCommand(projectGroupId, projectId, taskId, memberId);
+
+            return await this._mediator.Send(command).ToActionResult();
         }
 
         /// <summary>

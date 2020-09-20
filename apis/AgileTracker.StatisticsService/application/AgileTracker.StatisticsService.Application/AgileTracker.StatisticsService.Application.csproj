@@ -16,8 +16,4 @@
     <ProjectReference Include="..\..\domain\AgileTracker.StatisticsService.Domain\AgileTracker.StatisticsService.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Queries\" />
-  </ItemGroup>
-
 </Project>
