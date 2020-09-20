@@ -19,4 +19,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="5.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\application\AgileTracker.StatisticsService.Application\AgileTracker.StatisticsService.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectCapability Include="DynamicFileNesting" />
+  </ItemGroup>
+
 </Project>
