@@ -43,5 +43,7 @@
         public string RemoveSprintEndpoint { get; set; } = default!;
 
         public string CreateTaskEstimationEndpoint { get; set; } = default!;
+
+        public string GetTaskEstimationsEndpoint { get; set; } = default!;
     }
 }
