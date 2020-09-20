@@ -133,6 +133,22 @@
                                     </div>
                                     @if (!task.IsFinished)
                                     {
+                                        @if (authorizedOwner)
+                                        {
+                                            <form class="mt-0 form-inline" method="post" asp-controller="TaskEstimations" asp-action="CreateEstimation" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id" asp-route-taskId="@task.Id">
+                                                <div class="modal-body pb-2 manager-section">
+                                                    <div class="section-title mb-3">Task estimations</div>
+                                                    <div class="row">
+                                                        <div class="form-group col-12">
+                                                            <label>Estimated to finish on</label>
+                                                            <input name="EstimatedToFinishOn" type="text" class="form-control ml-2" />
+                                                            <button type="submit" class="btn btn-primary ml-3">Save</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        }
+
                                         <form class="mt-4" method="post" asp-controller="Projects" asp-action="UpdateBacklogTask" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id" asp-route-taskId="@task.Id">
                                             <input type="hidden" name="Title" value="@task.Title" />
                                             <div class="modal-body">
