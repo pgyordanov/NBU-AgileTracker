@@ -173,7 +173,25 @@
                                         </button>
                                     </div>
                                     @if (!task.IsFinished)
-                                    {
+                                            {
+                                                if (authorizedOwner && hasEstimation)
+                                                {
+                                                    var estimation = Model.TaskEstimations.First(e => e.TaskId == task.Id);
+                                            <form class="mt-0 form-inline" method="post" asp-controller="Projects" asp-action="CreateEstimation" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id">
+                                                <input type="hidden" name="TaskId" value="@task.Id" />
+                                                <div class="modal-body pb-2 manager-section">
+                                                    <div class="section-title mb-3">Task estimations</div>
+                                                    <div class="row">
+                                                        <div class="form-group col-12">
+                                                            <label>Estimated to finish on</label>
+                                                            <input name="EstimatedToFinishOn" type="text" class="form-control ml-2" value="@estimation.EstimatedToFinishOn.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)" />
+                                                            <button type="submit" class="btn btn-primary ml-3">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        }
+
                                         <form class="mt-4" method="post" asp-controller="Projects" asp-action="UpdateBacklogTask" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id" asp-route-taskId="@task.Id">
                                             <input type="hidden" name="Title" value="@task.Title" />
                                             <div class="modal-body">
