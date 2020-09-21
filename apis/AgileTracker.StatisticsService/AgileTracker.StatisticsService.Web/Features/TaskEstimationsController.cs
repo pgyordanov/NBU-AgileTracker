@@ -32,6 +32,7 @@
         /// <param name="projectGroupId"></param>
         /// <param name="projectId"></param>
         /// <param name="taskId"></param>
+        /// <param name="onlyCompleted"></param>
         /// <response code="200">If the task estimations are fetched successfully</response>
         /// <response code="400">If there was an encountered error with processing the request</response>
         [HttpGet]
@@ -43,9 +44,10 @@
             [FromRoute] string memberId,
             [FromQuery] int? projectGroupId,
             [FromQuery] int? projectId,
-            [FromQuery] int? taskId)
+            [FromQuery] int? taskId,
+            [FromQuery] bool? onlyCompleted)
         {
-            var command = new GetTaskEstimationsCommand(projectGroupId, projectId, taskId, memberId);
+            var command = new GetTaskEstimationsCommand(projectGroupId, projectId, taskId, onlyCompleted, memberId);
 
             return await this._mediator.Send(command).ToActionResult();
         }

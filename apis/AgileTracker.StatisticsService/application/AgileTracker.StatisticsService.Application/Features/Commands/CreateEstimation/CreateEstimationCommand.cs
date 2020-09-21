@@ -38,12 +38,19 @@
                     throw new ModelValidationException();
                 }
 
+                bool exists = (await this._taskEstimationRepository.GetByKeys(request.ProjectGroupId, request.ProjectId, request.TaskId)) != null;
+
+                if (exists)
+                {
+                    throw new ModelValidationException();
+                }
+
                 var taskEstimation = this._taskEstimationFactory
-                                            .WithKeys(request.ProjectGroupId, request.ProjectId, request.TaskId)
-                                            .WithEstimatorId(request.EstimatedByMemberId)
-                                            .WithStartTime(request.StartedOn)
-                                            .WithEstimatedFinishTime(request.EstimatedToFinishOn)
-                                            .Build();
+                                                .WithKeys(request.ProjectGroupId, request.ProjectId, request.TaskId)
+                                                .WithEstimatorId(request.EstimatedByMemberId)
+                                                .WithStartTime(request.StartedOn)
+                                                .WithEstimatedFinishTime(request.EstimatedToFinishOn)
+                                                .Build();
 
                 await this._taskEstimationRepository.Save(taskEstimation);
 

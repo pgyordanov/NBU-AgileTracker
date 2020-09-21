@@ -1,14 +1,13 @@
-﻿namespace AgileTracker.StatisticsService.Application.Features.Queries.GetTaskEstimations
+﻿namespace AgileTracker.Client.Application.Features.Tasks.Queries.GetTaskEstimations
 {
     public class GetTaskEstimationsInputModel
     {
-        public GetTaskEstimationsInputModel(int? projectGroupId, int? projectId, int? taskId, bool? onlyCompleted, string memberId)
+        public GetTaskEstimationsInputModel(int? projectGroupId, int? projectId, int? taskId, bool? onlyCompleted)
         {
             this.ProjectGroupId = projectGroupId;
             this.ProjectId = projectId;
             this.TaskId = taskId;
             this.OnlyCompleted = onlyCompleted;
-            this.MemberId = memberId;
         }
 
         public int? ProjectGroupId { get; }
@@ -18,7 +17,5 @@
         public int? TaskId { get; }
 
         public bool? OnlyCompleted { get; }
-
-        public string MemberId { get; }
     }
 }

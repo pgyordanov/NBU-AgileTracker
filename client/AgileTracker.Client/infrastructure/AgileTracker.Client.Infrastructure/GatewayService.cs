@@ -33,6 +33,8 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveSprint;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProject;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProjectGroup;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateTaskEstimation;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetTaskEstimations;
 
     public class GatewayService : BaseHttpGatewayService, IGatewayService
     {
@@ -330,6 +332,40 @@
             };
 
             return await this.MakeAuthenticatedRequest(request);
+        }
+
+        public async Task<Result> CreateTaskEstimation(CreateTaskEstimationInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.CreateTaskEstimationEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                   JsonConvert.SerializeObject(input),
+                   Encoding.UTF8,
+                   "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest(request);
+        }
+
+        public async Task<Result<IEnumerable<GetTaskEstimationsOutputModel>>> GetTaskEstimations(GetTaskEstimationsInputModel input)
+        {
+            var uriBuilder = new UriBuilder(this._gatewaySettings.BaseAddress + this._gatewaySettings.GetTaskEstimationsEndpoint);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["projectGroupId"] = input.ProjectGroupId?.ToString();
+            query["projectId"] = input.ProjectId?.ToString();
+            query["taskId"] = input.TaskId?.ToString();
+            query["onlyCompleted"] = input.OnlyCompleted?.ToString();
+            uriBuilder.Query = query.ToString();
+
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(uriBuilder.ToString()),
+                Method = HttpMethod.Get
+            };
+
+            return await this.MakeAuthenticatedRequest<IEnumerable<GetTaskEstimationsOutputModel>>(request);
         }
     }
 }

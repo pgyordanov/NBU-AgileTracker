@@ -114,6 +114,11 @@ li.project {
     font-size: 1.7rem;
 }
 
+.task-box.not-finished.owner.no-estimation {
+    padding-right: 40px;
+    position: relative;
+}
+
 .task-box > button {
     width: 100%;
     display: block;
@@ -121,6 +126,18 @@ li.project {
     text-decoration: none !important;
     padding: 0;
 }
+
+.task-box .estimationToggle {
+    width: auto;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 14px;
+}
+
+    .task-box .estimationToggle i {
+        font-size: 1.3rem;
+    }
 
 .task-box .task {
     display: block;

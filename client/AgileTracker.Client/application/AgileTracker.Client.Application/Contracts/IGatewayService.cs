@@ -22,6 +22,8 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveSprint;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProject;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProjectGroup;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateTaskEstimation;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetTaskEstimations;
 
     public interface IGatewayService
     {
@@ -62,5 +64,9 @@
         Task<Result> FinishSprint(FinishSprintInputModel input);
 
         Task<Result> RemoveSprint(RemoveSprintInputModel input);
+
+        Task<Result> CreateTaskEstimation(CreateTaskEstimationInputModel input);
+
+        Task<Result<IEnumerable<GetTaskEstimationsOutputModel>>> GetTaskEstimations(GetTaskEstimationsInputModel input);
     }
 }
