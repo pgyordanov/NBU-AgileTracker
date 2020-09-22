@@ -20,8 +20,4 @@
     <ProjectReference Include="..\infrastructure\AgileTracker.Client.Infrastructure\AgileTracker.Client.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Statistics\" />
-  </ItemGroup>
-
 </Project>

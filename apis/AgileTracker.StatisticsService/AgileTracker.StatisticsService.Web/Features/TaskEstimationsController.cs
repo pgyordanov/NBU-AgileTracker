@@ -5,6 +5,7 @@
 
     using AgileTracker.StatisticsService.Application.Features.Commands.CreateEstimation;
     using AgileTracker.StatisticsService.Application.Features.Commands.UpdateEstimation;
+    using AgileTracker.StatisticsService.Application.Features.Queries.GetEstimationStatistics;
     using AgileTracker.StatisticsService.Application.Features.Queries.GetTaskEstimations;
     using AgileTracker.StatisticsService.Web.Common;
 
@@ -49,6 +50,29 @@
             [FromQuery] bool? onlyCompleted)
         {
             var command = new GetTaskEstimationsCommand(projectGroupId, projectId, taskId, onlyCompleted, memberId);
+
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to fetch all task estimations with the provided parameters
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="projectGroupId"></param>
+        /// <param name="projectId"></param>
+        /// <response code="200">If the task estimations are fetched successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpGet]
+        [Route("{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<GetEstimationStatisticsOutputModel>> GetEstimationStatistics(
+            [FromRoute] string memberId,
+            [FromQuery] int? projectGroupId,
+            [FromQuery] int? projectId)
+        {
+            var command = new GetEstimationStatisticsCommand(projectGroupId, projectId, memberId);
 
             return await this._mediator.Send(command).ToActionResult();
         }
