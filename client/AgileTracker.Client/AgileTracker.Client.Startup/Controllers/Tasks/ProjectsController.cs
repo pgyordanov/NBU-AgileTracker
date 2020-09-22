@@ -4,9 +4,11 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AgileTracker.Client.Application.Features.Statistics.Commands.CreateTaskEstimation;
+    using AgileTracker.Client.Application.Features.Statistics.Commands.UpdateTaskEstimation;
+    using AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstimations;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateTaskEstimation;
     using AgileTracker.Client.Application.Features.Tasks.Commands.FinishSprint;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProject;
@@ -15,7 +17,6 @@
     using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
     using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetTaskEstimations;
     using AgileTracker.Client.Startup.Infrastructure;
     using AgileTracker.Client.Startup.Infrastructure.UI;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.AddToBacklog;
@@ -23,6 +24,7 @@
     using AgileTracker.Client.Startup.Models.Tasks.Projects.Index;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.SaveTaskEstimation;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.Sprint;
+    using AgileTracker.Client.Startup.Models.Tasks.Projects.UpdateTaskEstimation;
     using AgileTracker.Client.Startup.Models.Tasks.Projects.UpdateTaskStatus;
 
     using AutoMapper;
@@ -72,7 +74,7 @@
 
                 if (estimationsResult.Succeeded)
                 {
-                    var estimationsModel = this._mapper.ProjectTo<GetTaskEstimationsViewModel>(estimationsResult.Data.AsQueryable()).ToList();
+                    var estimationsModel = this._mapper.ProjectTo<Models.Tasks.Projects.Index.GetTaskEstimationsViewModel>(estimationsResult.Data.AsQueryable()).ToList();
                     model.TaskEstimations = estimationsModel;
                 }
             }
@@ -205,6 +207,20 @@
             model.ProjectGroupId = projectGroupId;
             model.ProjectId = projectId;
 
+            bool isOwner = (await this._authorizationService.AuthorizeAsync(this.User, projectGroupId, "IsProjectGroupOwner")).Succeeded;
+
+            if (isOwner)
+            {
+                var estimationsCommand = new GetTaskEstimationsCommand(projectGroupId, projectId, null, false);
+                var estimationsResult = await this._mediator.Send(estimationsCommand);
+
+                if (estimationsResult.Succeeded)
+                {
+                    var estimationsModel = this._mapper.ProjectTo<Models.Tasks.Projects.Sprint.GetTaskEstimationsViewModel>(estimationsResult.Data.AsQueryable()).ToList();
+                    model.TaskEstimations = estimationsModel;
+                }
+            }
+
             return View(model);
         }
 
@@ -271,7 +287,7 @@
 
         [HttpPost]
         [Authorize(Policy = "IsProjectGroupOwner")]
-        [Route("estimation")]
+        [Route("create-estimation")]
         public async Task<IActionResult> CreateTaskEstimation(int projectGroupId, int projectId, CreateTaskEstimationViewModel model)
         {
             var command = new CreateTaskEstimationCommand(projectGroupId, projectId, model.TaskId, model.StartedOn, model.EstimatedToFinishOn);
@@ -287,6 +303,26 @@
 
             return this.RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId })
                 .WithSuccess("Successfully saved task estimation", "Successfully saved task estimation");
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "IsProjectGroupOwner")]
+        [Route("update-estimation")]
+        public async Task<IActionResult> UpdateTaskEstimation(int projectGroupId, int projectId, UpdateTaskEstimationViewModel model)
+        {
+            var command = new UpdateTaskEstimationCommand(projectGroupId, projectId, model.TaskId, model.EstimatedToFinishOn);
+            var result = await this._mediator.Send(command);
+
+            var actionResult = this.HandleResultValidation(result);
+
+            if (!result.Succeeded)
+            {
+                return RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId })
+                    .WithDanger("An error has occured", string.Join("\n ", result.Errors));
+            }
+
+            return this.RedirectToAction(nameof(this.Index), new { ProjectGroupId = projectGroupId, ProjectId = projectId })
+                .WithSuccess("Successfully updated task estimation", "Successfully updated task estimation");
         }
     }
 }

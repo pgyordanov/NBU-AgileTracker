@@ -146,7 +146,7 @@
                                         <form method="post" asp-controller="Projects" asp-action="CreateTaskEstimation" asp-route-projectGroupId="@Model.ProjectGroupId" asp-route-projectId="@Model.Id">
                                             <div class="modal-body">
                                                 <input type="hidden" value="@task.Id" name="TaskId" />
-                                                <input type="hidden" value="@task.StartedOn" name="StartedOn"  />
+                                                <input type="hidden" value="@task.StartedOn" name="StartedOn" />
                                                 <div class="row">
                                                     <div class="form-group col-12">
                                                         <label>Estimated to finish on</label>
@@ -229,6 +229,20 @@
                                     }
                                     else
                                     {
+                                        if (authorizedOwner && hasEstimation)
+                                        {
+                                            var estimation = Model.TaskEstimations.First(e => e.TaskId == task.Id);
+                                            <div class="modal-body pb-2 manager-section">
+                                                <div class="section-title mb-3">Task estimations</div>
+                                                <div class="row">
+                                                    <div class="form-group col-12">
+                                                        <label>Estimated to finish on</label>
+                                                        <div>@estimation.EstimatedToFinishOn.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="form-group col-12">

@@ -1,4 +1,4 @@
-﻿namespace AgileTracker.Client.Application.Features.Tasks.Queries.GetTaskEstimations
+﻿namespace AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstimations
 {
     using System.Collections.Generic;
     using System.Threading;

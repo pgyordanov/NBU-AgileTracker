@@ -85,6 +85,7 @@
                                     <ul class="list-unstyled">
                                         @foreach (var task in Model.SprintBacklog.Where(t => t.Status.Title == status.Title))
                                         {
+                                            bool hasEstimation = Model.TaskEstimations.Any(e => e.TaskId == task.Id);
                                             <li class='mb-3 task-box @(task.IsFinished ? "finished": "")'>
                                                 <button class="btn btn-link toggler" data-toggle="modal" data-target="#taskmodal-@task.Id">
                                                     <div class="task">
@@ -104,6 +105,19 @@
                                                                 </button>
                                                             </div>
                                                             <input type="hidden" name="Title" value="@task.Title" />
+                                                            @if (authorizedOwner && hasEstimation)
+                                                            {
+                                                                var estimation = Model.TaskEstimations.First(e => e.TaskId == task.Id);
+                                                                <div class="modal-body pb-2 manager-section">
+                                                                    <div class="section-title mb-3">Task estimations</div>
+                                                                    <div class="row">
+                                                                        <div class="form-group col-12">
+                                                                            <label>Estimated to finish on</label>
+                                                                            <div>@estimation.EstimatedToFinishOn.ToString("dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
                                                             <div class="modal-body">
                                                                 <div class="row">
                                                                     <div class="form-group col-12">

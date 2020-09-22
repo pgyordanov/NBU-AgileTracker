@@ -25,5 +25,7 @@
         public DateTime FinishedOn { get; set; }
 
         public bool IsFinished { get; set; }
+
+        public IEnumerable<GetTaskEstimationsViewModel> TaskEstimations { get; set; } = new List<GetTaskEstimationsViewModel>();
     }
 }

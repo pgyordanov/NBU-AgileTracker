@@ -15,8 +15,4 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.8" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Statistics\" />
-  </ItemGroup>
-
 </Project>

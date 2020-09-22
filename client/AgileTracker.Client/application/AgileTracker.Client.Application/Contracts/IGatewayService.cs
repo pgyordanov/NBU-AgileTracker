@@ -3,27 +3,28 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
     using AgileTracker.Client.Application.Features.Identity.GetUserInfo;
-    using AgileTracker.Common.Application;
     using AgileTracker.Client.Application.Features.Identity.IsEmailRegistered;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
+    using AgileTracker.Client.Application.Features.Statistics.Commands.CreateTaskEstimation;
+    using AgileTracker.Client.Application.Features.Statistics.Commands.UpdateTaskEstimation;
+    using AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstimations;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
     using AgileTracker.Client.Application.Features.Tasks.Commands.FinishSprint;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProject;
     using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProjectGroup;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateTaskEstimation;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetTaskEstimations;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
+    using AgileTracker.Common.Application;
 
     public interface IGatewayService
     {
@@ -66,6 +67,8 @@
         Task<Result> RemoveSprint(RemoveSprintInputModel input);
 
         Task<Result> CreateTaskEstimation(CreateTaskEstimationInputModel input);
+
+        Task<Result> UpdateTaskEstimation(UpdateTaskEstimationInputModel input);
 
         Task<Result<IEnumerable<GetTaskEstimationsOutputModel>>> GetTaskEstimations(GetTaskEstimationsInputModel input);
     }

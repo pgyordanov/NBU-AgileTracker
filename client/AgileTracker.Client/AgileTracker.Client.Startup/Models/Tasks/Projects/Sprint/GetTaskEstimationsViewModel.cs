@@ -1,4 +1,4 @@
-﻿namespace AgileTracker.Client.Startup.Models.Tasks.Projects.Index
+﻿namespace AgileTracker.Client.Startup.Models.Tasks.Projects.Sprint
 {
     using System;
 

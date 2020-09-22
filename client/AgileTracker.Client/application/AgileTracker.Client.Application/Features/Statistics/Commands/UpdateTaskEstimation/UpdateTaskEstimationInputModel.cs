@@ -1,15 +1,14 @@
-﻿namespace AgileTracker.Client.Application.Features.Tasks.Commands.CreateTaskEstimation
+﻿namespace AgileTracker.Client.Application.Features.Statistics.Commands.UpdateTaskEstimation
 {
     using System;
 
-    public class CreateTaskEstimationInputModel
+    public class UpdateTaskEstimationInputModel
     {
-        public CreateTaskEstimationInputModel(int projectGroupId, int projectId, int taskId, DateTime startedOn, DateTime estimatedToFinishOn)
+        public UpdateTaskEstimationInputModel(int projectGroupId, int projectId, int taskId, DateTime estimatedToFinishOn)
         {
             this.ProjectGroupId = projectGroupId;
             this.ProjectId = projectId;
             this.TaskId = taskId;
-            this.StartedOn = startedOn;
             this.EstimatedToFinishOn = estimatedToFinishOn;
         }
 
@@ -18,8 +17,6 @@
         public int ProjectId { get; }
 
         public int TaskId { get; }
-
-        public DateTime StartedOn { get; }
 
         public DateTime EstimatedToFinishOn { get; }
     }

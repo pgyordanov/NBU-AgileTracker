@@ -5,36 +5,37 @@
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Web;
 
     using AgileTracker.Client.Application.Configuration;
     using AgileTracker.Client.Application.Contracts;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
     using AgileTracker.Client.Application.Features.Identity.GetUserInfo;
+    using AgileTracker.Client.Application.Features.Identity.IsEmailRegistered;
+    using AgileTracker.Client.Application.Features.Statistics.Commands.CreateTaskEstimation;
+    using AgileTracker.Client.Application.Features.Statistics.Commands.UpdateTaskEstimation;
+    using AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstimations;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProjectGroup;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.FinishSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProject;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProjectGroup;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveSprint;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
+    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroups;
+    using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
     using AgileTracker.Client.Infrastructure.Contracts;
     using AgileTracker.Common.Application;
 
     using Microsoft.Extensions.Options;
 
     using Newtonsoft.Json;
-    using AgileTracker.Client.Application.Features.Identity.IsEmailRegistered;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProjectGroupInvitations;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetProject;
-    using System.Web;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveFromProjectBacklog;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateBacklogTask;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateSprint;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetSprint;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.UpdateSprintTaskStatus;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.FinishSprint;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveSprint;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProject;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.RemoveProjectGroup;
-    using AgileTracker.Client.Application.Features.Tasks.Commands.CreateTaskEstimation;
-    using AgileTracker.Client.Application.Features.Tasks.Queries.GetTaskEstimations;
 
     public class GatewayService : BaseHttpGatewayService, IGatewayService
     {
@@ -339,6 +340,21 @@
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.CreateTaskEstimationEndpoint),
+                Method = HttpMethod.Post,
+                Content = new StringContent(
+                   JsonConvert.SerializeObject(input),
+                   Encoding.UTF8,
+                   "application/json")
+            };
+
+            return await this.MakeAuthenticatedRequest(request);
+        }
+
+        public async Task<Result> UpdateTaskEstimation(UpdateTaskEstimationInputModel input)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(this._gatewaySettings.BaseAddress + this._gatewaySettings.UpdateTaskEstimationEndpoint),
                 Method = HttpMethod.Post,
                 Content = new StringContent(
                    JsonConvert.SerializeObject(input),

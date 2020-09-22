@@ -1,4 +1,4 @@
-﻿namespace AgileTracker.Client.Application.Features.Tasks.Commands.CreateTaskEstimation
+﻿namespace AgileTracker.Client.Application.Features.Statistics.Commands.CreateTaskEstimation
 {
     using System;
     using System.Threading;
