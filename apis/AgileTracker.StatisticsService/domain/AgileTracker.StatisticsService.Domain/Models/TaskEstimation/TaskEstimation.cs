@@ -72,5 +72,8 @@
 
         public void SetActualFinishedOnTime(DateTime finishedOn)
             => this.ActuallyFinishedOn = finishedOn;
+
+        public void SetEstimatedToFinishOnTime(DateTime estimatedToFinishOn)
+            => this.EstimatedToFinishOn = estimatedToFinishOn;
     }
 }

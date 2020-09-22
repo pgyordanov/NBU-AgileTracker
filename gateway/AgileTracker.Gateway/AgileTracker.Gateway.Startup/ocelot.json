@@ -351,6 +351,24 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/TaskEstimations/UpdateEstimation/{memberId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44311
+        }
+      ],
+      "UpstreamPathTemplate": "/api/statistics/taskestimations/update",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "ChangeDownstreamPathTemplate": {
+        "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/TaskEstimations/GetEstimations/{memberId}?{parameters}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [

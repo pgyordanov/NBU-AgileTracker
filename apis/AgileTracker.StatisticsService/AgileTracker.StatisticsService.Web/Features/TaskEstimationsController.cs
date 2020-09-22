@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using AgileTracker.StatisticsService.Application.Features.Commands.CreateEstimation;
+    using AgileTracker.StatisticsService.Application.Features.Commands.UpdateEstimation;
     using AgileTracker.StatisticsService.Application.Features.Queries.GetTaskEstimations;
     using AgileTracker.StatisticsService.Web.Common;
 
@@ -73,6 +74,31 @@
                 command.TaskId,
                 memberId,
                 command.StartedOn,
+                command.EstimatedToFinishOn);
+
+            return await this._mediator.Send(command).ToActionResult();
+        }
+
+        /// <summary>
+        /// Attempts to update a task finish estimation with the provided parameters
+        /// </summary>
+        /// <param name="memberId"></param>
+        /// <param name="command"></param>
+        /// <response code="200">If the task estimation is updated successfully</response>
+        /// <response code="400">If there was an encountered error with processing the request</response>
+        [HttpPost]
+        [Route("{memberId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string[]), StatusCodes.Status400BadRequest)]
+        [SwaggerRequestExample(typeof(UpdateEstimationCommand), typeof(TaskEstimationsSwaggerExamples.UpdateEstimationExample))]
+        public async Task<ActionResult> UpdateEstimation([FromRoute] string memberId, [FromBody] UpdateEstimationCommand command)
+        {
+            command = new UpdateEstimationCommand(
+                command.ProjectGroupId,
+                command.ProjectId,
+                command.TaskId,
+                memberId,
                 command.EstimatedToFinishOn);
 
             return await this._mediator.Send(command).ToActionResult();
