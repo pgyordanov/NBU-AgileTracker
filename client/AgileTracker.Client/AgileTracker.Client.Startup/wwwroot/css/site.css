@@ -275,3 +275,23 @@ li.project {
 .manager-section {
     background: #eee;
 }
+
+.chart-holder {
+    width: 100%;
+}
+
+.stat {
+    margin-bottom: 10px;
+    margin-right:25px;
+    display: inline-block;
+}
+
+    .stat .stat-label {
+        font-size: 1.3rem;
+        font-weight: 300;
+    }
+
+    .stat .stat-value {
+        font-size: 1.7rem;
+        font-weight: 300;
+    }

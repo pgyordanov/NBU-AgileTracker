@@ -1,5 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
 }
+
+<input type="hidden" value="@this.Context.Request.HttpContext.Request.RouteValues["projectGroupId"]" id="statisticsProjectGroupId"/>
+<input type="hidden" value="@this.Context.Request.HttpContext.Request.RouteValues["projectId"]" id="statisticsProjecId"/>
+
+<div class="section-title mb-3">
+    Estimations statistics
+</div>
+<div class="stats-container" style="display:none;">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="stat">
+                <div class="stat-label">Total estimations</div>
+                <div class="stat-value" id="totalEstimations"></div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Accuracy estimations %</div>
+                <div class="stat-value" id="accuracyPercentage"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-6">
+            <div class="chart-holder">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="chart-holder">
+                <canvas id="scatterChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="stats-message pb-2" style="display:none;"></div>

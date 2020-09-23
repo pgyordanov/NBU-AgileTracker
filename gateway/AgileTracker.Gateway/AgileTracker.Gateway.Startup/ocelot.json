@@ -385,6 +385,24 @@
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/TaskEstimations/GetEstimationStatistics/{memberId}?{parameters}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44311
+        }
+      ],
+      "UpstreamPathTemplate": "/api/statistics/taskestimations/statistics/get?{parameters}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "ChangeDownstreamPathTemplate": {
+        "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
+      }
     }
   ],
   "GlobalConfiguration": {

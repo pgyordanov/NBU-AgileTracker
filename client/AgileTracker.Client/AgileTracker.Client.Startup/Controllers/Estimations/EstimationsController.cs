@@ -1,10 +1,9 @@
 ﻿namespace AgileTracker.Client.Startup.Controllers.Estimations
 {
-    using System.Linq;
     using System.Text.Json;
     using System.Threading.Tasks;
 
-    using AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstimations;
+    using AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstmationStatistics;
     using AgileTracker.Client.Startup.Infrastructure;
     using AgileTracker.Client.Startup.Models.Tasks.Estimations;
 
@@ -14,8 +13,6 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
-    using Newtonsoft.Json;
 
     [Authorize]
     [Route("statistics")]
@@ -32,10 +29,10 @@
 
         [HttpGet]
         [Authorize(Policy = "IsProjectGroupOwner")]
-        [Route("{projectGroupId}")]
+        [Route("project-group/{projectGroupId}")]
         public async Task<IActionResult> Get(int projectGroupId, int? projectId)
         {
-            var estimationsCommand = new GetTaskEstimationsCommand(projectGroupId, projectId, null, false);
+            var estimationsCommand = new GetTaskEstimationStatisticsCommand(projectGroupId, projectId);
             var estimationsResult = await this._mediator.Send(estimationsCommand);
 
             if (!estimationsResult.Succeeded)
@@ -43,9 +40,9 @@
                 return new JsonResult(new { Succeeded = false, Errors = estimationsResult.Errors });
             }
 
-            var estimationsModel = this._mapper.ProjectTo<GetStatisticsViewModel>(estimationsResult.Data.AsQueryable()).ToList();
+            var estimationsModel = this._mapper.Map<GetTaskEstimationStatisticsOutputModel, GetStatisticsViewModel>(estimationsResult.Data);
 
-            return new JsonResult(estimationsModel, new JsonSerializerOptions { WriteIndented = true });
+            return new JsonResult(estimationsModel, new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
     }
 }

@@ -47,5 +47,7 @@
         public string UpdateTaskEstimationEndpoint { get; set; } = default!;
 
         public string GetTaskEstimationsEndpoint { get; set; } = default!;
+
+        public string GetTaskEstimationStatisticsEndpoint { get; set; } = default!;
     }
 }

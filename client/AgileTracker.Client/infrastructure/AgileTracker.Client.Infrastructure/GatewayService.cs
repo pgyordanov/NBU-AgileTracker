@@ -14,6 +14,7 @@
     using AgileTracker.Client.Application.Features.Statistics.Commands.CreateTaskEstimation;
     using AgileTracker.Client.Application.Features.Statistics.Commands.UpdateTaskEstimation;
     using AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstimations;
+    using AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstmationStatistics;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
@@ -382,6 +383,23 @@
             };
 
             return await this.MakeAuthenticatedRequest<IEnumerable<GetTaskEstimationsOutputModel>>(request);
+        }
+
+        public async Task<Result<GetTaskEstimationStatisticsOutputModel>> GetTaskEstimationStatistics(GetTaskEstimationStatisticsInputModel input)
+        {
+            var uriBuilder = new UriBuilder(this._gatewaySettings.BaseAddress + this._gatewaySettings.GetTaskEstimationStatisticsEndpoint);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["projectGroupId"] = input.ProjectGroupId?.ToString();
+            query["projectId"] = input.ProjectId?.ToString();
+            uriBuilder.Query = query.ToString();
+
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri(uriBuilder.ToString()),
+                Method = HttpMethod.Get
+            };
+
+            return await this.MakeAuthenticatedRequest<GetTaskEstimationStatisticsOutputModel>(request);
         }
     }
 }

@@ -36,6 +36,11 @@
 
     @if (authorizedOwner)
     {
+        <partial name="_TaskEstimationStatisticsPartial" />
+    }
+
+    @if (authorizedOwner)
+    {
         <!-- Remove modal -->
         <div class="modal fade" id="removeModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -379,4 +384,6 @@
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <script src="~/js/statistics.js"></script>
 }

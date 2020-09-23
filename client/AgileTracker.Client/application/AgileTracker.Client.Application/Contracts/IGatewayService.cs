@@ -8,6 +8,7 @@
     using AgileTracker.Client.Application.Features.Statistics.Commands.CreateTaskEstimation;
     using AgileTracker.Client.Application.Features.Statistics.Commands.UpdateTaskEstimation;
     using AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstimations;
+    using AgileTracker.Client.Application.Features.Statistics.Queries.GetTaskEstmationStatistics;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AcceptProjectGroupInvitation;
     using AgileTracker.Client.Application.Features.Tasks.Commands.AddToProjectBacklog;
     using AgileTracker.Client.Application.Features.Tasks.Commands.CreateProject;
@@ -71,5 +72,7 @@
         Task<Result> UpdateTaskEstimation(UpdateTaskEstimationInputModel input);
 
         Task<Result<IEnumerable<GetTaskEstimationsOutputModel>>> GetTaskEstimations(GetTaskEstimationsInputModel input);
+
+        Task<Result<GetTaskEstimationStatisticsOutputModel>> GetTaskEstimationStatistics(GetTaskEstimationStatisticsInputModel input);
     }
 }
