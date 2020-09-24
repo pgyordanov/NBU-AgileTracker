@@ -27,7 +27,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/identity/is-email-registered",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
       }
