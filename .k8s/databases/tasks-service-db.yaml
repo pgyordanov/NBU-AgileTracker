@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tasks-database
+spec:
+  selector:
+    matchLabels:
+      database: tasks
+  serviceName: tasks-database
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        database: tasks
+        system: database
+    spec:
+      terminationGracePeriod: 60
+      securityContext:
+        fsGroup: 10001
+      containers:
+      - name: tasks-database
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 1433
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: environment-secrets
+              key: tasks-db-password
+        volumeMounts:
+        - mountPath: "/var/opt/mssql"
+          name: tasks-database-pvc
+  volumeClaimTemplates:
+  - metadata:
+      name: tasks-database-pvc
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: do-block-storage
