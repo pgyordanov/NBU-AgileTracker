@@ -43,3 +43,13 @@ spec:
             secretKeyRef:
               name: environment-secrets
               key: gateway-auth-identity-server-connection-string
+        - name: IdentityServerSettings__WebClientRedirectUrl
+          valueFrom:
+            configMapKeyRef:
+              name: environment-settings
+              key: web-client-oidc-redirect-uri
+        - name: IdentityServerSettings__WebClientPostLogourRedirectUrl
+          valueFrom:
+            configMapKeyRef:
+              name: environment-settings
+              key: web-client-oidc-postlogout-redirect-uri
