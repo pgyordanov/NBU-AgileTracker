@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: tasks-database
+  name: identity-database
 spec:
   clusterIP: None
   selector:
-    database: tasks
+    database: identity
   ports: 
   - port: 1433
     targetPort: 1433
@@ -15,24 +15,24 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: tasks-database
+  name: identity-database
 spec:
   selector:
     matchLabels:
-      database: tasks
-  serviceName: tasks-database
+      database: identity
+  serviceName: identity-database
   replicas: 1
   template:
     metadata:
       labels:
-        database: tasks
+        database: identity
         system: database
     spec:
       terminationGracePeriodSeconds: 60
       securityContext:
         fsGroup: 10001
       containers:
-      - name: tasks-database
+      - name: identity-database
         image: mcr.microsoft.com/mssql/server:2019-latest
         imagePullPolicy: IfNotPresent
         ports:
@@ -48,13 +48,13 @@ spec:
           valueFrom:
             secretKeyRef:
               name: environment-secrets
-              key: tasks-db-password
+              key: identity-db-password
         volumeMounts:
         - mountPath: "/var/opt/mssql"
-          name: tasks-database-pvc
+          name: identity-database-pvc
   volumeClaimTemplates:
   - metadata:
-      name: tasks-database-pvc
+      name: identity-database-pvc
     spec:
       accessModes:
       - ReadWriteOnce

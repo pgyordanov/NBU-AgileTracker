@@ -1,64 +1,66 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: tasks-database
+  name: rabbitmq
 spec:
-  clusterIP: None
+  type: LoadBalancer
   selector:
-    database: tasks
+    eventbus: rabbitmq
   ports: 
-  - port: 1433
-    targetPort: 1433
+  - port: 5672
+    name: service-port
+    targetPort: 5672
+  - port: 15672
+    name: admin-port
+    targetPort: 15672
 
 ---
 
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: tasks-database
+  name: rabbitmq
 spec:
   selector:
     matchLabels:
-      database: tasks
-  serviceName: tasks-database
+      eventbus: rabbitmq
+  serviceName: rabbitmq
   replicas: 1
   template:
     metadata:
       labels:
-        database: tasks
-        system: database
+        eventbus: rabbitmq
+        system: eventbus
     spec:
       terminationGracePeriodSeconds: 60
       securityContext:
         fsGroup: 10001
       containers:
-      - name: tasks-database
-        image: mcr.microsoft.com/mssql/server:2019-latest
+      - name: rabbitmq
+        image: rabbitmq:3-management
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 1433
+        - containerPort: 5672
+        - containerPort: 15672
         # resources:
         #   limits:
         #     memory: "500Mi"
         #     cpu: "300m"
         env:
-        - name: ACCEPT_EULA
-          value: "Y"
-        - name: SA_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: environment-secrets
-              key: tasks-db-password
+        - name: RABBITMQ_DEFAULT_USER
+          value: "guest"
+        - name: RABBITMQ_DEFAULT_PASS
+          value: "guest"
         volumeMounts:
-        - mountPath: "/var/opt/mssql"
-          name: tasks-database-pvc
+        - mountPath: "/var/opt/lib/rabbitmq/mnesia"
+          name: rabbitmq-pvc
   volumeClaimTemplates:
   - metadata:
-      name: tasks-database-pvc
+      name: rabbitmq-pvc
     spec:
       accessModes:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 5Gi
+          storage: 2Gi
       storageClassName: do-block-storage

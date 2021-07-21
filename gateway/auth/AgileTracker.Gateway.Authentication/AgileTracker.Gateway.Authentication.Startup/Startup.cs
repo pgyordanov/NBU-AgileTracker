@@ -24,7 +24,7 @@ namespace AgileTracker.Gateway.Authentication.IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddApplication()
+                .AddApplication(this.Configuration)
                 .AddInfrastructure(this.Configuration)
                 .AddWebComponents();
         }

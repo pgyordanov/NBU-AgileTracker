@@ -23,9 +23,11 @@ namespace AgileTracker.Gateway.Startup
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .ConfigureAppConfiguration(configureDelegate =>
+                .ConfigureAppConfiguration((context, configureDelegate) =>
                 {
-                    configureDelegate.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+                    configureDelegate
+                        .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
+                        .AddJsonFile($"ocelot.{context.HostingEnvironment.EnvironmentName}.json", true, true);
                 });
     }
 }
