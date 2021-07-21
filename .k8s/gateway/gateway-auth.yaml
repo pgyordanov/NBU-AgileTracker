@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway-auth
+  name: gateway-auth-svc
 spec:
   type: LoadBalancer
   selector:
@@ -28,11 +28,16 @@ spec:
     spec:
       containers:
       - name: gateway-auth
-        image: pgyordanovv/agiletracker-gateway-auth:latest
+        image: pgyordanovv/agiletracker-gateway-auth:0.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
         env:
+        - name: IDENTITY_ISSUER
+          valueFrom:
+            configMapKeyRef:
+              name: environment-settings
+              key: authorization-server-uri
         - name: ConnectionStrings__IdentityConnection
           valueFrom:
             secretKeyRef:

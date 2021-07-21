@@ -36,5 +36,8 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Development"
         - name: AuthorizationServer
-          value: "http://gateway-auth:80"
+          valueFrom:
+            configMapKeyRef:
+              name: environment-settings
+              key: authorization-server-uri
           

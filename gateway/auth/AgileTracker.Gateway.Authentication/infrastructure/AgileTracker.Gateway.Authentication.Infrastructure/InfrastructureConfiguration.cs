@@ -69,6 +69,8 @@
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseInformationEvents = true;
+
+                    options.IssuerUri = configuration["IdentityServerSettings:IssuerUri"];
                 })
                 .AddAspNetIdentity<AgileTrackerUser>()
                 .AddConfigurationStore(options =>

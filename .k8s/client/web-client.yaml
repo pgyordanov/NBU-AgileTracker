@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: tasks
-        image: pgyordanovv/agiletracker-client:latest
+        image: pgyordanovv/agiletracker-client:0.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
@@ -36,5 +36,10 @@ spec:
         - name: GatewaySettings__BaseAddress
           value: "http://gateway:80"
         - name: AuthorizationServer
-          value: "http://gateway-auth:80"
+          valueFrom:
+            configMapKeyRef:
+              name: environment-settings
+              key: authorization-server-uri
+        - name: IDENTITY_ISSUER
+          value: "http://gateway-auth-svc:80"
           

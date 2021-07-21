@@ -51,14 +51,14 @@ spec:
               key: identity-server-db-password
         volumeMounts:
         - mountPath: "/var/opt/mssql"
-          name: identity-server-database-pvc
+          name: identity-server-database-2-pvc
   volumeClaimTemplates:
   - metadata:
-      name: identity-server-database-pvc
+      name: identity-server-database-2-pvc
     spec:
       accessModes:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 5Gi
+          storage: 4Gi
       storageClassName: do-block-storage

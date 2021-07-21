@@ -4,8 +4,9 @@ metadata:
   name: environment-settings
 data:
   event-bus-hostname: rabbitmq
-  web-client-oidc-redirect-uri: http://webclient:80/signin-oidc
-  web-client-oidc-postlogout-redirect-uri: http://webclient:80/signout-redirect-oidc
+  authorization-server-uri: http://157.245.16.223:8001/
+  web-client-oidc-redirect-uri: http://104.248.102.48:8000/signin-oidc
+  web-client-oidc-postlogout-redirect-uri: http://104.248.102.48:8000/signout-redirect-oidc
 
 ---
 
