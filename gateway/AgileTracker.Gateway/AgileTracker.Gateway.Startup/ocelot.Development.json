@@ -406,6 +406,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://gateway:8002"
+    "BaseUrl": "http://gateway:80"
   }
 }
