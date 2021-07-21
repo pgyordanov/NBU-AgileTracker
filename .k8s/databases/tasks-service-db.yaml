@@ -14,7 +14,7 @@ spec:
         database: tasks
         system: database
     spec:
-      terminationGracePeriod: 60
+      terminationGracePeriodSeconds: 60
       securityContext:
         fsGroup: 10001
       containers:
