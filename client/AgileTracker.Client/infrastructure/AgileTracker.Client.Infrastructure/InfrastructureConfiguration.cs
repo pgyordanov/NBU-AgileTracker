@@ -57,7 +57,7 @@
                     configureOptions.Authority = configuration["AuthorizationServer"];
                     //only for dev
                     configureOptions.RequireHttpsMetadata = false;
-                })
+                });
 
             services.AddAuthorization(options =>
             {

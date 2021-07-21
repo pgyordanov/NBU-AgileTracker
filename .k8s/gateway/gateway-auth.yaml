@@ -28,12 +28,12 @@ spec:
     spec:
       containers:
       - name: gateway-auth
-        image: pgyordanovv/agiletracker-gateway-auth:0.1
+        image: pgyordanovv/agiletracker-gateway-auth:0.2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
         env:
-        - name: IDENTITY_ISSUER
+        - name: IdentityServerSettings_IssuerUri
           valueFrom:
             configMapKeyRef:
               name: environment-settings
