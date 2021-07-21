@@ -3,14 +3,25 @@
     using System;
     using System.Collections.Generic;
 
+    using AgileTracker.Gateway.Authentication.Application.Identity.Configuration;
+
     using IdentityModel;
 
     using IdentityServer4;
     using IdentityServer4.EntityFramework.Entities;
     using IdentityServer4.EntityFramework.Mappers;
 
+    using Microsoft.Extensions.Options;
+
     public class ClientData : IIdentityServerInitialData
     {
+        private readonly IdentityServerSettings _identityServerSettings;
+
+        public ClientData(IOptions<IdentityServerSettings> options)
+        {
+            _identityServerSettings = options.Value;
+        }
+
         public Type EntityType => typeof(Client);
 
         public IEnumerable<object> GetData()
@@ -28,8 +39,8 @@
                     AllowedGrantTypes = IdentityServer4.Models.GrantTypes.Code,
 
                     // default URLs
-                    RedirectUris = { "https://localhost:44397/signin-oidc"},
-                    PostLogoutRedirectUris = { "https://localhost:44397/signout-callback-oidc" },
+                    RedirectUris = { _identityServerSettings.WebClientRedirectUrl},
+                    PostLogoutRedirectUris = { _identityServerSettings.WebClientPostLogourRedirectUrl },
 
                     AllowedScopes =
                     {
