@@ -31,6 +31,9 @@ namespace AgileTracker.Gateway.Startup
                 .AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", config =>
                 {
+                    //only for dev
+                    config.RequireHttpsMetadata = false;
+
                     config.Authority = (string)this.Configuration.GetValue(typeof(string), "AuthorizationServer");
 
                     config.TokenValidationParameters = new TokenValidationParameters
