@@ -53,6 +53,9 @@
                     {
                         OnUserInformationReceived = AgileTrackerOpenIdConnectEvents.OnUserInformationReceived
                     };
+
+                    //only for dev
+                    configureOptions.RequireHttpsMetadata = false;
                 });
 
             services.AddAuthorization(options =>

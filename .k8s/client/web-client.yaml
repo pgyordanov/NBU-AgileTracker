@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway
+  name: web-client
 spec:
   type: LoadBalancer
   selector:
-    web-service: gateway
+    web-service: web-client
   ports: 
-  - port: 8002
+  - port: 8000
     targetPort: 80
 
 ---
@@ -15,26 +15,26 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway
+  name: web-client
 spec:
   selector:
     matchLabels:
-      web-service: gateway
+      web-service: web-client
   template:
     metadata:
       labels:
-        web-service: gateway
+        web-service: web-client
         system: server
     spec:
       containers:
       - name: tasks
-        image: pgyordanovv/agiletracker-gateway:0.2
+        image: pgyordanovv/agiletracker-client:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
         env:
-        - name: ASPNETCORE_ENVIRONMENT
-          value: "Development"
+        - name: GatewaySettings__BaseAddress
+          value: "http://gateway:80"
         - name: AuthorizationServer
           value: "http://gateway-auth:80"
           
