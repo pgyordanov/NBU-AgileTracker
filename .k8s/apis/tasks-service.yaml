@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tasks
+spec:
+  type: LoadBalancer
+  selector:
+    web-service: tasks
+  ports: 
+  - port: 8003
+    targetPort: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasks
+spec:
+  selector:
+    matchLabels:
+      web-service: tasks
+  template:
+    metadata:
+      labels:
+        web-service: tasks
+        system: server
+    spec:
+      containers:
+      - name: tasks
+        image: pgyordanovv/agiletracker-tasks-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: RabbitSettings__HostName
+          valueFrom:
+            configMapKeyRef:
+              name: environment-settings
+              key: event-bus-hostname
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom:
+            secretKeyRef:
+              name: environment-secrets
+              key: tasks-service-connection-string

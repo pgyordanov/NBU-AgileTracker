@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: environment-settings
 data:
+  event-bus-hostname: rabbitmq
   web-client-oidc-redirect-uri: http://webclient:8000/signin-oidc
   web-client-oidc-postlogout-redirect-uri: http://webclient:8000/signout-redirect-oidc
 
@@ -17,5 +18,7 @@ data:
   identity-server-db-password: U3RyMG5nUGFzc3dvcmQxIQ==
   tasks-db-password: U3RyMG5nUGFzc3dvcmQxIQ==
   statistics-db-password: U3RyMG5nUGFzc3dvcmQxIQ==
+  tasks-service-connection-string: RGF0YSBTb3VyY2U9dGFza3MtZGF0YWJhc2U7SW5pdGlhbCBDYXRhbG9nPWFnaWxldHJhY2tlcl90YXNrcztVc2VyPXNhO1Bhc3N3b3JkPVN0cjBuZ1Bhc3N3b3JkMSE7TXVsdGlwbGVBY3RpdmVSZXN1bHRTZXRzPVRydWU=
+  statistics-service-connection-string: RGF0YSBTb3VyY2U9c3RhdGlzdGljcy1kYXRhYmFzZTtJbml0aWFsIENhdGFsb2c9YWdpbGV0cmFja2VyX3N0YXRpc3RpY3M7VXNlcj1zYTtQYXNzd29yZD1TdHIwbmdQYXNzd29yZDEhO011bHRpcGxlQWN0aXZlUmVzdWx0U2V0cz1UcnVl
   gateway-auth-identity-connection-string: RGF0YSBTb3VyY2U9aWRlbnRpdHktZGF0YWJhc2U7SW5pdGlhbCBDYXRhbG9nPWFnaWxldHJhY2tlcl9pZGVudGl0eTtVc2VyPXNhO1Bhc3N3b3JkPVN0cjBuZ1Bhc3N3b3JkMSE7TXVsdGlwbGVBY3RpdmVSZXN1bHRTZXRzPVRydWU=
   gateway-auth-identity-server-connection-string: RGF0YSBTb3VyY2U9aWRlbnRpdHktc2VydmVyLWRhdGFiYXNlO0luaXRpYWwgQ2F0YWxvZz1hZ2lsZXRyYWNrZXJfaWRlbnRpdHlzZXJ2ZXI7VXNlcj1zYTtQYXNzd29yZD1TdHIwbmdQYXNzd29yZDEhO011bHRpcGxlQWN0aXZlUmVzdWx0U2V0cz1UcnVl

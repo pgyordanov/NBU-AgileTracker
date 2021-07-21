@@ -6,8 +6,8 @@
       "DownstreamHttpMethod": "POST",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44393
+          "Host": "gateway-auth",
+          "Port": 8001
         }
       ],
       "UpstreamPathTemplate": "/api/identity/user-info",
@@ -22,8 +22,8 @@
       "DownstreamHttpMethod": "POST",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44393
+          "Host": "gateway-auth",
+          "Port": 8001
         }
       ],
       "UpstreamPathTemplate": "/api/identity/is-email-registered",
@@ -37,8 +37,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/get",
@@ -55,8 +55,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/invitations/get",
@@ -73,8 +73,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/invitations/create",
@@ -91,8 +91,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/invitations/accept",
@@ -106,8 +106,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/create",
@@ -121,8 +121,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/remove",
@@ -139,8 +139,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/create",
@@ -157,8 +157,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/remove",
@@ -175,8 +175,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects?projectGroupId={projectGroupId}&projectId={projectId}",
@@ -193,8 +193,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/add-to-backlog",
@@ -211,8 +211,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/remove-from-backlog",
@@ -229,8 +229,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/update-backlog-task",
@@ -247,8 +247,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/create-sprint",
@@ -265,8 +265,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/sprints?projectGroupId={projectGroupId}&projectId={projectId}&sprintId={sprintId}",
@@ -283,8 +283,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/sprints/update-task-status",
@@ -301,8 +301,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/sprints/finish",
@@ -319,8 +319,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44386
+          "Host": "tasks",
+          "Port": 8003
         }
       ],
       "UpstreamPathTemplate": "/api/tasks/projectgroups/projects/sprints/remove",
@@ -337,8 +337,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44311
+          "Host": "statistics",
+          "Port": 8004
         }
       ],
       "UpstreamPathTemplate": "/api/statistics/taskestimations/create",
@@ -355,8 +355,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44311
+          "Host": "statistics",
+          "Port": 8004
         }
       ],
       "UpstreamPathTemplate": "/api/statistics/taskestimations/update",
@@ -373,8 +373,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44311
+          "Host": "statistics",
+          "Port": 8004
         }
       ],
       "UpstreamPathTemplate": "/api/statistics/taskestimations/get?{parameters}",
@@ -391,8 +391,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44311
+          "Host": "statistics",
+          "Port": 8004
         }
       ],
       "UpstreamPathTemplate": "/api/statistics/taskestimations/statistics/get?{parameters}",
@@ -406,6 +406,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44332"
+    "BaseUrl": "http://gateway:8002"
   }
 }

@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: statistics
+spec:
+  type: LoadBalancer
+  selector:
+    web-service: statistics
+  ports: 
+  - port: 8004
+    targetPort: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statistics
+spec:
+  selector:
+    matchLabels:
+      web-service: statistics
+  template:
+    metadata:
+      labels:
+        web-service: statistics
+        system: server
+    spec:
+      containers:
+      - name: statistics
+        image: pgyordanovv/agiletracker-statistics-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: RabbitSettings__HostName
+          valueFrom:
+            configMapKeyRef:
+              name: environment-settings
+              key: event-bus-hostname
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom:
+            secretKeyRef:
+              name: environment-secrets
+              key: statistics-service-connection-string
