@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: tasks
-        image: pgyordanovv/agiletracker-gateway:0.3
+        image: pgyordanovv/agiletracker-gateway:0.4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

@@ -2,7 +2,7 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/IdentityApi/GetUsersInformation",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHttpMethod": "POST",
       "DownstreamHostAndPorts": [
         {
@@ -19,7 +19,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/IdentityApi/IsEmailRegistered",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHttpMethod": "POST",
       "DownstreamHostAndPorts": [
         {
@@ -36,7 +36,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/get-member-groups/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -55,7 +55,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/get-member-group-invitations/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -74,7 +74,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/invite-group-member/{ownerId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -92,7 +92,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/add-group-member",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -108,7 +108,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -124,7 +124,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/remove-project-group/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -143,7 +143,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/create-project/{ownerId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -162,7 +162,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/remove-project/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -181,7 +181,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/{projectGroupId}/project/{projectId}/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -200,7 +200,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/add-to-backlog/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -219,7 +219,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/remove-from-backlog/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -238,7 +238,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/update-backlog-task/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -257,7 +257,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/create-sprint/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -276,7 +276,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/{projectGroupId}/project/{projectId}/sprint/{sprintId}/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -295,7 +295,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/update-sprint-task-status/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -314,7 +314,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/finish-sprint/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -333,7 +333,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/remove-sprint/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "tasks",
@@ -352,7 +352,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/TaskEstimations/CreateEstimation/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "statistics",
@@ -371,7 +371,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/TaskEstimations/UpdateEstimation/{memberId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "statistics",
@@ -390,7 +390,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/TaskEstimations/GetEstimations/{memberId}?{parameters}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "statistics",
@@ -409,7 +409,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/TaskEstimations/GetEstimationStatistics/{memberId}?{parameters}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "statistics",
