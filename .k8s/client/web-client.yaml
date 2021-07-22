@@ -34,7 +34,7 @@ spec:
         - containerPort: 80
         env:
         - name: GatewaySettings__BaseAddress
-          value: "http://gateway:80"
+          value: "http://gateway:8002"
         - name: AuthorizationServer
           valueFrom:
             configMapKeyRef:
