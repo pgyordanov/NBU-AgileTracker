@@ -14,7 +14,8 @@
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/IdentityApi/IsEmailRegistered",
@@ -30,7 +31,8 @@
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/get-member-groups/{memberId}",
@@ -48,7 +50,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/get-member-group-invitations/{memberId}",
@@ -66,7 +69,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/invite-group-member/{ownerId}",
@@ -99,7 +103,8 @@
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups",
@@ -114,7 +119,8 @@
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/remove-project-group/{memberId}",
@@ -132,7 +138,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/create-project/{ownerId}",
@@ -150,7 +157,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "ownerId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/remove-project/{memberId}",
@@ -168,7 +176,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/{projectGroupId}/project/{projectId}/{memberId}",
@@ -186,7 +195,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/add-to-backlog/{memberId}",
@@ -204,7 +214,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/remove-from-backlog/{memberId}",
@@ -222,7 +233,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/update-backlog-task/{memberId}",
@@ -240,7 +252,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/create-sprint/{memberId}",
@@ -258,7 +271,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/{projectGroupId}/project/{projectId}/sprint/{sprintId}/{memberId}",
@@ -276,7 +290,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/update-sprint-task-status/{memberId}",
@@ -294,7 +309,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/finish-sprint/{memberId}",
@@ -312,7 +328,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/ProjectGroups/remove-sprint/{memberId}",
@@ -330,7 +347,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/TaskEstimations/CreateEstimation/{memberId}",
@@ -348,7 +366,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/TaskEstimations/UpdateEstimation/{memberId}",
@@ -366,7 +385,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/TaskEstimations/GetEstimations/{memberId}?{parameters}",
@@ -384,7 +404,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
       "DownstreamPathTemplate": "/api/TaskEstimations/GetEstimationStatistics/{memberId}?{parameters}",
@@ -402,7 +423,8 @@
       },
       "ChangeDownstreamPathTemplate": {
         "memberId": "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
   ],
   "GlobalConfiguration": {
