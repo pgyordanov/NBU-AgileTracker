@@ -6,7 +6,7 @@
       "DownstreamHttpMethod": "POST",
       "DownstreamHostAndPorts": [
         {
-          "Host": "gateway-auth-svc",
+          "Host": "157.245.16.223",
           "Port": 8001
         }
       ],
@@ -23,7 +23,7 @@
       "DownstreamHttpMethod": "POST",
       "DownstreamHostAndPorts": [
         {
-          "Host": "gateway-auth-svc",
+          "Host": "157.245.16.223",
           "Port": 8001
         }
       ],

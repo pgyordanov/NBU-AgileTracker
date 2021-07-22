@@ -37,10 +37,10 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 1433
-        # resources:
-        #   limits:
-        #     memory: "500Mi"
-        #     cpu: "300m"
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "500m"
         env:
         - name: ACCEPT_EULA
           value: "Y"
@@ -51,10 +51,10 @@ spec:
               key: tasks-db-password
         volumeMounts:
         - mountPath: "/var/opt/mssql"
-          name: tasks-database-pvc
+          name: tasks-database-1-pvc
   volumeClaimTemplates:
   - metadata:
-      name: tasks-database-pvc
+      name: tasks-database-1-pvc
     spec:
       accessModes:
       - ReadWriteOnce
